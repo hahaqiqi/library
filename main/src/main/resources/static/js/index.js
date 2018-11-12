@@ -31,7 +31,7 @@ new Vue({
             layer.confirm('您确定要退出登录吗？', {
                 btn: ['确定', '取消'] //按钮
             }, function() {
-                alert("退出系统");
+                window.href="/logout";
             }, function() {
 
             });
@@ -70,35 +70,34 @@ new Vue({
                 },{
                     id: "1",
                     title: "空间管理",
-                    icon: "&#xe68e;",
+                    icon: "",
                     spread: false,
                     children: [{
                         id: "10",
                         title: "子模块1",
-                        icon: "&#xe6c6;",
-                        url: "/user.page"
+                        icon: "",
+                        url: "/user.html"
                     }, {
                         id: "11",
                         title: "子模块2",
-                        icon: "&#xe63c;",
-                        url: "/user.page"
+                        icon: "",
+                        url: "/user.html"
                     }]
                 }, {
                     id: "2",
                     title: "用户管理",
-                    icon: "&#xe68e;",
-                    url: "",
+                    icon: "",
                     spread: false,
                     children: [{
                         id: "12",
                         title: "子模块1",
-                        icon: "&#xe6c6;",
-                        url: "/user.page"
+                        icon: "",
+                        url: "/user.html"
                     }, {
                         id: "13",
                         title: "子模块2",
-                        icon: "&#xe63c;",
-                        url: "/user.page"
+                        icon: "",
+                        url: "/user.html"
                     }]
                 }];
 
