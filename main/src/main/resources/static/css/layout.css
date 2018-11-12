@@ -1,0 +1,143 @@
+/** 
+supplier
+version：1.5.0
+authors：Javan
+license：MIT
+*/
+.kit-layout-admin .layui-body {
+    bottom: 0 !important
+}
+
+.layui-nav-tree .layui-nav-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.layui-nav-tree .layui-nav-item.layui-this a {
+    background: #009688
+}
+
+.layui-nav-tree .layui-nav-item a.active {
+    background: #009688
+}
+
+.layui-form-checked.layui-checkbox-disbaled[lay-skin=primary] i {
+    border-color: #ccc;
+    background-color: #ccc
+}
+
+.layui-tab-content .layui-tab-item {
+    min-width: 1200px;
+    overflow-x: auto
+}
+
+.layui-nav-tree .layui-nav-child {
+    padding-left: 24px
+}
+
+.kit-sided .layui-nav-tree .layui-nav-child {
+    padding-left: 0
+}
+
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a {
+    background: none
+}
+
+.link-a {
+    color: #009688;
+    cursor: pointer
+}
+
+.clear:after {
+    content: '';
+    display: block;
+    clear: both
+}
+
+.fl {
+    float: left
+}
+
+.fr {
+    float: right
+}
+
+.text-r {
+    text-align: right
+}
+
+.ft-gray {
+    color: #808080
+}
+
+.ft-red {
+    color: #f00
+}
+
+.ft-green {
+    color: #009688
+}
+
+.ft-c {
+    text-align: center !important
+}
+
+.layui-layer-dialog .layui-layer-btn .layui-layer-btn0 {
+    border-color: #009688;
+    background-color: #009688
+}
+
+.layui-form-onswitch {
+    border-color: #009688;
+    background-color: #009688
+}
+
+.required {
+    color: #f00
+}
+
+.mt-0 {
+    margin-top: 0
+}
+
+.mb-0 {
+    margin-bottom: 0
+}
+
+.td-overflow {
+    table-layout: fixed;
+}
+
+.td-overflow .text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.td-overflow .text-overflow-line {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: #ddd;
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+    border: 2px solid #fff;
+    height: 30px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #c5c5c5
+}
+
+::-webkit-scrollbar-button {
+    display: none
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 14px
+}

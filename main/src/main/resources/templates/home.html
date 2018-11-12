@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>图书管理系统</title>
+    <meta name="name" content="Javan" />
+    <link rel="stylesheet" href="/plugins/layui/css/layui.css" th:href="@{/plugins/layui/css/layui.css}" media="all">
+    <!--<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}">-->
+    <link rel="stylesheet" th:href="@{/css/app.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/layout.css}" media="all">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin kit-layout-admin" id="layout">
+    <div class="layui-header">
+        <div class="layui-logo">图书管理系统</div>
+        <div class="layui-logo kit-logo-mobile"></div>
+        <!--<ul class="layui-nav layui-layout-left kit-nav">
+            <li class="layui-nav-item"><a href="javascript:;">控制台</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">商品管理</a></li>
+            <li class="layui-nav-item"><a href="javascript:;" id="pay"><i class="fa fa-gratipay" aria-hidden="true"></i> 捐赠我</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">邮件管理</a></dd>
+                    <dd><a href="javascript:;">消息管理</a></dd>
+                    <dd><a href="javascript:;">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>-->
+        <ul class="layui-nav layui-layout-right kit-nav">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img th:src="@{/images/logo.png}" class="layui-nav-img"> Javan
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">基本资料</a></dd>
+                    <dd><a href="javascript:;">安全设置</a></dd>
+                </dl>
+            </li>
+            <!--<li class="layui-nav-item">
+                <a href="javascript:;" @click="showMessage" id="message">
+                    <i class="fa fa-bell-o hava-message" aria-hidden="true"></i> 消息
+                    <span class="layui-badge">9</span>
+                </a>
+            </li>-->
+            <li class="layui-nav-item"><a href="javascript:;" @click="exit()"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black kit-side">
+        <div class="layui-side-scroll">
+            <div class="kit-side-fold">
+
+                <!--<i class="fa fa-navicon" aria-hidden="false"></i>-->
+            </div>
+            <!-- options={url:'main.html',icon:'&#xe658;',title:'Navbar',id:'-1'}
+            url:要打开的页面；icon:tab icon图标；title:tab标题；id:tab的唯一id(不可重复，遵守规则（一级菜单十位递增，二级在一级菜单一位递增）) -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
+
+            </ul>
+
+        </div>
+    </div>
+    <div class="layui-body" id="container">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">内容加载中,请稍等...</div>
+    </div>
+
+    <div class="layui-footer" v-if="false">
+        <!-- 底部固定区域 -->
+        2018&copy;
+        <a href="https://www.javanx.com/" target="_blank">www.javanx.com/</a> MIT license
+
+    </div>
+</div>
+<script th:src="@{/plugins/layui/layui.js}"></script>
+<script th:src="@{/plugins/vue/vue.min.js}"></script>
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>
