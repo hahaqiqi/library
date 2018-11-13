@@ -1,7 +1,6 @@
 package com.november.main.controller;
 
 import com.november.demo2.service.BillService;
-import com.november.main.service.Server;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,15 +14,12 @@ public class maincontroller {
     @RequestMapping(value = "/home.html")
     public String home(){ return "home"; }
 
-    @RequestMapping(value = "/login.html")
+    @RequestMapping(value = "/login")
     public String login(){
-        return "login";
+
+        return "redirect:/home.html";
     }
 
-    @RequestMapping(value = "/tologin.html")
-    public String tologin(){
-        return "redirets:login2.html";
-    }
 
     @RequestMapping(value = "/user.html")
     public String userPage(){
@@ -33,6 +29,11 @@ public class maincontroller {
     @RequestMapping(value = "/welcome.html")
     public String welcome(){
         return "welcome";
+    }
+
+    @RequestMapping(value = "/test1.html")
+    public String test1(){
+        return "test1";
     }
 
 

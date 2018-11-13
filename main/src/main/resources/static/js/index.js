@@ -31,7 +31,7 @@ new Vue({
             layer.confirm('您确定要退出登录吗？', {
                 btn: ['确定', '取消'] //按钮
             }, function() {
-                window.href="/logout";
+                window.location.href="/logout";
             }, function() {
 
             });
@@ -69,32 +69,80 @@ new Vue({
                     "icon": "&#xe68e;"
                 },{
                     id: "1",
-                    title: "空间管理",
-                    icon: "",
+                    title: "用户管理",
+                    icon: "&#xe770;",
                     spread: false,
                     children: [{
-                        id: "10",
-                        title: "子模块1",
+                        id: "11",
+                        title: "添加用户",
+                        icon: "&#xe671;",
+                        url: "/user.html"
+                    }, {
+                        id: "12",
+                        title: "子模块2",
+                        icon: "",
+                        url: "/user.html"
+                    }]
+                },{
+                    id: "2",
+                    title: "空间管理",
+                    icon: "&#xe632;",
+                    spread: false,
+                    children: [{
+                        id: "21",
+                        title: "添加空间",
                         icon: "",
                         url: "/user.html"
                     }, {
-                        id: "11",
+                        id: "22",
                         title: "子模块2",
                         icon: "",
                         url: "/user.html"
                     }]
                 }, {
-                    id: "2",
-                    title: "用户管理",
-                    icon: "",
+                    id: "3",
+                    title: "书籍管理",
+                    icon: "&#xe705;",
                     spread: false,
                     children: [{
-                        id: "12",
+                        id: "31",
+                        title: "添加书籍",
+                        icon: "",
+                        url: "/user.html"
+                    }, {
+                        id: "32",
+                        title: "子模块2",
+                        icon: "",
+                        url: "/user.html"
+                    }]
+                },{
+                    id: "4",
+                    title: "权限管理",
+                    icon: "&#xe605;",
+                    spread: false,
+                    children: [{
+                        id: "41",
                         title: "子模块1",
                         icon: "",
                         url: "/user.html"
                     }, {
-                        id: "13",
+                        id: "42",
+                        title: "子模块2",
+                        icon: "",
+                        url: "/user.html"
+                    }]
+                },{
+                    id: "5",
+                    title: "管理员管理",
+                    icon: "&#xe857;",
+                    spread: false,
+                    children: [{
+                        id: "51",
+                        title: "添加管理员",
+                        icon: "&#xe654;",
+                        url: "/user.html"
+                    }, {
+                        id: "52",
                         title: "子模块2",
                         icon: "",
                         url: "/user.html"
@@ -148,6 +196,7 @@ new Vue({
                 }, 100);
 
                 $(document).on('click', '.layui-nav-item a', function() {
+                    $(this).
                     $(this).addClass('active');
                     $(this).parents('.layui-nav-item').siblings().find('a').removeClass('active');
                     $(this).parents('.layui-nav-item').siblings().removeClass('layui-this');

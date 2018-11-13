@@ -6,14 +6,14 @@
     <title>图书管理系统</title>
     <meta name="name" content="Javan" />
     <link rel="stylesheet" href="/plugins/layui/css/layui.css" th:href="@{/plugins/layui/css/layui.css}" media="all">
-    <!--<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}">-->
+
     <link rel="stylesheet" th:href="@{/css/app.css}" media="all">
     <link rel="stylesheet" th:href="@{/css/layout.css}" media="all">
 </head>
 <body>
 <div class="layui-layout layui-layout-admin kit-layout-admin" id="layout">
     <div class="layui-header">
-        <div class="layui-logo">图书管理系统</div>
+        <div class="layui-logo" style="color: white">图书管理系统</div>
         <div class="layui-logo kit-logo-mobile"></div>
         <!--<ul class="layui-nav layui-layout-left kit-nav">
             <li class="layui-nav-item"><a href="javascript:;">控制台</a></li>
@@ -31,12 +31,12 @@
         <ul class="layui-nav layui-layout-right kit-nav">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img th:src="@{/images/logo.png}" class="layui-nav-img"> Javan
+                    <img th:src="@{/images/user.png}" class="layui-nav-img">&nbsp;&nbsp; user
                 </a>
-                <dl class="layui-nav-child">
+                <!--<dl class="layui-nav-child">
                     <dd><a href="javascript:;">基本资料</a></dd>
                     <dd><a href="javascript:;">安全设置</a></dd>
-                </dl>
+                </dl>-->
             </li>
             <!--<li class="layui-nav-item">
                 <a href="javascript:;" @click="showMessage" id="message">

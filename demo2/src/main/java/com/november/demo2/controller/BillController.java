@@ -21,6 +21,7 @@ public class BillController {
 	@ResponseBody
 	public List<Bill> getAllBill(){
         String a= TimeUtil.getTimr();
+        System.out.println(a);
 		return billService.getBillList();
 	}
 
