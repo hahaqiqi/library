@@ -14,6 +14,7 @@
         <option value="$PROJECT_DIR$/admin/pom.xml" />
         <option value="$PROJECT_DIR$/acl/pom.xml" />
         <option value="$PROJECT_DIR$/space/pom.xml" />
+        <option value="$PROJECT_DIR$/book/pom.xml" />
       </list>
     </option>
   </component>

@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="acl" />
         <module name="admin" />
+        <module name="book" />
         <module name="demo2" />
         <module name="main" />
         <module name="public" />
