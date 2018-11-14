@@ -1,46 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bq.dao.AclMapper" >
-  <resultMap id="BaseResultMap" type="com.bq.model.Acl" >
+<mapper namespace="com.november.acl.dao.AclModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.november.acl.model.AclModule" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="acl_name" property="aclName" jdbcType="VARCHAR" />
+    <result column="acl_module_name" property="aclModuleName" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="seq" property="seq" jdbcType="INTEGER" />
-    <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
     <result column="operator" property="operator" jdbcType="VARCHAR" />
     <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, acl_name, status, seq, type, url, operator, operate_time, remark
+    id, acl_module_name, status, seq, parent_id, level, operator, operate_time, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from acl
+    from acl_module
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from acl
+    delete from acl_module
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bq.model.Acl" >
-    insert into acl (id, acl_name, status, 
-      seq, type, url, operator, 
-      operate_time, remark)
-    values (#{id,jdbcType=INTEGER}, #{aclName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{seq,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, 
-      #{operateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.november.acl.model.AclModule" >
+    insert into acl_module (id, acl_module_name, status, 
+      seq, parent_id, level, 
+      operator, operate_time, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{aclModuleName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{seq,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{level,jdbcType=VARCHAR}, 
+      #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.bq.model.Acl" >
-    insert into acl
+  <insert id="insertSelective" parameterType="com.november.acl.model.AclModule" >
+    insert into acl_module
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="aclName != null" >
-        acl_name,
+      <if test="aclModuleName != null" >
+        acl_module_name,
       </if>
       <if test="status != null" >
         status,
@@ -48,11 +50,11 @@
       <if test="seq != null" >
         seq,
       </if>
-      <if test="type != null" >
-        type,
+      <if test="parentId != null" >
+        parent_id,
       </if>
-      <if test="url != null" >
-        url,
+      <if test="level != null" >
+        level,
       </if>
       <if test="operator != null" >
         operator,
@@ -68,8 +70,8 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="aclName != null" >
-        #{aclName,jdbcType=VARCHAR},
+      <if test="aclModuleName != null" >
+        #{aclModuleName,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -77,11 +79,11 @@
       <if test="seq != null" >
         #{seq,jdbcType=INTEGER},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
       </if>
-      <if test="url != null" >
-        #{url,jdbcType=VARCHAR},
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
       </if>
       <if test="operator != null" >
         #{operator,jdbcType=VARCHAR},
@@ -94,11 +96,11 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bq.model.Acl" >
-    update acl
+  <update id="updateByPrimaryKeySelective" parameterType="com.november.acl.model.AclModule" >
+    update acl_module
     <set >
-      <if test="aclName != null" >
-        acl_name = #{aclName,jdbcType=VARCHAR},
+      <if test="aclModuleName != null" >
+        acl_module_name = #{aclModuleName,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -106,11 +108,11 @@
       <if test="seq != null" >
         seq = #{seq,jdbcType=INTEGER},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
       </if>
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
       </if>
       <if test="operator != null" >
         operator = #{operator,jdbcType=VARCHAR},
@@ -124,13 +126,13 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bq.model.Acl" >
-    update acl
-    set acl_name = #{aclName,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.november.acl.model.AclModule" >
+    update acl_module
+    set acl_module_name = #{aclModuleName,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       seq = #{seq,jdbcType=INTEGER},
-      type = #{type,jdbcType=INTEGER},
-      url = #{url,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      level = #{level,jdbcType=VARCHAR},
       operator = #{operator,jdbcType=VARCHAR},
       operate_time = #{operateTime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
