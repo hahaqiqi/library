@@ -1,8 +1,8 @@
 create database library;
 
 use library;
-//mysql端口统一3306，用户名 root 密码 123
-//每人首先只创建自己模块的表
+-- mysql端口统一3306，用户名 root 密码 123
+-- 每人首先只创建自己模块的表
 create table if not exists user_type(
 	`id` int primary key auto_increment comment '主键id',
 	`type_name`	varchar(20) not null comment '类型名称',
