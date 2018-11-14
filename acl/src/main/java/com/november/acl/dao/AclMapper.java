@@ -1,6 +1,6 @@
 package com.november.acl.dao;
 
-import com.november.acl.model.Acl ;
+import com.november.acl.model.Acl;
 
 public interface AclMapper {
     int deleteByPrimaryKey(Integer id);

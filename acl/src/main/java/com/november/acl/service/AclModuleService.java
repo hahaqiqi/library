@@ -11,4 +11,6 @@ public interface AclModuleService {
 
     void save(AclModuleParam param);
 
+    void update(AclModuleParam param);
+
 }

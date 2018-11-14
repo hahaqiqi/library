@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.november.acl.dao.AclMapper" >
+<mapper namespace="com.bq.dao.AclMapper" >
   <resultMap id="BaseResultMap" type="com.november.acl.model.Acl" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="acl_name" property="aclName" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="seq" property="seq" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
@@ -13,7 +14,7 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, acl_name, status, seq, type, url, operator, operate_time, remark
+    id, acl_name, parent_id, status, seq, type, url, operator, operate_time, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -26,12 +27,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.november.acl.model.Acl" >
-    insert into acl (id, acl_name, status, 
-      seq, type, url, operator, 
-      operate_time, remark)
-    values (#{id,jdbcType=INTEGER}, #{aclName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{seq,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, 
-      #{operateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+    insert into acl (id, acl_name, parent_id, 
+      status, seq, type, 
+      url, operator, operate_time, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{aclName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{seq,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{url,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.november.acl.model.Acl" >
     insert into acl
@@ -41,6 +44,9 @@
       </if>
       <if test="aclName != null" >
         acl_name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
       </if>
       <if test="status != null" >
         status,
@@ -71,6 +77,9 @@
       <if test="aclName != null" >
         #{aclName,jdbcType=VARCHAR},
       </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
@@ -100,6 +109,9 @@
       <if test="aclName != null" >
         acl_name = #{aclName,jdbcType=VARCHAR},
       </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
@@ -127,6 +139,7 @@
   <update id="updateByPrimaryKey" parameterType="com.november.acl.model.Acl" >
     update acl
     set acl_name = #{aclName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       seq = #{seq,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},

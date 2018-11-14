@@ -13,42 +13,43 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 //  TODO
-
+@Slf4j
 @Controller
 @RequestMapping("/aclModule")
-@Slf4j
 public class AclModuleController {
 
     @Autowired
     private AclModuleService aclModuleService;
 
-    @RequestMapping("/acl.page")
+    @RequestMapping("/acl.html")
     public ModelAndView page() {
         return new ModelAndView("acl");
     }
 
-    @RequestMapping("/save.json")
     @ResponseBody
+    @RequestMapping("/save.json")
     public JsonData saveAclModule(AclModuleParam param) {
         aclModuleService.save(param);
         return JsonData.success();
     }
 
-    @RequestMapping("/update.json")
     @ResponseBody
+    @RequestMapping("/update.json")
     public JsonData updateAclModule(AclModuleParam param) {
+
         return JsonData.success();
     }
 
-    @RequestMapping("/tree.json")
     @ResponseBody
+    @RequestMapping("/tree.json")
     public JsonData tree() {
         return JsonData.success();
     }
 
-    @RequestMapping("/delete.json")
     @ResponseBody
+    @RequestMapping("/delete.json")
     public JsonData delete(@RequestParam("id") int id) {
         return JsonData.success();
     }
 }
+

@@ -7,6 +7,8 @@ public class Acl {
 
     private String aclName;
 
+    private Integer parentId;
+
     private Integer status;
 
     private Integer seq;
@@ -35,6 +37,14 @@ public class Acl {
 
     public void setAclName(String aclName) {
         this.aclName = aclName == null ? null : aclName.trim();
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     public Integer getStatus() {
