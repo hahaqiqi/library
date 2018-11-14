@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bq.dao.BookMapper" >
+  <resultMap id="BaseResultMap" type="com.bq.model.Book" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="book_name" property="bookName" jdbcType="VARCHAR" />
+    <result column="book_code" property="bookCode" jdbcType="VARCHAR" />
+    <result column="author_name" property="authorName" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="press_name" property="pressName" jdbcType="VARCHAR" />
+    <result column="book_type_id" property="bookTypeId" jdbcType="INTEGER" />
+    <result column="book_lease_id" property="bookLeaseId" jdbcType="INTEGER" />
+    <result column="book_loss_id" property="bookLossId" jdbcType="INTEGER" />
+    <result column="book_lease_type" property="bookLeaseType" jdbcType="INTEGER" />
+    <result column="book_chco_type" property="bookChcoType" jdbcType="INTEGER" />
+    <result column="book_space_id" property="bookSpaceId" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, book_name, book_code, author_name, price, press_name, book_type_id, book_lease_id, 
+    book_loss_id, book_lease_type, book_chco_type, book_space_id, operator, operate_time, 
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from book
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bq.model.Book" >
+    insert into book (id, book_name, book_code, 
+      author_name, price, press_name, 
+      book_type_id, book_lease_id, book_loss_id, 
+      book_lease_type, book_chco_type, book_space_id, 
+      operator, operate_time, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{bookCode,jdbcType=VARCHAR}, 
+      #{authorName,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{pressName,jdbcType=VARCHAR}, 
+      #{bookTypeId,jdbcType=INTEGER}, #{bookLeaseId,jdbcType=INTEGER}, #{bookLossId,jdbcType=INTEGER}, 
+      #{bookLeaseType,jdbcType=INTEGER}, #{bookChcoType,jdbcType=INTEGER}, #{bookSpaceId,jdbcType=INTEGER}, 
+      #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bq.model.Book" >
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bookName != null" >
+        book_name,
+      </if>
+      <if test="bookCode != null" >
+        book_code,
+      </if>
+      <if test="authorName != null" >
+        author_name,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="pressName != null" >
+        press_name,
+      </if>
+      <if test="bookTypeId != null" >
+        book_type_id,
+      </if>
+      <if test="bookLeaseId != null" >
+        book_lease_id,
+      </if>
+      <if test="bookLossId != null" >
+        book_loss_id,
+      </if>
+      <if test="bookLeaseType != null" >
+        book_lease_type,
+      </if>
+      <if test="bookChcoType != null" >
+        book_chco_type,
+      </if>
+      <if test="bookSpaceId != null" >
+        book_space_id,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bookName != null" >
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookCode != null" >
+        #{bookCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authorName != null" >
+        #{authorName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="pressName != null" >
+        #{pressName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookTypeId != null" >
+        #{bookTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="bookLeaseId != null" >
+        #{bookLeaseId,jdbcType=INTEGER},
+      </if>
+      <if test="bookLossId != null" >
+        #{bookLossId,jdbcType=INTEGER},
+      </if>
+      <if test="bookLeaseType != null" >
+        #{bookLeaseType,jdbcType=INTEGER},
+      </if>
+      <if test="bookChcoType != null" >
+        #{bookChcoType,jdbcType=INTEGER},
+      </if>
+      <if test="bookSpaceId != null" >
+        #{bookSpaceId,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bq.model.Book" >
+    update book
+    <set >
+      <if test="bookName != null" >
+        book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookCode != null" >
+        book_code = #{bookCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authorName != null" >
+        author_name = #{authorName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="pressName != null" >
+        press_name = #{pressName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookTypeId != null" >
+        book_type_id = #{bookTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="bookLeaseId != null" >
+        book_lease_id = #{bookLeaseId,jdbcType=INTEGER},
+      </if>
+      <if test="bookLossId != null" >
+        book_loss_id = #{bookLossId,jdbcType=INTEGER},
+      </if>
+      <if test="bookLeaseType != null" >
+        book_lease_type = #{bookLeaseType,jdbcType=INTEGER},
+      </if>
+      <if test="bookChcoType != null" >
+        book_chco_type = #{bookChcoType,jdbcType=INTEGER},
+      </if>
+      <if test="bookSpaceId != null" >
+        book_space_id = #{bookSpaceId,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bq.model.Book" >
+    update book
+    set book_name = #{bookName,jdbcType=VARCHAR},
+      book_code = #{bookCode,jdbcType=VARCHAR},
+      author_name = #{authorName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      press_name = #{pressName,jdbcType=VARCHAR},
+      book_type_id = #{bookTypeId,jdbcType=INTEGER},
+      book_lease_id = #{bookLeaseId,jdbcType=INTEGER},
+      book_loss_id = #{bookLossId,jdbcType=INTEGER},
+      book_lease_type = #{bookLeaseType,jdbcType=INTEGER},
+      book_chco_type = #{bookChcoType,jdbcType=INTEGER},
+      book_space_id = #{bookSpaceId,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bq.dao.BookCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.bq.model.BookCode" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="book_price_min" property="bookPriceMin" jdbcType="INTEGER" />
+    <result column="book_price_max" property="bookPriceMax" jdbcType="INTEGER" />
+    <result column="book_price" property="bookPrice" jdbcType="DOUBLE" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, book_price_min, book_price_max, book_price, operator, operate_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from book_code
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from book_code
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bq.model.BookCode" >
+    insert into book_code (id, book_price_min, book_price_max, 
+      book_price, operator, operate_time, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{bookPriceMin,jdbcType=INTEGER}, #{bookPriceMax,jdbcType=INTEGER}, 
+      #{bookPrice,jdbcType=DOUBLE}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bq.model.BookCode" >
+    insert into book_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bookPriceMin != null" >
+        book_price_min,
+      </if>
+      <if test="bookPriceMax != null" >
+        book_price_max,
+      </if>
+      <if test="bookPrice != null" >
+        book_price,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bookPriceMin != null" >
+        #{bookPriceMin,jdbcType=INTEGER},
+      </if>
+      <if test="bookPriceMax != null" >
+        #{bookPriceMax,jdbcType=INTEGER},
+      </if>
+      <if test="bookPrice != null" >
+        #{bookPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bq.model.BookCode" >
+    update book_code
+    <set >
+      <if test="bookPriceMin != null" >
+        book_price_min = #{bookPriceMin,jdbcType=INTEGER},
+      </if>
+      <if test="bookPriceMax != null" >
+        book_price_max = #{bookPriceMax,jdbcType=INTEGER},
+      </if>
+      <if test="bookPrice != null" >
+        book_price = #{bookPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bq.model.BookCode" >
+    update book_code
+    set book_price_min = #{bookPriceMin,jdbcType=INTEGER},
+      book_price_max = #{bookPriceMax,jdbcType=INTEGER},
+      book_price = #{bookPrice,jdbcType=DOUBLE},
+      operator = #{operator,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
