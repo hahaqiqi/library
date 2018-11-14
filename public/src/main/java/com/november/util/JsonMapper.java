@@ -12,6 +12,7 @@ import org.codehaus.jackson.type.TypeReference;
  * @author skrT
  * @create 2018/10/29 17:24
  */
+//  转换json工具
 @Slf4j
 public class JsonMapper {
 
