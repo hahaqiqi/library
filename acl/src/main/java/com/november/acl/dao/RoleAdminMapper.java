@@ -1,6 +1,7 @@
-package com.bq.dao;
+package com.november.acl.dao;
 
-import com.bq.model.RoleAdmin;
+
+import com.november.acl.model.RoleAdmin;
 
 public interface RoleAdminMapper {
     int deleteByPrimaryKey(Integer id);

@@ -1,6 +1,6 @@
-package com.bq.dao;
+package com.november.acl.dao;
 
-import com.bq.model.AclModule;
+import com.november.acl.model.AclModule;
 
 public interface AclModuleMapper {
     int deleteByPrimaryKey(Integer id);

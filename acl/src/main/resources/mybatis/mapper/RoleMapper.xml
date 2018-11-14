@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bq.dao.RoleAclMapper" >
-  <resultMap id="BaseResultMap" type="com.bq.model.RoleAcl" >
+<mapper namespace="com.november.acl.dao.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.november.acl.model.Role" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="acl_id" property="aclId" jdbcType="INTEGER" />
-    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="operator" property="operator" jdbcType="VARCHAR" />
     <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, acl_id, role_id, operator, operate_time, remark
+    id, role_name, status, operator, operate_time, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from role_acl
+    from role
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from role_acl
+    delete from role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bq.model.RoleAcl" >
-    insert into role_acl (id, acl_id, role_id, 
+  <insert id="insert" parameterType="com.november.acl.model.Role" >
+    insert into role (id, role_name, status, 
       operator, operate_time, remark
       )
-    values (#{id,jdbcType=INTEGER}, #{aclId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.bq.model.RoleAcl" >
-    insert into role_acl
+  <insert id="insertSelective" parameterType="com.november.acl.model.Role" >
+    insert into role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="aclId != null" >
-        acl_id,
+      <if test="roleName != null" >
+        role_name,
       </if>
-      <if test="roleId != null" >
-        role_id,
+      <if test="status != null" >
+        status,
       </if>
       <if test="operator != null" >
         operator,
@@ -56,11 +56,11 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="aclId != null" >
-        #{aclId,jdbcType=INTEGER},
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null" >
-        #{roleId,jdbcType=INTEGER},
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="operator != null" >
         #{operator,jdbcType=VARCHAR},
@@ -73,14 +73,14 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bq.model.RoleAcl" >
-    update role_acl
+  <update id="updateByPrimaryKeySelective" parameterType="com.november.acl.model.Role" >
+    update role
     <set >
-      <if test="aclId != null" >
-        acl_id = #{aclId,jdbcType=INTEGER},
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null" >
-        role_id = #{roleId,jdbcType=INTEGER},
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="operator != null" >
         operator = #{operator,jdbcType=VARCHAR},
@@ -94,10 +94,10 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bq.model.RoleAcl" >
-    update role_acl
-    set acl_id = #{aclId,jdbcType=INTEGER},
-      role_id = #{roleId,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.november.acl.model.Role" >
+    update role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
       operator = #{operator,jdbcType=VARCHAR},
       operate_time = #{operateTime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
