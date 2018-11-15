@@ -103,4 +103,27 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getAll" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM role
+  </select>
+
+  <select id="countByAclName" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM role
+    WHERE aclName = #{aclName}
+    <if test="id != null">
+      AND id != #{id}
+    </if>
+  </select>
+
+  <select id="getByIdList" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM role
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
 </mapper>

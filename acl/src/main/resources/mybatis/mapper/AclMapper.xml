@@ -149,4 +149,48 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="countByNameAndParentId" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM acl
+    WHERE parentId = #{parentId}
+    AND acl_name = #{aclName}
+    <if test="id != null">
+      AND id != #{id}
+    </if>
+  </select>
+
+  <select id="countByParentId" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM acl
+    WHERE parentId = #{parentId}
+  </select>
+
+  <select id="getPageByParentId" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM acl
+    WHERE parentId = #{parentId}
+    ORDER BY seq ASC, name ASC
+    limit #{page.offset}, #{page.pageSize}
+  </select>
+
+  <select id="getAll" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM acl
+  </select>
+
+  <select id="getByIdList" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM acl
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
+
+  <select id="getByUrl" parameterType="string" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM acl
+    WHERE url = #{url} <!-- url is not null and url != '' and  #{url} REGEXP url-->
+  </select>
 </mapper>

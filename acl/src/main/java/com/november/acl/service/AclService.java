@@ -1,69 +1,20 @@
 package com.november.acl.service;
 
-import com.google.common.base.Preconditions;
+import com.november.acl.model.Acl;
 import com.november.acl.param.AclParam;
-import com.november.common.RequestHolder;
-import com.november.exception.ParamException;
-import com.november.util.BeanValidator;
-import org.springframework.stereotype.Service;
+import com.november.util.PageQuery;
+import com.november.util.PageResult;
 
-import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+/**
+ * @author skrT
+ * @create 2018/11/15 8:29
+ */
+public interface AclService {
 
-@Service
-public class AclService {
-/*
-    public void save(AclParam param) {
-        BeanValidator.check(param);
-        if (checkExist(param.getAclModuleId(), param.getName(), param.getId())) {
-            throw new ParamException("当前权限模块下面存在相同名称的权限点");
-        }
-        SysAcl acl = SysAcl.builder().name(param.getName()).aclModuleId(param.getAclModuleId()).url(param.getUrl())
-                .type(param.getType()).status(param.getStatus()).seq(param.getSeq()).remark(param.getRemark()).build();
-        acl.setCode(generateCode());
-        acl.setOperator(RequestHolder.getCurrentUser().getUsername());
-        acl.setOperateTime(new Date());
-        acl.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
-        sysAclMapper.insertSelective(acl);
-        sysLogService.saveAclLog(null, acl);
-    }
+    void save(AclParam param);
 
-    public void update(AclParam param) {
-        BeanValidator.check(param);
-        if (checkExist(param.getAclModuleId(), param.getName(), param.getId())) {
-            throw new ParamException("当前权限模块下面存在相同名称的权限点");
-        }
-        SysAcl before = sysAclMapper.selectByPrimaryKey(param.getId());
-        Preconditions.checkNotNull(before, "待更新的权限点不存在");
+    void update(AclParam param);
 
-        SysAcl after = SysAcl.builder().id(param.getId()).name(param.getName()).aclModuleId(param.getAclModuleId()).url(param.getUrl())
-                .type(param.getType()).status(param.getStatus()).seq(param.getSeq()).remark(param.getRemark()).build();
-        after.setOperator(RequestHolder.getCurrentUser().getUsername());
-        after.setOperateTime(new Date());
-        after.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
+    PageResult<Acl> getPageByAclModuleId(int parentId, PageQuery page);
 
-        sysAclMapper.updateByPrimaryKeySelective(after);
-        sysLogService.saveAclLog(before, after);
-    }
-
-    public boolean checkExist(int aclModuleId, String name, Integer id) {
-        return sysAclMapper.countByNameAndAclModuleId(aclModuleId, name, id) > 0;
-    }
-
-    public String generateCode() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-        return dateFormat.format(new Date()) + "_" + (int)(Math.random() * 100);
-    }
-
-    public PageResult<SysAcl> getPageByAclModuleId(int aclModuleId, PageQuery page) {
-        BeanValidator.check(page);
-        int count = sysAclMapper.countByAclModuleId(aclModuleId);
-        if (count > 0) {
-            List<SysAcl> aclList = sysAclMapper.getPageByAclModuleId(aclModuleId, page);
-            return PageResult.<SysAcl>builder().data(aclList).total(count).build();
-        }
-        return PageResult.<SysAcl>builder().build();
-    }*/
 }

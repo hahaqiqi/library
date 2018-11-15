@@ -2,6 +2,9 @@ package com.november.acl.dao;
 
 
 import com.november.acl.model.Role;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RoleMapper {
     int deleteByPrimaryKey(Integer id);
@@ -15,4 +18,10 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+    List<Role> getAll();
+
+    int countByAclName(@Param("aclName") String aclName, @Param("id") Integer id);
+
+    List<Role> getByIdList(@Param("idList") List<Integer> idList);
 }

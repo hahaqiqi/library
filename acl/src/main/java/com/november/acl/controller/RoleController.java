@@ -1,9 +1,9 @@
 package com.november.acl.controller;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.november.acl.param.RoleParam;
+import com.november.acl.service.RoleService;
 import com.november.common.JsonData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,31 +11,34 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 //  TODO
-
+@Slf4j
 @Controller
 @RequestMapping("/role")
 public class RoleController {
+
+    @Resource(name = "roleService")
+    private RoleService roleService;
 
     @RequestMapping("role.page")
     public ModelAndView page() {
         return new ModelAndView("role");
     }
 
-    @RequestMapping("/save.json")
     @ResponseBody
+    @RequestMapping("/save.json")
     public JsonData saveRole(RoleParam param) {
+        log.info("角色开始添加了,param:{}",param);
+        roleService.save(param);
         return JsonData.success();
     }
 
-    @RequestMapping("/update.json")
     @ResponseBody
+    @RequestMapping("/update.json")
     public JsonData updateRole(RoleParam param) {
+        log.info("角色开始修改了,param:{}",param);
+        roleService.update(param);
         return JsonData.success();
     }
 

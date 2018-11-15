@@ -1,7 +1,14 @@
 package com.november.acl.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role {
     private Integer id;
 
