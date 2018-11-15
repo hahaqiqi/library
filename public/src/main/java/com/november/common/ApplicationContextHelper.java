@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
  */
 
 //  可获取ioc容器中组件
-@Component(value = "applicationContextHelper")
-@Lazy(value = false)
 public class ApplicationContextHelper implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;

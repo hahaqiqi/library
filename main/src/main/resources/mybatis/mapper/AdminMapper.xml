@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bq.dao.AdminMapper" >
-  <resultMap id="BaseResultMap" type="com.bq.model.Admin" >
+<mapper namespace="com.november.main.dao.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.november.model.Admin" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="admin_code" property="adminCode" jdbcType="VARCHAR" />
     <result column="admin_pwd" property="adminPwd" jdbcType="VARCHAR" />
@@ -27,7 +27,7 @@
     delete from admin
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bq.model.Admin" >
+  <insert id="insert" parameterType="com.november.model.Admin" >
     insert into admin (id, admin_code, admin_pwd, 
       admin_name, admin_role, birthday, 
       id_card, operator, operate_time, 
@@ -37,7 +37,7 @@
       #{idCard,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.bq.model.Admin" >
+  <insert id="insertSelective" parameterType="com.november.model.Admin" >
     insert into admin
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -104,7 +104,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bq.model.Admin" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.november.model.Admin" >
     update admin
     <set >
       <if test="adminCode != null" >
@@ -137,7 +137,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bq.model.Admin" >
+  <update id="updateByPrimaryKey" parameterType="com.november.model.Admin" >
     update admin
     set admin_code = #{adminCode,jdbcType=VARCHAR},
       admin_pwd = #{adminPwd,jdbcType=VARCHAR},
@@ -150,4 +150,11 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getAdminByAdminCode" resultType="com.november.model.Admin">
+    select
+    <include refid="Base_Column_List" />
+    from admin
+    where admin_code = #{adminCode}
+  </select>
 </mapper>

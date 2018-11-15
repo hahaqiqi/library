@@ -1,4 +1,4 @@
-package com.bq.model;
+package com.november.model;
 
 import java.util.Date;
 
