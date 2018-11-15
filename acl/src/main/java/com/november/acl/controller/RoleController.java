@@ -21,7 +21,7 @@ public class RoleController {
     @Resource(name = "roleService")
     private RoleService roleService;
 
-    @RequestMapping("role.page")
+    @RequestMapping("role.html")
     public ModelAndView page() {
         return new ModelAndView("role");
     }

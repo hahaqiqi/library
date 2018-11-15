@@ -24,7 +24,7 @@ public class AclModuleController {
     private AclModuleService aclModuleService;
 
     @RequestMapping("/acl.html")
-    public ModelAndView page() {
+    public ModelAndView aclPage() {
         return new ModelAndView("acl");
     }
 
@@ -32,7 +32,7 @@ public class AclModuleController {
     @RequestMapping("/save.json")
     public JsonData saveAclModule(AclModuleParam param) {
         //  日志输出
-        log.info("开始权限模块添加,param:{}",param);
+        log.info("开始权限模块添加,param:{}", param);
         aclModuleService.save(param);
         return JsonData.success();
     }
@@ -41,7 +41,7 @@ public class AclModuleController {
     @RequestMapping("/update.json")
     public JsonData updateAclModule(AclModuleParam param) {
         //  日志输出
-        log.info("开始权限模块修改,param:{}",param);
+        log.info("开始权限模块修改,param:{}", param);
         aclModuleService.update(param);
         return JsonData.success();
     }

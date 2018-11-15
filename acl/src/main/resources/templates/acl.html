@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>权限页</title>
+</head>
+<link rel="stylesheet" href="../layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+<body>
+    <div class="layui-fluid" style="margin-top: 20px;">
+        <div class="layui-row">
+            <div class="layui-col-md3">
+                <div class="layui-card" style="width: 100%;">
+
+                    <div class="layui-card-header layui-bg-green" style="height: 50px;line-height: 50px;">
+                        <div class="layui-row" style="text-indent: 30px;">
+                            <div class="layui-col-md5">
+                                <span style="font-size: 20px; font-weight: bold;">权限模块</span>
+                            </div>
+                            <div class="layui-col-md2 layui-col-md-offset4">
+                                <i id="aclModule-add" class="layui-icon" style="opacity:0.6;">&#xe608;</i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-card-body">
+                        <div class="layui-collapse">
+                            <div class="layui-colla-item">
+                                <h2 class="layui-colla-title">杜甫</h2>
+                                <div class="layui-colla-content layui-show">内容区域</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md8 layui-col-md-offset1">
+                <div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="../static/js/jquery-1.9.1.min.js" th:src="@{/js/jquery-1.9.1.min.js}"></script>
+<script src="../layui/layui.all.js" th:src="@{/layui/layui.all.js}"></script>
+<script>
+    ;!function(){
+        //无需再执行layui.use()方法加载模块，直接使用即可
+        var form = layui.form
+            ,layer = layui.layer;
+
+        layer.msg("aaa");
+
+        $(function(){
+            $("#aclModule-add").hover(function (){
+                $(this).css({opacity:"1",transition:"opacity 1s"});
+            },function (){
+                $(this).css({opacity:"0.6",transition:"opacity 1s"});
+            });
+        })
+
+    }();
+</script>
+<style>
+    #aclModule-add:hover{
+        cursor: pointer;
+    }
+</style>
+</body>
+</html>
