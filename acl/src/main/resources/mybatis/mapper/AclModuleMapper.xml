@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bq.dao.AclModuleMapper" >
-  <resultMap id="BaseResultMap" type="com.bq.model.AclModule" >
+<mapper namespace="com.november.acl.dao.AclModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.november.acl.model.AclModule" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="acl_module_name" property="aclModuleName" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
@@ -25,7 +25,7 @@
     delete from acl_module
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bq.model.AclModule" >
+  <insert id="insert" parameterType="com.november.acl.model.AclModule" >
     insert into acl_module (id, acl_module_name, status, 
       seq, parent_id, level, 
       operator, operate_time, remark
@@ -35,7 +35,7 @@
       #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.bq.model.AclModule" >
+  <insert id="insertSelective" parameterType="com.november.acl.model.AclModule" >
     insert into acl_module
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -96,7 +96,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bq.model.AclModule" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.november.acl.model.AclModule" >
     update acl_module
     <set >
       <if test="aclModuleName != null" >
@@ -126,7 +126,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bq.model.AclModule" >
+  <update id="updateByPrimaryKey" parameterType="com.november.acl.model.AclModule" >
     update acl_module
     set acl_module_name = #{aclModuleName,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
@@ -138,4 +138,43 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getChildAclModuleListByLevel" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from acl_module
+    WHERE level like #{level} || '.%'
+  </select>
+
+  <update id="batchUpdateLevel" parameterType="map">
+    <foreach collection="aclModuleList" item="aclModule" separator=";">
+      UPDATE acl_module
+      SET level = #{aclModule.level}
+      WHERE id = #{aclModule.id}
+    </foreach>
+  </update>
+
+  <select id="countByNameAndParentId" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM acl_module
+    WHERE name = #{name}
+    <if test="parentId != null">
+      AND parent_id = #{parentId}
+    </if>
+    <if test="id != null">
+      AND id != #{id}
+    </if>
+  </select>
+
+  <select id="getAllAclModule" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM acl_module
+  </select>
+
+  <select id="countByParentId" parameterType="int" resultType="int">
+    SELECT count(1)
+    FROM acl_module
+    WHERE parent_id = #{parentId}
+  </select>
+
 </mapper>
