@@ -43,12 +43,21 @@ public class SpringExceptionResolver implements HandlerExceptionResolver {
     }
 
     private String deletePrefix(String msg) {
-        if (StringUtils.isNoneBlank(msg)) {
-            int start = msg.indexOf("{");
+        if (StringUtils.isNotBlank(msg)) {
+            int left = msg.indexOf("{");
             int end = msg.indexOf("=");
-            if (start > -1 && end > 0) {
-                String prefix = msg.substring(start+1, end+1);
-                msg = msg.replace(prefix,"");
+            int right = msg.indexOf("}");
+            if (left > -1) {
+                msg = msg.replace("{", "");
+            }
+            if (right > -1) {
+                msg = msg.replace("}", "");
+            }
+            if (end > -1) {
+                msg = msg.substring(end);
+                if (msg.indexOf("=") > -1) {
+                    deletePrefix(msg);
+                }
             }
         }
         return msg;

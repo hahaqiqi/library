@@ -1,6 +1,6 @@
 package com.november.common;
 
-import com.november.model.CodeEnum;
+import com.november.model.CodeType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,14 +40,14 @@ public class JsonData {
         JsonData jsonData = new JsonData(true);
         jsonData.setData(data);
         jsonData.setMsg(msg);
-        jsonData.setCode(CodeEnum.SUCCESS);
+        jsonData.setCode(CodeType.SUCCESS);
         return jsonData;
     }
 
     public static JsonData success(Object data){
         JsonData jsonData = new JsonData(true);
         jsonData.setData(data);
-        jsonData.setCode(CodeEnum.SUCCESS);
+        jsonData.setCode(CodeType.SUCCESS);
         return jsonData;
     }
 
@@ -55,7 +55,7 @@ public class JsonData {
         JsonData jsonData = new JsonData(true);
         jsonData.setData(data);
         jsonData.setCount(count);
-        jsonData.setCode(CodeEnum.SUCCESS);
+        jsonData.setCode(CodeType.SUCCESS);
         return jsonData;
     }
 
@@ -66,7 +66,7 @@ public class JsonData {
     public static JsonData fail(String msg){
         JsonData jsonData = new JsonData(false);
         jsonData.setMsg(msg);
-        jsonData.setCode(CodeEnum.FAIL);
+        jsonData.setCode(CodeType.FAIL);
         return jsonData;
     }
 
