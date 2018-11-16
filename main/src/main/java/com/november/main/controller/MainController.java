@@ -26,6 +26,7 @@ public class MainController {
     @RequestMapping(value = "/home.html")
     public String home(){ return "home"; }
 
+    @ResponseBody
     @RequestMapping(value = "/login.json")
     public JsonData login(LoginParam param, HttpServletRequest request){
         Admin admin = loginService.login(param);

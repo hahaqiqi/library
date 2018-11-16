@@ -21,7 +21,7 @@ public interface RoleMapper {
 
     List<Role> getAll();
 
-    int countByAclName(@Param("aclName") String aclName, @Param("id") Integer id);
+    int countByRoleName(@Param("roleName") String roleName, @Param("id") Integer id);
 
     List<Role> getByIdList(@Param("idList") List<Integer> idList);
 }

@@ -2,10 +2,8 @@ package com.november.acl.controller;
 
 import com.november.acl.param.AclModuleParam;
 import com.november.acl.service.AclModuleService;
-import com.november.acl.service.AclModuleServiceImpl;
 import com.november.common.JsonData;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,11 +20,6 @@ public class AclModuleController {
 
     @Resource(name = "aclModuleService")
     private AclModuleService aclModuleService;
-
-    @RequestMapping("/acl.html")
-    public ModelAndView aclPage() {
-        return new ModelAndView("acl");
-    }
 
     @ResponseBody
     @RequestMapping("/save.json")

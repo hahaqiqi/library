@@ -109,10 +109,10 @@
     FROM role
   </select>
 
-  <select id="countByAclName" parameterType="map" resultType="int">
+  <select id="countByRoleName" parameterType="map" resultType="int">
     SELECT count(1)
     FROM role
-    WHERE aclName = #{aclName}
+    WHERE role_name = #{roleName}
     <if test="id != null">
       AND id != #{id}
     </if>

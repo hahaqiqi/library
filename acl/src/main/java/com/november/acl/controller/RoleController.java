@@ -1,5 +1,6 @@
 package com.november.acl.controller;
 
+import com.november.acl.model.Role;
 import com.november.acl.param.RoleParam;
 import com.november.acl.service.RoleService;
 import com.november.common.JsonData;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 //  TODO
 @Slf4j
@@ -24,6 +26,11 @@ public class RoleController {
     @RequestMapping("role.html")
     public ModelAndView page() {
         return new ModelAndView("role");
+    }
+
+    @RequestMapping("test.html")
+    public ModelAndView test1(){
+        return new ModelAndView("test");
     }
 
     @ResponseBody
@@ -45,7 +52,8 @@ public class RoleController {
     @RequestMapping("/list.json")
     @ResponseBody
     public JsonData list() {
-        return JsonData.success();
+        List<Role> roleList = roleService.getAll();
+        return JsonData.success(roleList);
     }
 
     @RequestMapping("/roleTree.json")
