@@ -106,9 +106,9 @@ new Vue({
                     spread: false,
                     children: [{
                         id: "31",
-                        title: "添加书籍",
+                        title: "添加书籍类型",
                         icon: "",
-                        url: "/user.html"
+                        url: "/bookType/bookType.html"
                     }, {
                         id: "32",
                         title: "子模块2",

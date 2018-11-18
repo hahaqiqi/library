@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all"/>
+    <script src="/layui/layui.js"></script>
+</head>
+<body>
+<table class="layui-table" lay-data="{height:315, url:'/bookType/list2.json', page:true, id:'test'}" lay-filter="test">
+    <thead>
+    <tr>
+        <!--type: 'checkbox', fixed: 'left'-->
+        <th lay-data="{field:'id', width:80, sort: true}">ID</th>
+        <th lay-data="{field:'typeName', width:80}">书籍类型</th>
+        <th lay-data="{field:'operator', width:80, sort: true}">创建人</th>
+        <th lay-data="{field:'operateTime'}">创建时间</th>
+    </tr>
+    </thead>
+</table>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+
+<script>
+    layui.config({
+        version: '1541881042991' //为了更新 js 缓存，可忽略
+    });
+
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
+        var laydate = layui.laydate //日期
+            ,laypage = layui.laypage //分页
+            ,layer = layui.layer //弹层
+            ,table = layui.table //表格
+            ,slider = layui.slider //滑块
+
+        //向世界问个好
+        layer.msg('Hello World');
+
+
+        //执行一个 table 实例
+        table.render({
+
+        });
+    });
+</script>
+</body>
+</html>
