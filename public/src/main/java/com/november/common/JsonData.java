@@ -32,6 +32,8 @@ public class JsonData {
 
     private Integer count;
 
+    private Integer limit;
+
     public JsonData(boolean ret){
         this.ret = ret;
     }
@@ -51,10 +53,11 @@ public class JsonData {
         return jsonData;
     }
 
-    public static JsonData pageSuccess(Object data,Integer count){
+    public static JsonData pageSuccess(Object data,Integer count,Integer limit){
         JsonData jsonData = new JsonData(true);
         jsonData.setData(data);
         jsonData.setCount(count);
+        jsonData.setLimit(limit);
         jsonData.setCode(CodeType.SUCCESS);
         return jsonData;
     }
