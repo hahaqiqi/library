@@ -28,6 +28,11 @@ public class RoleController {
         return new ModelAndView("role");
     }
 
+    @RequestMapping("templatesTest.html")
+    public ModelAndView test2(){
+        return new ModelAndView("templatesTest");
+    }
+
     @RequestMapping("test.html")
     public ModelAndView test1(){
         return new ModelAndView("test");
