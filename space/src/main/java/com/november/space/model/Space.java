@@ -1,9 +1,15 @@
 package com.november.space.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Space {
     private Integer id;
 
