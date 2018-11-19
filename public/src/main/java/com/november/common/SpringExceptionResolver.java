@@ -54,10 +54,7 @@ public class SpringExceptionResolver implements HandlerExceptionResolver {
                 msg = msg.replace("}", "");
             }
             String[] strs = msg.split(",");
-            for (int i = 0; i < strs.length; i++) {
-                strs[i] = strs[i].substring(strs[i].indexOf("=")+1);
-            }
-            msg = StringUtils.join(strs,",");
+            msg = strs[0] = strs[0].substring(strs[0].indexOf("=")+1);;
         }
         return msg;
     }
