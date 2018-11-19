@@ -44,8 +44,8 @@ public class SpringExceptionResolver implements HandlerExceptionResolver {
 
     private String deletePrefix(String msg) {
         if (StringUtils.isNotBlank(msg)) {
+            //  {remark=备注不能为空, roleName=角色名称长度需要在2-20个字之间}
             int left = msg.indexOf("{");
-            int end = msg.indexOf("=");
             int right = msg.indexOf("}");
             if (left > -1) {
                 msg = msg.replace("{", "");
@@ -53,12 +53,11 @@ public class SpringExceptionResolver implements HandlerExceptionResolver {
             if (right > -1) {
                 msg = msg.replace("}", "");
             }
-            if (end > -1) {
-                msg = msg.substring(end);
-                if (msg.indexOf("=") > -1) {
-                    deletePrefix(msg);
-                }
+            String[] strs = msg.split(",");
+            for (int i = 0; i < strs.length; i++) {
+                strs[i] = strs[i].substring(strs[i].indexOf("=")+1);
             }
+            msg = StringUtils.join(strs,",");
         }
         return msg;
     }

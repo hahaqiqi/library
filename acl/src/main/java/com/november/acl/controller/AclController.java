@@ -52,4 +52,11 @@ public class AclController {
         return JsonData.success();
     }
 
+    @ResponseBody
+    @RequestMapping("/tree.json")
+    public JsonData aclTree(){
+        aclService.getAll();
+        return JsonData.success();
+    }
+
 }

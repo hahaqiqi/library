@@ -1,6 +1,8 @@
 package com.november.acl.controller;
 
+import com.google.common.collect.Lists;
 import com.november.acl.model.Role;
+import com.november.acl.model.TestTree;
 import com.november.acl.param.RoleParam;
 import com.november.acl.service.RoleService;
 import com.november.common.JsonData;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 //  TODO
@@ -28,14 +31,43 @@ public class RoleController {
         return new ModelAndView("role");
     }
 
+    // 测试模板
     @RequestMapping("templatesTest.html")
     public ModelAndView test2(){
         return new ModelAndView("templatesTest");
     }
 
+    //  测试页面
     @RequestMapping("test.html")
     public ModelAndView test1(){
         return new ModelAndView("test");
+    }
+
+    @ResponseBody
+    @RequestMapping("treeTest.html")
+    public ModelAndView testTree(){
+        return new ModelAndView("treeTest");
+    }
+
+    @ResponseBody
+    @RequestMapping("tree.json")
+    public JsonData getTree(){
+        List<TestTree> list = Lists.newArrayList(
+                new TestTree("用户管理","yhgl", true),
+                new TestTree("用户组管理","yhzgl", true, Lists.newArrayList(
+                        new TestTree("角色管理","yhzgl-jsgl", true,Lists.newArrayList(
+                                new TestTree("添加角色","yhzgl-jsgl-tjjs", true),
+                                new TestTree("角色列表","yhzgl-jsgl-jslb", false)
+                        )),
+                        new TestTree("管理员管理","glygl", false,Lists.newArrayList(
+                                new TestTree("添加管理员","glygl-tjgly", false),
+                                new TestTree("管理员列表","glygl-glylb", false),
+                                new TestTree("管理员管理","glygl-glylb", false)
+                        ))
+                ))
+        );
+
+        return JsonData.success(list,"获取成功");
     }
 
     @ResponseBody
@@ -51,6 +83,14 @@ public class RoleController {
     public JsonData updateRole(RoleParam param) {
         log.info("角色开始修改了,param:{}",param);
         roleService.update(param);
+        return JsonData.success();
+    }
+
+    @ResponseBody
+    @RequestMapping("/delete.json")
+    public JsonData delete(int id){
+        log.info("角色开始删除了,id:{}",id);
+        roleService.delete(id);
         return JsonData.success();
     }
 
