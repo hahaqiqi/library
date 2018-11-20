@@ -108,7 +108,7 @@ new Vue({
                         id: "31",
                         title: "添加书籍类型",
                         icon: "",
-                        url: "/bookType/bookType.html"
+                        url: "/bookType/users.html"
                     }, {
                         id: "32",
                         title: "子模块2",
