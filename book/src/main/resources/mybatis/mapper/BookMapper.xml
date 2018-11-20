@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bq.dao.BookMapper" >
-  <resultMap id="BaseResultMap" type="com.bq.model.Book" >
+<mapper namespace="com.november.book.dao.BookMapper" >
+  <resultMap id="BaseResultMap" type="com.november.book.model.Book" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="book_name" property="bookName" jdbcType="VARCHAR" />
     <result column="book_code" property="bookCode" jdbcType="VARCHAR" />
@@ -18,22 +18,48 @@
     <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
+
   <sql id="Base_Column_List" >
     id, book_name, book_code, author_name, price, press_name, book_type_id, book_lease_id, 
     book_loss_id, book_lease_type, book_chco_type, book_space_id, operator, operate_time, 
     remark
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from book
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="count" resultType="java.lang.Integer" >
+    select COUNT(1) FROM book
+  </select>
+
+  <select id="list" resultMap="BaseResultMap">
+    SELECT * FROM book
+  </select>
+
+  <select id="pageList" resultMap="BaseResultMap">
+    SELECT * FROM book LIMIT #{page},#{limit}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from book
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bq.model.Book" >
+
+  <!--批量删除-->
+  <delete id="bacthDelete" parameterType="java.util.List">
+    delete from book
+    where id
+    in
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+      #{id,jdbcType=INTEGER}
+    </foreach>
+  </delete>
+
+  <insert id="insert2" parameterType="com.november.book.model.Book" >
     insert into book (id, book_name, book_code, 
       author_name, price, press_name, 
       book_type_id, book_lease_id, book_loss_id, 
@@ -47,7 +73,40 @@
       #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.bq.model.Book" >
+
+  <!--批量添加-->
+  <insert id="batchInsert" parameterType="java.util.List"  useGeneratedKeys="true">
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into book
+    (
+    book_name, book_code, author_name, price, press_name, book_type_id, book_lease_id,
+    book_loss_id, book_lease_type, book_chco_type, book_space_id, operator,
+    remark
+    )
+    value
+      <foreach collection="list" item="params" index="index" separator=",">
+        (
+        #{params.bookName,jdbcType=VARCHAR},
+        #{params.bookCode,jdbcType=VARCHAR},
+        #{params.authorName,jdbcType=VARCHAR},
+        #{params.price,jdbcType=DOUBLE},
+        #{params.pressName,jdbcType=VARCHAR},
+        #{params.bookTypeId,jdbcType=INTEGER},
+        #{params.bookLeaseId,jdbcType=INTEGER},
+        #{params.bookLossId,jdbcType=INTEGER},
+        #{params.bookLeaseType,jdbcType=INTEGER},
+        #{params.bookChcoType,jdbcType=INTEGER},
+        #{params.bookSpaceId,jdbcType=INTEGER},
+        #{params.operator,jdbcType=VARCHAR},
+        #{params.remark,jdbcType=VARCHAR}
+        )
+      </foreach>
+
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.november.book.model.Book" >
     insert into book
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -144,7 +203,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bq.model.Book" >
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.november.book.model.Book" >
     update book
     <set >
       <if test="bookName != null" >
@@ -192,7 +252,8 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bq.model.Book" >
+
+  <update id="updateByPrimaryKey" parameterType="com.november.book.model.Book" >
     update book
     set book_name = #{bookName,jdbcType=VARCHAR},
       book_code = #{bookCode,jdbcType=VARCHAR},
@@ -210,4 +271,17 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--批量添加-->
+  <insert id="insert" parameterType="java.util.List"  useGeneratedKeys="true">
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+      SELECT LAST_INSERT_ID() </selectKey>
+    insert into description ( dataname, dataexplain, type, name, add_date ) values
+
+    <foreach collection="list" item="params" index="index" separator=",">
+    ( #{params.dataname,jdbcType=VARCHAR}, #{params.dataexplain,jdbcType=VARCHAR}, #{params.type,jdbcType=VARCHAR}, #{params.name,jdbcType=VARCHAR}, curdate())
+
+    </foreach>
+  </insert>
+
 </mapper>

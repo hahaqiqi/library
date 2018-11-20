@@ -12,12 +12,12 @@
     <script th:src="@{/spop-0.1.3/dist/spop.js}"></script>
     <style>
         .layui-form-label{
-            width: 90px;
+            width: 120px;
         }
     </style>
 </head>
 <body>
-<table class="layui-table" lay-data="{ url:'/bookType/list.json', page:true, id:'test',toolbar: 'default',done:function(res, curr, count){ pageCh(res, curr, count) }}" lay-filter="test">
+<table class="layui-table" lay-data="{ url:'/bookType/list.json', page:true, id:'test',toolbar: '#headTemplate',done:function(res, curr, count){ pageCh(res, curr, count) }}" lay-filter="test">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', width:40}"></th>
@@ -71,6 +71,24 @@
     </form>
 
 
+</script>
+
+<script id="headTemplate" type="text/html">
+    <div class="layui-table-tool-temp">
+        <div class="layui-inline" lay-event="add">
+            <i class="layui-icon layui-icon-add-1"></i>
+        </div>
+        <div class="layui-inline" lay-event="update">
+            <i class="layui-icon layui-icon-edit"></i>
+        </div>
+        <div class="layui-inline" lay-event="delete">
+            <i class="layui-icon layui-icon-delete"></i>
+        </div>
+        <div class="layui-inline" lay-event="refresh">
+            <i class="layui-icon layui-icon-refresh"></i>
+        </div>
+
+    </div>
 </script>
 
 </body>
