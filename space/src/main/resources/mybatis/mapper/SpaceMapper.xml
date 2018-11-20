@@ -115,12 +115,17 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectList" resultType="com.november.space.model.Space">
-    select * from Space
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+      *
+    from
+      Space
+      where parent_id=#{parentid}
   </select>
 
   <select id="selectByparentid" resultType="int">
     select COUNT(1) from Space where parent_id=#{parentid} AND space_name=#{parentName}
   </select>
+
 
 </mapper>

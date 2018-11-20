@@ -26,22 +26,25 @@ public class SpaceController {
     @RequestMapping("/save.json")
     public JsonData save(SpaceParam record){
         log.info("开始添加空间",record);
-        spaceser.insert(record);
-        return JsonData.success();
+        spaceser.insert(record);//
+        return JsonData.success();//
     }
-
-    @RequestMapping("/list.html")
-    public String save (){
+    @ResponseBody
+    @RequestMapping("/list.json")
+    public JsonData ParamList(){
         List<Space> spaceList=spaceser.selectList();
         log.info("开始查询空间",spaceList);
-        return "Parentspace";
+        return JsonData.success(spaceList);
     }
 
     @ResponseBody
     @RequestMapping("/update.json")
     public JsonData update(SpaceParam record){
         log.info("开始修改空间",record);
-        spaceser.updateByPrimaryKey(record);
+        int a= spaceser.updateByPrimaryKey(record);
+        System.out.println(a);
         return JsonData.success();
     }
+
+
 }
