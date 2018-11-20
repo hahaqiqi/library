@@ -14,6 +14,24 @@ function createTime(v) {
     var str = y + "-" + m + "-" + d + " " + h + ":" + M+":"+s;
     return str;
 }
+function getBookType(bid) {
+    var typeName="没有此类型";
+    layui.use('jquery', function() {
+        var $=layui.$;
+        $.ajax({
+            url: '/bookType/select.json',
+            data: {"id": bid.bookTypeId},
+            async: false,
+            type: 'GET',
+            success: function (result) {
+                if(result.data!=null){
+                    typeName= result.data.typeName;
+                }
+            }
+        });
+    });
+    return typeName;
+}
 
 var pageOldMax;
 var sliderPage;
@@ -83,14 +101,14 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         var checkStatus = table.checkStatus(obj.config.id)
             ,data = checkStatus.data; //获取选中的数据
         switch(obj.event){
-            case 'add':
+           /* case 'add':
                 var viewdata = { //数据
                     "bookTypeName":""
                     ,"remark":""
                     ,"submitType":1
                 }
                 showBookTypeInfo("新增",viewdata);
-                break;
+                break;*/
             case 'update':
                 if(data.length === 0){
                     layer.msg('请选择一行');
@@ -100,10 +118,17 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                     //layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
                     editObj=checkStatus.data[0];
                     var viewdata = { //数据
-                        "bookTypeName":data[0].typeName
+                        "bookName":data[0].bookName
+                        ,"bookCode":data[0].bookCode
+                        ,"authorName":data[0].authorName
+                        ,"price":data[0].price
+                        ,"pressName":data[0].pressName
+                        ,"bookTypeId":data[0].bookTypeId
+                        ,"bookChcoType":data[0].bookChcoType
+                        ,"bookSpaceId":data.bookSpaceId
                         ,"remark":data[0].remark
-                        ,"submitType":2
                         ,"id":data[0].id
+                        ,"submitType":1
                     }
                     showBookTypeInfo("编辑",viewdata);
                 }
@@ -149,7 +174,14 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             ,layEvent = obj.event; //获得 lay-event 对应的值
         if(layEvent === 'detail'){
             var viewdata = { //数据
-                "bookTypeName":data.typeName
+                "bookName":data.bookName
+                ,"bookCode":data.bookCode
+                ,"authorName":data.authorName
+                ,"price":data.price
+                ,"pressName":data.pressName
+                ,"bookTypeId":data.bookTypeId
+                ,"bookChcoType":data.bookChcoType
+                ,"bookSpaceId":data.bookSpaceId
                 ,"remark":data.remark
                 ,"submitType":0
             }
@@ -169,10 +201,17 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         } else if(layEvent === 'edit'){
             editObj=data;
             var viewdata = { //数据
-                "bookTypeName":data.typeName
+                "bookName":data.bookName
+                ,"bookCode":data.bookCode
+                ,"authorName":data.authorName
+                ,"price":data.price
+                ,"pressName":data.pressName
+                ,"bookTypeId":data.bookTypeId
+                ,"bookChcoType":data.bookChcoType
+                ,"bookSpaceId":data.bookSpaceId
                 ,"remark":data.remark
-                ,"submitType":2
                 ,"id":data.id
+                ,"submitType":1
             }
             showBookTypeInfo("编辑",viewdata);
         }
@@ -190,29 +229,30 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             view.innerHTML = html;
         });
         layer.open({
-            title: showTitleType+'图书类型',
+            title: showTitleType+'图书',
             type: 1,
             content: $("#view"),
             shade: 0,
-            area: '350px',
+            area: '380px',
             success:function(){
                 //监听提交数据
-                //submitType 0为查看，=1为新增，2为编辑
                 $('#submitBookType').on("click",function(){
-                    var submitType=$(this).attr("submitType");
                     $.ajax({
-                        url: submitType==1 ? '/bookType/save.json' : '/bookType/update.json',
-                        data: $("#bookTypeForm").serializeArray(),
+                        url: '/book/update.json',
+                        data: $("#bookForm").serializeArray(),
                         type: 'POST',
                         success: function (result) {
                             if (result.ret) {
-                                spopSucess(submitType==1?"添加成功":"修改成功");
+                                spopSucess("修改成功");
                                 layer.close(layer.index);
                                 $(".layui-laypage-btn")[0].click();
                                 $("#view").html("");
                             } else {
-                                spopFail(submitType==1?"添加失败":"修改失败",result.msg);
+                                spopFail("修改失败",result.msg);
                             }
+                        },
+                        error:function () {
+                            spopFail("修改失败","请检查参数");
                         }
                     });
                 });
@@ -253,6 +293,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         });
         return delSuccessCount;
     }
+
 
 
 

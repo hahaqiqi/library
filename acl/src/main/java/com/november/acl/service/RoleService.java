@@ -1,5 +1,6 @@
 package com.november.acl.service;
 
+import com.november.acl.model.Acl;
 import com.november.acl.model.Role;
 import com.november.acl.param.RoleParam;
 
@@ -16,4 +17,7 @@ public interface RoleService {
     void save(RoleParam param);
 
     void update(RoleParam param);
+
+    void delete(int id);
+
 }

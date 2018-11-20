@@ -1,7 +1,14 @@
-package com.bq.model;
+package com.november.book.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Book {
     private Integer id;
 

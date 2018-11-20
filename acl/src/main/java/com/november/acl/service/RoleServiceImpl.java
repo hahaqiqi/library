@@ -8,6 +8,7 @@ import com.november.exception.ParamException;
 import com.november.util.BeanValidator;
 import com.november.util.TimeUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ public class RoleServiceImpl implements RoleService {
         roleMapper.insertSelective(role);
     }
 
+    @Transactional
     public void update(RoleParam param) {
         BeanValidator.check(param);
         if (checkExist(param.getRoleName(), param.getId())) {
@@ -45,6 +47,13 @@ public class RoleServiceImpl implements RoleService {
         after.setOperator("admin");     //  TODO
         after.setOperateTime(new Date());
         roleMapper.updateByPrimaryKeySelective(after);
+    }
+
+    @Override
+    @Transactional
+    public void delete(int id) {
+        BeanValidator.check(id);
+        roleMapper.deleteByPrimaryKey(id);
     }
 
     public List<Role> getAll() {

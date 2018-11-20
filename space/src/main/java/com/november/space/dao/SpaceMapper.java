@@ -1,7 +1,10 @@
 package com.november.space.dao;
 
+
 import com.november.space.model.Space;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SpaceMapper {
 
@@ -13,7 +16,12 @@ public interface SpaceMapper {
 
     Space selectByPrimaryKey(@Param("id") Integer id);
 
+    int selectByparentid(@Param("parentid") Integer parentid, @Param("parentName") String parentName);
+
+    List<Space> selectList();
+
     int updateByPrimaryKeySelective(Space record);
 
     int updateByPrimaryKey(Space record);
+
 }

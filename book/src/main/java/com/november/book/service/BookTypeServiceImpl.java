@@ -9,13 +9,14 @@ import com.november.util.BeanValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
 @Service(value = "bookTypeService")
 public class BookTypeServiceImpl implements BookTypeService {
 
-    @Autowired
+    @Resource
     private BookTypeMapper bookTypeMapper;
     @Override
     public int saveBookType(BookTypeParam param) {

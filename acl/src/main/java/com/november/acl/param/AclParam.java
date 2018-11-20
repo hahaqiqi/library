@@ -21,16 +21,11 @@ public class AclParam {
     @Length(min = 2, max = 20, message = "权限点名称长度需要在2-20个字之间")
     private String name;
 
-    @NotNull(message = "必须指定权限模块")
-    private Integer aclModuleId;
+    @NotNull(message = "必须指定父权限")
+    private Integer parentId;
 
     @Length(min = 6, max = 100, message = "权限点URL长度需要在6-100个字符之间")
     private String url;
-
-    @NotNull(message = "必须指定权限点的类型")
-    @Min(value = 1, message = "权限点类型不合法")
-    @Max(value = 3, message = "权限点类型不合法")
-    private Integer type;
 
     @NotNull(message = "必须指定权限点的状态")
     @Min(value = 0, message = "权限点状态不合法")
