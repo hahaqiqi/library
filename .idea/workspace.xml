@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e273508d-dedf-4665-ad83-77408191bc04" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/book/src/main/java/com/november/book/controller/BookController.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/book/src/main/java/com/november/book/dao/BookMapper.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/book/src/main/java/com/november/book/param/BookParam.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/book/src/main/java/com/november/book/service/BookService.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/book/src/main/java/com/november/book/service/BookServiceImpl.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/book/src/main/java/com/november/book/util/BookCodeUtil.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/book/src/main/resources/static/js/book.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/book/src/main/resources/static/js/bookAdd.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/book/src/main/resources/templates/book.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/book/src/main/resources/templates/bookAdd.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/java/com/november/user/controller/UserController.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/java/com/november/user/dao/UserMapper.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/java/com/november/user/dao/UserTypeMapper.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/java/com/november/user/model/User.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/java/com/november/user/model/UserType.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/java/com/november/user/param/UserParam.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/java/com/november/user/service/UserService.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/java/com/november/user/service/UserServiceImpl.java" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/mybatis/mapper/UserMapper.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/mybatis/mapper/UserTypeMapper.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/css/spop.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/js/spopUtil.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/js/users.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/css/layui.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/css/layui.mobile.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/css/modules/code.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/css/modules/laydate/default/laydate.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/css/modules/layer/default/icon-ext.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/css/modules/layer/default/icon.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/css/modules/layer/default/layer.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/css/modules/layer/default/loading-0.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/css/modules/layer/default/loading-1.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/css/modules/layer/default/loading-2.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/font/iconfont.eot" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/font/iconfont.svg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/font/iconfont.ttf" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/font/iconfont.woff" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/0.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/1.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/10.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/11.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/12.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/13.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/14.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/15.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/16.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/17.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/18.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/19.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/2.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/20.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/21.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/22.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/23.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/24.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/25.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/26.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/27.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/28.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/29.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/3.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/30.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/31.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/32.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/33.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/34.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/35.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/36.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/37.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/38.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/39.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/4.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/40.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/41.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/42.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/43.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/44.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/45.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/46.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/47.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/48.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/49.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/5.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/50.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/51.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/52.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/53.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/54.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/55.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/56.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/57.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/58.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/59.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/6.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/60.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/61.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/62.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/63.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/64.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/65.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/66.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/67.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/68.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/69.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/7.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/70.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/71.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/8.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/images/face/9.gif" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/carousel.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/code.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/colorpicker.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/element.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/flow.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/form.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/jquery.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/laydate.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/layedit.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/layer.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/laypage.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/laytpl.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/mobile.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/rate.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/slider.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/table.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/tree.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/upload.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/lay/modules/util.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/layui.all.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/layui/layui.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/.editorconfig" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/.gitignore" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/LICENSE" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/dist/spop.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/dist/spop.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/dist/spop.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/dist/spop.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/dist/spop.scss" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/gulpfile.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/index.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/package.json" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/readme.md" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/src/_normalize.scss" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/src/_prism.scss" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/src/_variables.scss" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/src/favicon.ico" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/src/index.jade" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/src/prism.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/src/scripts.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/src/scripts.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/src/styles.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/static/spop-0.1.3/src/styles.scss" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/templates/home.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/templates/save.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/main/resources/templates/users.html" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/user/src/test/java/com/november/user/ApplicationTest.java" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="$PROJECT_DIR$/book/src/main/java/com/november/book/service/BookTypeServiceImpl.java" afterPath="$PROJECT_DIR$/book/src/main/java/com/november/book/service/BookTypeServiceImpl.java" />
+      <change beforePath="$PROJECT_DIR$/book/src/main/resources/static/css/spop.css" afterPath="$PROJECT_DIR$/book/src/main/resources/static/css/spop.css" />
+      <change beforePath="$PROJECT_DIR$/book/src/main/resources/static/js/bookType.js" afterPath="$PROJECT_DIR$/book/src/main/resources/static/js/bookType.js" />
+      <change beforePath="$PROJECT_DIR$/book/src/main/resources/static/layui/lay/modules/laytpl.js" afterPath="$PROJECT_DIR$/book/src/main/resources/static/layui/lay/modules/laytpl.js" />
+      <change beforePath="$PROJECT_DIR$/book/src/main/resources/static/layui/layui.js" afterPath="$PROJECT_DIR$/book/src/main/resources/static/layui/layui.js" />
+      <change beforePath="$PROJECT_DIR$/book/src/main/resources/templates/bookType.html" afterPath="$PROJECT_DIR$/book/src/main/resources/templates/bookType.html" />
+      <change beforePath="$PROJECT_DIR$/book/src/test/java/com/november/book/test.java" afterPath="$PROJECT_DIR$/book/src/test/java/com/november/book/test.java" />
+      <change beforePath="$PROJECT_DIR$/generator/src/com/bq/mapper/BookMapper.xml" afterPath="$PROJECT_DIR$/book/src/main/resources/mybatis/mapper/BookMapper.xml" />
+      <change beforePath="$PROJECT_DIR$/generator/src/com/bq/model/Book.java" afterPath="$PROJECT_DIR$/book/src/main/java/com/november/book/model/Book.java" />
+      <change beforePath="$PROJECT_DIR$/library.iml" afterPath="$PROJECT_DIR$/library.iml" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/resources/static/js/index.js" afterPath="$PROJECT_DIR$/main/src/main/resources/static/js/index.js" />
+      <change beforePath="$PROJECT_DIR$/main/src/main/resources/static/spop-0.1.3/gulpfile.js" afterPath="$PROJECT_DIR$/main/src/main/resources/static/spop-0.1.3/gulpfile.js" />
+      <change beforePath="$PROJECT_DIR$/user/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/user/src/main/resources/application.properties" />
+    </list>
+    <ignored path="$PROJECT_DIR$/user/target/" />
+    <ignored path="$PROJECT_DIR$/demo2/target/" />
+    <ignored path="$PROJECT_DIR$/public/target/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="$PROJECT_DIR$/acl/target/" />
+    <ignored path="$PROJECT_DIR$/book/target/" />
+    <ignored path="$PROJECT_DIR$/main/target/" />
+    <ignored path="$PROJECT_DIR$/admin/target/" />
+    <ignored path="$PROJECT_DIR$/space/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="SpaceController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/controller/SpaceController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="281">
+              <caret line="34" column="45" lean-forward="false" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpaceMapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/dao/SpaceMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="21" column="64" lean-forward="false" selection-start-line="21" selection-start-column="64" selection-end-line="21" selection-end-column="64" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpaceService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/service/SpaceService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="155">
+              <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpaceServiceimpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/service/SpaceServiceimpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-432">
+              <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+              <folding>
+                <element signature="e#1756#1757#0" expanded="true" />
+                <element signature="e#1807#1808#0" expanded="true" />
+                <element signature="e#2432#2433#0" expanded="true" />
+                <element signature="e#2489#2490#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="library.iml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/library.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="10" column="14" lean-forward="true" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="compiler.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="81">
+              <caret line="3" column="30" lean-forward="false" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpaceMapper.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/space/src/main/resources/mybatis/mapper/SpaceMapper.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="297">
+              <caret line="122" column="33" lean-forward="false" selection-start-line="122" selection-start-column="33" selection-end-line="122" selection-end-column="33" />
+              <folding>
+                <marker date="1542678921062" expanded="true" signature="993:1094" ph="select from space" />
+                <marker date="1542678921062" expanded="true" signature="1181:1236" ph="delete from space... " />
+                <marker date="1542678921062" expanded="true" signature="1324:1653" ph="insert into space... " />
+                <marker date="1542678921062" expanded="true" signature="3056:3712" ph="update space... " />
+                <marker date="1542678921062" expanded="true" signature="3812:4148" ph="update space... " />
+                <marker date="1542678921062" expanded="true" signature="4219:4254" ph="select * fro... Space" />
+                <marker date="1542678921062" expanded="true" signature="4219:4261" ph="select * fro... Space" />
+                <marker date="1542678921062" expanded="true" signature="4219:4288" ph="select * fro... Space" />
+                <marker date="1542678921062" expanded="true" signature="4356:4439" ph="select COUNT... Space" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/space/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/space/pom.xml" />
+        <option value="$PROJECT_DIR$/space/src/main/java/com/november/space/param/SpaceParam.java" />
+        <option value="$PROJECT_DIR$/space/src/main/resources/templates/Parentspace.html" />
+        <option value="$PROJECT_DIR$/space/src/main/resources/mybatis/mapper/SpaceMapper.xml" />
+        <option value="$PROJECT_DIR$/space/src/main/java/com/november/space/controller/SpaceController.java" />
+        <option value="$PROJECT_DIR$/space/src/main/java/com/november/space/service/SpaceService.java" />
+        <option value="$PROJECT_DIR$/space/src/main/java/com/november/space/dao/SpaceMapper.java" />
+        <option value="$PROJECT_DIR$/space/src/main/java/com/november/space/service/SpaceServiceimpl.java" />
+        <option value="$PROJECT_DIR$/.idea/compiler.xml" />
+        <option value="$PROJECT_DIR$/library.iml" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="10" />
+    <option name="y" value="20" />
+    <option name="width" value="1346" />
+    <option name="height" value="688" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="library" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="library" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth2" value="75" />
+    <property name="RequestMappingsPanelOrder2" value="2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\IDEAandGitHub\library\space\src\main\resources\static\layui" />
+      <recent name="D:\IDEAandGitHub\library\space\src\main\resources\static\layui\css" />
+      <recent name="D:\IDEAandGitHub\library\space\src\main" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.SpaceApplication">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
+    <configuration name="AclApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.november.acl.AclApplication" />
+      <module name="acl" />
+      <envs />
+    </configuration>
+    <configuration name="AdminApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.november.admin.AdminApplication" />
+      <module name="admin" />
+      <envs />
+    </configuration>
+    <configuration name="BookApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.november.book.BookApplication" />
+      <module name="book" />
+      <envs />
+    </configuration>
+    <configuration name="Demo2Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.november.demo2.Demo2Application" />
+      <module name="demo2" />
+      <envs />
+    </configuration>
+    <configuration name="MainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.november.main.MainApplication" />
+      <module name="main" />
+      <envs />
+    </configuration>
+    <configuration name="SpaceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.november.space.SpaceApplication" />
+      <module name="space" />
+      <envs />
+    </configuration>
+    <configuration name="UserApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.november.user.UserApplication" />
+      <module name="user" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+    </configuration>
+    <list size="7">
+      <item index="0" class="java.lang.String" itemvalue="Spring Boot.UserApplication" />
+      <item index="1" class="java.lang.String" itemvalue="Spring Boot.Demo2Application" />
+      <item index="2" class="java.lang.String" itemvalue="Spring Boot.AclApplication" />
+      <item index="3" class="java.lang.String" itemvalue="Spring Boot.BookApplication" />
+      <item index="4" class="java.lang.String" itemvalue="Spring Boot.MainApplication" />
+      <item index="5" class="java.lang.String" itemvalue="Spring Boot.AdminApplication" />
+      <item index="6" class="java.lang.String" itemvalue="Spring Boot.SpaceApplication" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e273508d-dedf-4665-ad83-77408191bc04" name="Default" comment="" />
+      <created>1542594657851</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1542594657851</updated>
+      <workItem from="1542594661848" duration="4033000" />
+      <workItem from="1542599023653" duration="17477000" />
+    </task>
+    <task id="LOCAL-00001" summary="我的模块">
+      <created>1542595940600</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1542595940600</updated>
+    </task>
+    <task id="LOCAL-00002" summary="我的模块">
+      <created>1542680623322</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1542680623322</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="21510000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32879046" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42930153" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32879046" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11584327" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="我的模块" />
+    <MESSAGE value="Merge branch 'master' of https://github.com/hahaqiqi/library&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;#&#9;library.iml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/hahaqiqi/library&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;#&#9;library.iml" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="10" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/controller/SpaceController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/dao/SpaceMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="23" column="11" lean-forward="false" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/service/SpaceService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="17" column="11" lean-forward="false" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/resources/mybatis/mapper/SpaceMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2727">
+          <caret line="101" column="44" lean-forward="true" selection-start-line="101" selection-start-column="44" selection-end-line="101" selection-end-column="44" />
+          <folding>
+            <marker date="1542678921062" expanded="true" signature="993:1094" ph="select from space" />
+            <marker date="1542678921062" expanded="true" signature="1181:1236" ph="delete from space... " />
+            <marker date="1542678921062" expanded="true" signature="1324:1653" ph="insert into space... " />
+            <marker date="1542678921062" expanded="true" signature="3056:3712" ph="update space... " />
+            <marker date="1542678921062" expanded="true" signature="3812:4148" ph="update space... " />
+            <marker date="1542678921062" expanded="true" signature="4219:4254" ph="select * fro... Space" />
+            <marker date="1542678921062" expanded="true" signature="4219:4261" ph="select * fro... Space" />
+            <marker date="1542678921062" expanded="true" signature="4219:4288" ph="select * fro... Space" />
+            <marker date="1542678921062" expanded="true" signature="4356:4439" ph="select COUNT... Space" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/service/SpaceServiceimpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1080">
+          <caret line="53" column="62" lean-forward="true" selection-start-line="53" selection-start-column="62" selection-end-line="53" selection-end-column="62" />
+          <folding>
+            <element signature="e#1756#1757#0" expanded="true" />
+            <element signature="e#1807#1808#0" expanded="true" />
+            <element signature="e#2432#2433#0" expanded="true" />
+            <element signature="e#2489#2490#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/src/main/java/com/november/common/JsonData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="50" column="31" lean-forward="true" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1374#1375#0" expanded="false" />
+            <element signature="e#1415#1416#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo2/src/main/resources/templates/html1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book/src/main/java/com/november/book/controller/BookLossTypeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="53" column="8" lean-forward="false" selection-start-line="53" selection-start-column="8" selection-end-line="53" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book/src/main/java/com/november/book/param/BookTypeParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/param/SpaceParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="14" column="25" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/SpaceApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book/src/main/resources/templates/bookType.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="77" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/resources/static/layui/spop-0.1.3/src/prism.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/resources/static/layui/css/spop.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/resources/static/layui/js/bookType.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="5" column="16" lean-forward="false" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/resources/mybatis/mybatis-config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/resources/templates/Parentspace.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-165">
+          <caret line="42" column="37" lean-forward="true" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/model/Space.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-192">
+          <caret line="15" column="29" lean-forward="true" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/resources/mybatis/mapper/SpaceMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="122" column="33" lean-forward="false" selection-start-line="122" selection-start-column="33" selection-end-line="122" selection-end-column="33" />
+          <folding>
+            <marker date="1542678921062" expanded="true" signature="993:1094" ph="select from space" />
+            <marker date="1542678921062" expanded="true" signature="1181:1236" ph="delete from space... " />
+            <marker date="1542678921062" expanded="true" signature="1324:1653" ph="insert into space... " />
+            <marker date="1542678921062" expanded="true" signature="3056:3712" ph="update space... " />
+            <marker date="1542678921062" expanded="true" signature="3812:4148" ph="update space... " />
+            <marker date="1542678921062" expanded="true" signature="4219:4254" ph="select * fro... Space" />
+            <marker date="1542678921062" expanded="true" signature="4219:4261" ph="select * fro... Space" />
+            <marker date="1542678921062" expanded="true" signature="4219:4288" ph="select * fro... Space" />
+            <marker date="1542678921062" expanded="true" signature="4356:4439" ph="select COUNT... Space" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/controller/SpaceController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="34" column="45" lean-forward="false" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/service/SpaceService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/dao/SpaceMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="21" column="64" lean-forward="false" selection-start-line="21" selection-start-column="64" selection-end-line="21" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/space/src/main/java/com/november/space/service/SpaceServiceimpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-432">
+          <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+          <folding>
+            <element signature="e#1756#1757#0" expanded="true" />
+            <element signature="e#1807#1808#0" expanded="true" />
+            <element signature="e#2432#2433#0" expanded="true" />
+            <element signature="e#2489#2490#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="3" column="30" lean-forward="false" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="10" column="14" lean-forward="true" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

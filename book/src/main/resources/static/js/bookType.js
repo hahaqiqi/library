@@ -137,6 +137,9 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
                 }
                 break;
+            case 'refresh': //刷新
+                $(".layui-laypage-btn")[0].click();
+                break;
         };
     });
 

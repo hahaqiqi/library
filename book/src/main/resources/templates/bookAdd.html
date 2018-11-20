@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
+    <link th:href="@{/spop-0.1.3/dist/spop.css}" rel="stylesheet">
+    <link th:href="@{/css/spop.css}" rel="stylesheet">
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/js/bookAdd.js}"></script>
+    <script th:src="@{/js/spopUtil.js}"></script>
+    <script th:src="@{/spop-0.1.3/dist/spop.js}"></script>
+    <style>
+        .loading{display:inline-block; font-size: 30px; color: #1E9FFF;}
+        .static{font-size: 0px}
+    </style>
+</head>
+<body>
+    <form class="layui-form" action="" id="bookForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">图书名称</label>
+            <div class="layui-input-inline" style="width: 200px;">
+                <input id="bookName" type="text" name="bookName" placeholder="请输入名称" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">作者</label>
+            <div class="layui-input-inline" style="width: 200px;">
+                <input id="authorName" type="text" name="authorName" placeholder="请输入" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">价格</label>
+            <div class="layui-input-inline" style="width: 200px;">
+                <input id="price" type="text" name="price" placeholder="" autocomplete="off"
+                       class="layui-input" value="0">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">出版社</label>
+            <div class="layui-input-inline" style="width: 200px;">
+                <input id="pressName" type="text" name="pressName" placeholder="请输入" autocomplete="off"
+                       class="layui-input" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">书籍类型</label>
+                <div class="layui-input-inline">
+                    <select name="bookTypeId">
+                            <option value="1">45</option>
+                            <option value="2">46</option>
+                            <option value="3">47</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">收费方式</label>
+                <div class="layui-input-inline">
+                    <select name="bookChcoType" lay-verify="">
+                        <option value="0" selected>免费</option>
+                        <option value="1">收费</option>
+                    </select>
+                </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">数量</label>
+            <div class="layui-input-inline" style="width: 200px;">
+                <input id="count" type="text" name="count" placeholder="默认1" autocomplete="off"
+                       class="layui-input" value="1">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <textarea id="bookTypeRemark" name="remark" placeholder="请输入备注"
+                          class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block">
+                <button id="submitBook" type="button" class="layui-btn" lay-submit lay-filter="save">添加
+                </button>
+                <i id="loading" class="layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

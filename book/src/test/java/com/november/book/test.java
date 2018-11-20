@@ -2,25 +2,27 @@ package com.november.book;/*
  *
  **/
 
+import com.november.book.model.Book;
+import com.november.book.util.BookCodeUtil;
 import org.junit.Test;
 import sun.net.www.content.image.x_xpixmap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class test {
     @Test
     public void testEx(){
-        List<String> ss=new ArrayList<>();
-        ss.add("1");
-        String asads="";
-        for(int i=0;i<ss.size();i++){
-            if(i==0){
-                asads=ss.get(0);
-                continue;
-            }
-            asads=asads+","+ss.get(i);
+        for(int i=0;i<10000;i++) {
+            BookCodeUtil.getBookCode();
         }
-        System.out.println(asads);
+
+        List<Book> li=new ArrayList<>();
+        li.add(new Book());
+
+
+
+
     }
 }
