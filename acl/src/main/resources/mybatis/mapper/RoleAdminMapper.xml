@@ -103,4 +103,21 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <delete id="deleteByRoleId">
+      delete from role_admin where role_id = #{rid}
+  </delete>
+
+  <select id="getAdminIdsByRoleId" resultType="int">
+    select
+    admin_id
+    from role_admin
+    where role_id = #{rid}
+  </select>
+
+  <insert id="batchInsert" parameterType="map">
+      insert into role_admin(role_id, admin_id,operator) values
+      <foreach collection="ids" item="id" separator=",">
+        (#{rid},#{id},#{operator})
+      </foreach>
+  </insert>
 </mapper>

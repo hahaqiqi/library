@@ -79,7 +79,7 @@ layui.define(['jquery', 'form'], function(exports){
 			// 	/*console.log(childs);*/
 			// 	form.render('checkbox');
 			// });
-			
+
 			// 解决单击和双击冲突问题的 timer 变量
 			var timer = 0;
 			$(dst).find('.auth-single:first').unbind('click').on('click', '.layui-form-checkbox', function(){
@@ -91,10 +91,24 @@ layui.define(['jquery', 'form'], function(exports){
 					var checked = elem.is(':checked');
 
 					if (autochecked) {
+                        var flag = true;
 						if (checked) {
 							/*查找child的前边一个元素，并将里边的checkbox选中状态改为true。*/
-							elem.parents('.auth-child').prev().find('input[type="checkbox"]').prop('checked', true);
-						}
+                            var divs = elem.parent().parent().siblings();
+                            for(var i=0;i<divs.length;i++){
+                            	var a = $(divs[i]).children("div:first").children("input[type='checkbox']").prop("checked");
+                            	if(!a){
+                            	    flag = false;
+                                }
+							}
+                        }else{
+						    flag = false;
+                        }
+                        if(flag){
+                            elem.parent().parent().parent().parent().prev().find('input[type="checkbox"]').prop('checked', true);
+                        }else{
+                            elem.parent().parent().parent().parent().prev().find('input[type="checkbox"]').prop('checked', false);
+                        }
 						var childs = elem.parent().next().find('input[type="checkbox"]').prop('checked', checked);
 					}
 					if (autoclose) {

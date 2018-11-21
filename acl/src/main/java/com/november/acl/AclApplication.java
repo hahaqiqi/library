@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
-@SpringBootApplication
-@MapperScan("com.november.acl.dao")
+@SpringBootApplication()
+@MapperScan(value = "com.november.acl.dao")
 @ComponentScan("com.november")
 public class AclApplication {
 

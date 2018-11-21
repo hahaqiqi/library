@@ -1,5 +1,6 @@
 package com.november.acl.service;
 
+import com.november.acl.dto.AclDto;
 import com.november.acl.model.Acl;
 import com.november.acl.param.AclParam;
 import com.november.util.PageQuery;
@@ -19,6 +20,8 @@ public interface AclService {
 
     PageResult<Acl> getPageByAclModuleId(int parentId, PageQuery page);
 
-    List<Acl> getAll();
+    List<AclDto> getAll(int rid);
+
+    void changeAcl(String idStr,int rid);
 
 }

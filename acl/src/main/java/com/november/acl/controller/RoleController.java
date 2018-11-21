@@ -1,12 +1,17 @@
 package com.november.acl.controller;
 
 import com.google.common.collect.Lists;
+import com.november.acl.dto.AdminDto;
 import com.november.acl.model.Role;
 import com.november.acl.model.TestTree;
 import com.november.acl.param.RoleParam;
+import com.november.acl.service.RoleAdminService;
 import com.november.acl.service.RoleService;
 import com.november.common.JsonData;
+import com.november.model.Admin;
+import com.november.util.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +30,9 @@ public class RoleController {
 
     @Resource(name = "roleService")
     private RoleService roleService;
+
+    @Resource
+    private RoleAdminService roleAdminService;
 
     @RequestMapping("role.html")
     public ModelAndView page() {
@@ -47,6 +55,11 @@ public class RoleController {
     @RequestMapping("treeTest.html")
     public ModelAndView testTree(){
         return new ModelAndView("treeTest");
+    }
+
+    @RequestMapping("selectTest.html")
+    public ModelAndView testSelect(){
+        return new ModelAndView("selectFormTest");
     }
 
     @ResponseBody
@@ -107,21 +120,21 @@ public class RoleController {
         return JsonData.success();
     }
 
-    @RequestMapping("/changeAcls.json")
     @ResponseBody
-    public JsonData changeAcls(@RequestParam("roleId") int roleId, @RequestParam(value = "aclIds", required = false, defaultValue = "") String aclIds) {
+    @RequestMapping("/changeAdmin.json")
+    public JsonData changeAdmin(String idStr,int rid) {
+        roleAdminService.changeAdmin(idStr,rid);
         return JsonData.success();
     }
 
-    @RequestMapping("/changeUsers.json")
     @ResponseBody
-    public JsonData changeUsers(@RequestParam("roleId") int roleId, @RequestParam(value = "userIds", required = false, defaultValue = "") String userIds) {
-        return JsonData.success();
+    @RequestMapping("/packAdminList.json")
+    public JsonData packAdminList(String str,int rid){
+        //  [{"id":1,"adminCode":"admin","adminPwd":"123","adminName":"张三","adminRole":null,"birthday":"2018-11-15T19:25:23.000+0800","idCard":"5464651689431","operator":"admin","operateTime":"2018-11-15T19:26:27.000+0800","remark":null},{"id":2,"adminCode":"jack","adminPwd":"123","adminName":"李四","adminRole":null,"birthday":"2018-11-21T08:41:39.000+0800","idCard":"16516519561316516","operator":"admin","operateTime":"2018-11-21T08:41:53.000+0800","remark":null},{"id":3,"adminCode":"nick","adminPwd":"123","adminName":"王老五","adminRole":null,"birthday":"2018-11-06T08:42:12.000+0800","idCard":"1651951","operator":"admin","operateTime":"2018-11-21T08:42:21.000+0800","remark":null}]
+        List<Admin> list = JsonMapper.string2Obj(str, new TypeReference<List<Admin>>() {
+        });
+        List<AdminDto> dtoList = roleAdminService.packAdminList(list, rid);
+        return JsonData.success(dtoList);
     }
 
-    @RequestMapping("/users.json")
-    @ResponseBody
-    public JsonData users(@RequestParam("roleId") int roleId) {
-        return JsonData.success();
-    }
 }
