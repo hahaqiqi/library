@@ -51,16 +51,22 @@ public class SpaceServiceimpl implements SpaceService {
         查询
      */
     public List<Space> selectList(){
-        List<Space> listSpace=new ArrayList<>();
-        for(Space li:getSpaceByPid(-1)){
-            listSpace.add(li);
-        }
-
-        return null;
+        List<Space> listSpace=spacemapper.selectList(0);
+        listSpace= forListSpace(0,listSpace.size(),listSpace);
+        return listSpace;
     }
 
-    public List<Space> getSpaceByPid(Integer pid){
-        return  spacemapper.selectList(pid);
+    public List<Space> forListSpace(int start,int end,List<Space> listSpace){
+        for(int i=start;i<end;i++){
+            List<Space> newList=spacemapper.selectList(listSpace.get(i).getId());
+            for (Space space : newList) {
+                listSpace.add(space);
+            }
+        }
+        if(end!=listSpace.size()){
+            forListSpace(end,listSpace.size(),listSpace);
+        }
+        return listSpace;
     }
 
     /*
