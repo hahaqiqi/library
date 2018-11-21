@@ -22,6 +22,9 @@ public class SpaceController {
     @Resource(name = "spaceService")
     private SpaceService spaceser;
 
+    @RequestMapping("/space.html")
+    public String toSpace(){return "Parentspace"; };
+
     @ResponseBody
     @RequestMapping("/save.json")
     public JsonData save(SpaceParam record){
