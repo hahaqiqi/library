@@ -1,10 +1,10 @@
 package com.november.main.service;
 
+import com.november.admin.dao.AdminMapper;
 import com.november.common.RequestHolder;
 import com.november.exception.ParamException;
-import com.november.main.dao.AdminMapper;
 import com.november.main.param.LoginParam;
-import com.november.model.Admin;
+import com.november.admin.model.Admin;
 import com.november.util.BeanValidator;
 import org.springframework.stereotype.Service;
 

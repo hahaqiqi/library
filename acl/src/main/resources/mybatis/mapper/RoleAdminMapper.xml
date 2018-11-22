@@ -120,4 +120,13 @@
         (#{rid},#{id},#{operator})
       </foreach>
   </insert>
+
+  <delete id="deleteByAdminId">
+      delete from role_admin where admin_id = #{adminId}
+  </delete>
+
+  <select id="countByAdminId" resultType="int">
+      select count(1) from role_admin
+      where admin_id = #{adminId}
+  </select>
 </mapper>

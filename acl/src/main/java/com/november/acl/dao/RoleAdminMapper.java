@@ -10,6 +10,8 @@ public interface RoleAdminMapper {
 
     int deleteByRoleId(@Param("rid") int rid);
 
+    int deleteByAdminId(@Param("adminId") int adminId);
+
     int insert(RoleAdmin record);
 
     int insertSelective(RoleAdmin record);
@@ -23,4 +25,6 @@ public interface RoleAdminMapper {
     List<Integer> getAdminIdsByRoleId(@Param("rid") int rid);
 
     void batchInsert(@Param("ids") List<Integer> ids,@Param("rid") int rid,@Param("operator") String operator);
+
+    int countByAdminId(@Param("adminId") int adminId);
 }

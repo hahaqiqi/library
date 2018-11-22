@@ -1,5 +1,6 @@
 package com.november.admin.service;
 
+import com.november.admin.dto.AdminDto;
 import com.november.admin.model.Admin;
 import com.november.admin.param.AdminParam;
 
@@ -17,4 +18,9 @@ public interface AdminService {
 
     List<Admin> getAll();
 
+    List<AdminDto> getPageList(int page,int limit);
+
+    int countAll();
+
+    void delete(int adminId);
 }

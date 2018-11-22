@@ -6,7 +6,6 @@
     <result column="admin_code" property="adminCode" jdbcType="VARCHAR" />
     <result column="admin_pwd" property="adminPwd" jdbcType="VARCHAR" />
     <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
-    <result column="admin_role" property="adminRole" jdbcType="INTEGER" />
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
     <result column="id_card" property="idCard" jdbcType="VARCHAR" />
     <result column="operator" property="operator" jdbcType="VARCHAR" />
@@ -14,7 +13,7 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, admin_code, admin_pwd, admin_name, admin_role, birthday, id_card, operator, operate_time, 
+    id, admin_code, admin_pwd, admin_name, birthday, id_card, operator, operate_time,
     remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -29,11 +28,11 @@
   </delete>
   <insert id="insert" parameterType="com.november.admin.model.Admin" >
     insert into admin (id, admin_code, admin_pwd, 
-      admin_name, admin_role, birthday, 
+      admin_name, birthday,
       id_card, operator, operate_time, 
       remark)
     values (#{id,jdbcType=INTEGER}, #{adminCode,jdbcType=VARCHAR}, #{adminPwd,jdbcType=VARCHAR}, 
-      #{adminName,jdbcType=VARCHAR}, #{adminRole,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{adminName,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
       #{idCard,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
@@ -51,9 +50,6 @@
       </if>
       <if test="adminName != null" >
         admin_name,
-      </if>
-      <if test="adminRole != null" >
-        admin_role,
       </if>
       <if test="birthday != null" >
         birthday,
@@ -84,9 +80,6 @@
       <if test="adminName != null" >
         #{adminName,jdbcType=VARCHAR},
       </if>
-      <if test="adminRole != null" >
-        #{adminRole,jdbcType=INTEGER},
-      </if>
       <if test="birthday != null" >
         #{birthday,jdbcType=TIMESTAMP},
       </if>
@@ -116,9 +109,6 @@
       <if test="adminName != null" >
         admin_name = #{adminName,jdbcType=VARCHAR},
       </if>
-      <if test="adminRole != null" >
-        admin_role = #{adminRole,jdbcType=INTEGER},
-      </if>
       <if test="birthday != null" >
         birthday = #{birthday,jdbcType=TIMESTAMP},
       </if>
@@ -142,7 +132,6 @@
     set admin_code = #{adminCode,jdbcType=VARCHAR},
       admin_pwd = #{adminPwd,jdbcType=VARCHAR},
       admin_name = #{adminName,jdbcType=VARCHAR},
-      admin_role = #{adminRole,jdbcType=INTEGER},
       birthday = #{birthday,jdbcType=TIMESTAMP},
       id_card = #{idCard,jdbcType=VARCHAR},
       operator = #{operator,jdbcType=VARCHAR},
@@ -153,5 +142,21 @@
 
   <select id="getAll" resultMap="BaseResultMap">
       select <include refid="Base_Column_List" /> from admin
+  </select>
+
+  <select id="countAll" resultType="int">
+      select count(1) from admin
+  </select>
+
+  <select id="getPageList" resultMap="BaseResultMap" parameterType="map">
+      select <include refid="Base_Column_List" /> from admin
+      limit #{page},#{limit}
+  </select>
+
+  <select id="getAdminByAdminCode" resultType="com.november.model.Admin">
+    select
+    <include refid="Base_Column_List" />
+    from admin
+    where admin_code = #{adminCode}
   </select>
 </mapper>

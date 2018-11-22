@@ -31,6 +31,7 @@
             <artifactId>public</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!-- 运行Main时需注释 -->
         <dependency>
             <groupId>com.november</groupId>
             <artifactId>admin</artifactId>

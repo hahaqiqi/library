@@ -11,8 +11,6 @@ public class Admin {
 
     private String adminName;
 
-    private Integer adminRole;
-
     private Date birthday;
 
     private String idCard;
@@ -53,14 +51,6 @@ public class Admin {
 
     public void setAdminName(String adminName) {
         this.adminName = adminName == null ? null : adminName.trim();
-    }
-
-    public Integer getAdminRole() {
-        return adminRole;
-    }
-
-    public void setAdminRole(Integer adminRole) {
-        this.adminRole = adminRole;
     }
 
     public Date getBirthday() {

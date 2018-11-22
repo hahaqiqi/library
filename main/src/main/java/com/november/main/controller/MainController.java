@@ -1,12 +1,13 @@
 package com.november.main.controller;
 
+import com.november.admin.model.Admin;
 import com.november.common.JsonData;
 import com.november.common.RequestHolder;
 import com.november.demo2.service.BillService;
 import com.november.main.param.LoginParam;
 import com.november.main.service.LoginService;
-import com.november.model.Admin;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,7 +31,9 @@ public class MainController {
     @RequestMapping(value = "/login.json")
     public JsonData login(LoginParam param, HttpServletRequest request){
         Admin admin = loginService.login(param);
-        RequestHolder.add(admin);
+        com.november.model.Admin copyAdmin = new com.november.model.Admin();
+        BeanUtils.copyProperties(admin,copyAdmin);
+        RequestHolder.add(copyAdmin);
         RequestHolder.add(request);
         return JsonData.success();
     }
