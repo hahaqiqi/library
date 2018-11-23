@@ -24,14 +24,6 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.november.space.model.Space" >
-    insert into space (id, space_name, parent_id, 
-      level, operator, operate_time, 
-      remark)
-    values (#{id,jdbcType=INTEGER}, #{spaceName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
-      #{level,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
-      #{remark,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.november.space.model.Space" >
     insert into space
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -120,11 +112,15 @@
       *
     from
       Space
-      where parent_id=#{parentid}
+      where parent_id=#{parentId}
   </select>
 
   <select id="selectByparentid" resultType="int">
     select COUNT(1) from Space where parent_id=#{parentid} AND space_name=#{parentName}
+  </select>
+
+  <select id="selectIdandParentId" resultMap="BaseResultMap">
+    select * from Space where parent_id=#{parentid}
   </select>
 
 

@@ -11,9 +11,7 @@ public interface SpaceMapper {
 
     int deleteByPrimaryKey(@Param("id") Integer id);//根据ID删除
 
-    int insert(Space record);//添加空间
-
-    int insertSelective(Space record);//添加空间
+    int insert(Space record);//添加父空间
 
     Space selectByPrimaryKey(@Param("id") Integer id);//查询空间
 
@@ -23,6 +21,7 @@ public interface SpaceMapper {
 
     int updateByPrimaryKeySelective(Space record);//修改空间
 
-    int updateByPrimaryKey(Space record);//修改空间
+    List<Space> selectIdandParentId(@Param("parentid") Integer parentid);
+
 
 }

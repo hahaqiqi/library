@@ -25,13 +25,15 @@ public class SpaceController {
     @RequestMapping("/space.html")
     public String toSpace(){return "Parentspace"; };
 
+
     @ResponseBody
     @RequestMapping("/save.json")
     public JsonData save(SpaceParam record){
         log.info("开始添加空间",record);
-        spaceser.insert(record);//
-        return JsonData.success();//
+        spaceser.insert(record);
+        return JsonData.success();
     }
+
     @ResponseBody
     @RequestMapping("/list.json")
     public JsonData ParamList(){
@@ -43,9 +45,15 @@ public class SpaceController {
     @ResponseBody
     @RequestMapping("/update.json")
     public JsonData update(SpaceParam record){
-        log.info("开始修改空间",record);
-        int a= spaceser.updateByPrimaryKey(record);
-        System.out.println(a);
+        log.info("开始编辑空间",record);
+        spaceser.updateByPrimaryKeySelective(record);
+        return JsonData.success();
+    }
+
+    @ResponseBody
+    @RequestMapping("/delete.json")
+    public JsonData delete(@RequestParam(value = "id") Integer id){
+        spaceser.deleteByPrimaryKey(id);
         return JsonData.success();
     }
 

@@ -5,12 +5,13 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Space {
+public class Space implements Serializable{
     private Integer id;
 
     private String spaceName;
