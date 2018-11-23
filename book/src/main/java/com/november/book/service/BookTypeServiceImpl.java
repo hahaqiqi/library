@@ -27,7 +27,9 @@ public class BookTypeServiceImpl implements BookTypeService {
             throw new ParamException("已经有相同的图书类型名");
         }
         //将BookTypeParam中的值放入BookType
-        BookType bookType=BookType.builder().typeName(param.getTypeName()).remark(param.getRemark()).build();
+        BookType bookType=BookType.builder()
+                .typeName(param.getTypeName())
+                .remark(param.getRemark()).build();
         //加入自动插入的值，比如当时的管理员
         bookType.setOperator("admin");
         //bookType.setOperator(当前登录管理员的用户名);

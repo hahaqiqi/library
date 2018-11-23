@@ -1,12 +1,16 @@
 package com.november.acl.service;
 
 import com.google.common.base.Preconditions;
+import com.november.acl.dao.RoleAclMapper;
+import com.november.acl.dao.RoleAdminMapper;
 import com.november.acl.dao.RoleMapper;
 import com.november.acl.model.Role;
 import com.november.acl.param.RoleParam;
+import com.november.admin.dao.AdminMapper;
 import com.november.exception.ParamException;
 import com.november.util.BeanValidator;
 import com.november.util.TimeUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +24,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Resource
     private RoleMapper roleMapper;
+
+    @Resource
+    private RoleAdminMapper roleAdminMapper;
+
+    @Resource
+    private RoleAclMapper roleAclMapper;
 
     public void save(RoleParam param) {
         BeanValidator.check(param);
@@ -53,7 +63,12 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     public void delete(int id) {
         BeanValidator.check(id);
+        List<Integer> adminIdsByRoleId = roleAdminMapper.getAdminIdsByRoleId(id);
+        if(CollectionUtils.isNotEmpty(adminIdsByRoleId)){
+            throw new ParamException("该角色下还有管理员");
+        }
         roleMapper.deleteByPrimaryKey(id);
+        roleAclMapper.deleteByRoleId(id);
     }
 
     public List<Role> getAll() {

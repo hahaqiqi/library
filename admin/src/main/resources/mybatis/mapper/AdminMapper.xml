@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.november.main.dao.AdminMapper" >
-  <resultMap id="BaseResultMap" type="com.november.model.Admin" >
+<mapper namespace="com.november.admin.dao.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.november.admin.model.Admin" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="admin_code" property="adminCode" jdbcType="VARCHAR" />
     <result column="admin_pwd" property="adminPwd" jdbcType="VARCHAR" />
     <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
-    <result column="admin_role" property="adminRole" jdbcType="INTEGER" />
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
     <result column="id_card" property="idCard" jdbcType="VARCHAR" />
     <result column="operator" property="operator" jdbcType="VARCHAR" />
@@ -14,7 +13,7 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, admin_code, admin_pwd, admin_name, admin_role, birthday, id_card, operator, operate_time, 
+    id, admin_code, admin_pwd, admin_name, birthday, id_card, operator, operate_time,
     remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -27,17 +26,17 @@
     delete from admin
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.november.model.Admin" >
+  <insert id="insert" parameterType="com.november.admin.model.Admin" >
     insert into admin (id, admin_code, admin_pwd, 
-      admin_name, admin_role, birthday, 
+      admin_name, birthday,
       id_card, operator, operate_time, 
       remark)
     values (#{id,jdbcType=INTEGER}, #{adminCode,jdbcType=VARCHAR}, #{adminPwd,jdbcType=VARCHAR}, 
-      #{adminName,jdbcType=VARCHAR}, #{adminRole,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{adminName,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
       #{idCard,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.november.model.Admin" >
+  <insert id="insertSelective" parameterType="com.november.admin.model.Admin" >
     insert into admin
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -51,9 +50,6 @@
       </if>
       <if test="adminName != null" >
         admin_name,
-      </if>
-      <if test="adminRole != null" >
-        admin_role,
       </if>
       <if test="birthday != null" >
         birthday,
@@ -84,9 +80,6 @@
       <if test="adminName != null" >
         #{adminName,jdbcType=VARCHAR},
       </if>
-      <if test="adminRole != null" >
-        #{adminRole,jdbcType=INTEGER},
-      </if>
       <if test="birthday != null" >
         #{birthday,jdbcType=TIMESTAMP},
       </if>
@@ -104,7 +97,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.november.model.Admin" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.november.admin.model.Admin" >
     update admin
     <set >
       <if test="adminCode != null" >
@@ -115,9 +108,6 @@
       </if>
       <if test="adminName != null" >
         admin_name = #{adminName,jdbcType=VARCHAR},
-      </if>
-      <if test="adminRole != null" >
-        admin_role = #{adminRole,jdbcType=INTEGER},
       </if>
       <if test="birthday != null" >
         birthday = #{birthday,jdbcType=TIMESTAMP},
@@ -137,12 +127,11 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.november.model.Admin" >
+  <update id="updateByPrimaryKey" parameterType="com.november.admin.model.Admin" >
     update admin
     set admin_code = #{adminCode,jdbcType=VARCHAR},
       admin_pwd = #{adminPwd,jdbcType=VARCHAR},
       admin_name = #{adminName,jdbcType=VARCHAR},
-      admin_role = #{adminRole,jdbcType=INTEGER},
       birthday = #{birthday,jdbcType=TIMESTAMP},
       id_card = #{idCard,jdbcType=VARCHAR},
       operator = #{operator,jdbcType=VARCHAR},
@@ -150,6 +139,19 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getAll" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List" /> from admin
+  </select>
+
+  <select id="countAll" resultType="int">
+      select count(1) from admin
+  </select>
+
+  <select id="getPageList" resultMap="BaseResultMap" parameterType="map">
+      select <include refid="Base_Column_List" /> from admin
+      limit #{page},#{limit}
+  </select>
 
   <select id="getAdminByAdminCode" resultType="com.november.model.Admin">
     select

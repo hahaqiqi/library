@@ -1,0 +1,4 @@
+.spop--info, .spop--error, .spop--warning, .spop--success{
+    background-color: #c2c6e0;
+    border-radius: 10px;
+}

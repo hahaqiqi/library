@@ -1,7 +1,7 @@
 package com.november.main.service;
 
 import com.november.main.param.LoginParam;
-import com.november.model.Admin;
+import com.november.admin.model.Admin;
 
 /**
  * @author skrT

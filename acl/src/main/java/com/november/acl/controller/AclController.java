@@ -1,5 +1,7 @@
 package com.november.acl.controller;
 
+import com.google.common.collect.Lists;
+import com.november.acl.dto.AclDto;
 import com.november.acl.param.AclParam;
 import com.november.acl.service.AclService;
 import com.november.common.JsonData;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 //  TODO
 @Slf4j
@@ -21,7 +24,7 @@ public class AclController {
     @Resource(name = "aclService")
     private AclService aclService;
 
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping("/save.json")
     public JsonData saveAclModule(AclParam param) {
         //  后台日志输出
@@ -37,26 +40,21 @@ public class AclController {
         log.info("开始进行权限点修改,param:{}", param);
         aclService.update(param);
         return JsonData.success();
-    }
-
-    @RequestMapping("/page.json")
-    @ResponseBody
-    public JsonData list(@RequestParam("parentId") Integer parentId, PageQuery page) {
-        log.info("开始进行分页查询,parentId:{},param:{}", parentId, page);
-        return JsonData.success(aclService.getPageByAclModuleId(parentId, page));
-    }
-
-    @RequestMapping("acls.json")
-    @ResponseBody
-    public JsonData acls(@RequestParam("aclId") int aclId) {
-        return JsonData.success();
-    }
+    }*/
 
     @ResponseBody
     @RequestMapping("/tree.json")
-    public JsonData aclTree(){
-        aclService.getAll();
-        return JsonData.success();
+    public JsonData aclTree(int rid){
+        //  后台日志输出
+        log.info("开始获取权限点集合,rid:{}", rid);
+        List<AclDto> aclTree = aclService.getAll(rid);
+        return JsonData.success(aclTree);
     }
 
+    @ResponseBody
+    @RequestMapping("/changeAcl.json")
+    public JsonData changeRoleAcl(String idStr,int rid){
+        aclService.changeAcl(idStr,rid);
+        return JsonData.success();
+    }
 }

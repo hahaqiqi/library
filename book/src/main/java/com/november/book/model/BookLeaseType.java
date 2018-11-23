@@ -4,19 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookLossType {
+public class BookLeaseType  implements Serializable {
     private Integer id;
 
     private String typeName;
 
     private Integer score;
 
-    private Integer price;
+    private Double discount;
 
     private String operator;
 
@@ -48,12 +49,12 @@ public class BookLossType {
         this.score = score;
     }
 
-    public Integer getPrice() {
-        return price;
+    public Double getDiscount() {
+        return discount;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 
     public String getOperator() {

@@ -57,6 +57,13 @@ public class BookTypeController {
         return JsonData.pageSuccess(listBookType,count,limit);
     }
 
+    @RequestMapping(value = "/listAll.json",method =RequestMethod.GET)
+    @ResponseBody
+    public JsonData listBookTypeAll(){
+        List<BookType> list=bookTypeService.listBookType();
+        return JsonData.success(list);
+    }
+
     @RequestMapping(value = "/select.json",method =RequestMethod.GET)
     @ResponseBody
     public JsonData selectBookType(Integer id){

@@ -1,38 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.november.book.dao.BookLossTypeMapper" >
-  <resultMap id="BaseResultMap" type="com.november.book.model.BookLossType" >
+<mapper namespace="com.november.book.dao.BookLeaseTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.november.book.model.BookLeaseType" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="type_name" property="typeName" jdbcType="VARCHAR" />
     <result column="score" property="score" jdbcType="INTEGER" />
-    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="discount" property="discount" jdbcType="DOUBLE" />
     <result column="operator" property="operator" jdbcType="VARCHAR" />
     <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, type_name, score, price, operator, operate_time, remark
+    id, type_name, score, discount, operator, operate_time, remark
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from book_loss_type
+    from book_lease_type
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByTypeName" resultType="java.lang.Integer" parameterType="com.november.book.param.BookLeaseTypeParam">
+    select
+    count(1)
+    from book_lease_type
+    where type_name = #{typeName}
+    <if test="id!=null">
+     AND id!=#{id}
+    </if>
+  </select>
+
+  <select id="pageList" resultMap="BaseResultMap">
+    SELECT * FROM book_lease_type LIMIT #{page},#{limit}
+  </select>
+
+  <select id="count" resultType="java.lang.Integer" >
+    select
+    COUNT(1)
+    from book_lease_type
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from book_loss_type
+    delete from book_lease_type
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.november.book.model.BookLossType" >
-    insert into book_loss_type (id, type_name, score, 
-      price, operator, operate_time, 
+  <insert id="insert" parameterType="com.november.book.model.BookLeaseType" >
+    insert into book_lease_type (id, type_name, score, 
+      discount, operator, operate_time, 
       remark)
     values (#{id,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
-      #{price,jdbcType=INTEGER}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
+      #{discount,jdbcType=DOUBLE}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.november.book.model.BookLossType" >
-    insert into book_loss_type
+  <insert id="insertSelective" parameterType="com.november.book.model.BookLeaseType" >
+    insert into book_lease_type
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -43,8 +65,8 @@
       <if test="score != null" >
         score,
       </if>
-      <if test="price != null" >
-        price,
+      <if test="discount != null" >
+        discount,
       </if>
       <if test="operator != null" >
         operator,
@@ -66,8 +88,8 @@
       <if test="score != null" >
         #{score,jdbcType=INTEGER},
       </if>
-      <if test="price != null" >
-        #{price,jdbcType=INTEGER},
+      <if test="discount != null" >
+        #{discount,jdbcType=DOUBLE},
       </if>
       <if test="operator != null" >
         #{operator,jdbcType=VARCHAR},
@@ -80,8 +102,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.november.book.model.BookLossType" >
-    update book_loss_type
+  <update id="updateByPrimaryKeySelective" parameterType="com.november.book.model.BookLeaseType" >
+    update book_lease_type
     <set >
       <if test="typeName != null" >
         type_name = #{typeName,jdbcType=VARCHAR},
@@ -89,8 +111,8 @@
       <if test="score != null" >
         score = #{score,jdbcType=INTEGER},
       </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=INTEGER},
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=DOUBLE},
       </if>
       <if test="operator != null" >
         operator = #{operator,jdbcType=VARCHAR},
@@ -104,28 +126,14 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.november.book.model.BookLossType" >
-    update book_loss_type
+  <update id="updateByPrimaryKey" parameterType="com.november.book.model.BookLeaseType" >
+    update book_lease_type
     set type_name = #{typeName,jdbcType=VARCHAR},
       score = #{score,jdbcType=INTEGER},
-      price = #{price,jdbcType=INTEGER},
+      discount = #{discount,jdbcType=DOUBLE},
       operator = #{operator,jdbcType=VARCHAR},
       operate_time = #{operateTime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <select id="getBookLossType" resultType="com.november.book.model.BookLossType">
-      SELECT * FROM book_loss_type
-      <if test="id!=null">
-        WHERE id=#{id}
-      </if>
-  </select>
-
-  <select id="checkBookLossTypeName" resultType="int">
-    SELECT COUNT(1) FROM book_loss_type WHERE type_name=#{bookLossBookTypeName}
-    <if test="id!=null">
-      AND id!=#{id}
-    </if>
-  </select>
 </mapper>

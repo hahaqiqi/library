@@ -29,6 +29,4 @@ public class Acl {
 
     private String remark;
 
-    private List<Acl> list;
-
 }

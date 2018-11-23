@@ -160,7 +160,8 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 //layer.msg("删除"+data.id);
                 //向服务端发送删除指令
                 if(deleteBookType(data.id)){
-                    obj.del(); //删除对应行（tr）的DOM结构
+                    $(".layui-laypage-btn")[0].click();
+                    //obj.del(); //删除对应行（tr）的DOM结构
                     spopSucess("删除成功");
                 }else{
                     spopFail("删除失败","该项可能已经不存在");

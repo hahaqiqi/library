@@ -103,4 +103,22 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getAclIdByRoleId" resultType="int">
+      select acl_id from role_acl
+      where role_id = #{rid}
+  </select>
+
+  <delete id="deleteByRoleId">
+    delete from role_acl
+    where role_id = #{rid}
+  </delete>
+
+  <insert id="batchInsert" parameterType="map">
+      insert into role_acl (acl_id, role_id,operator)
+      values
+      <foreach collection="ids" item="aid" separator=",">
+        (#{aid},#{rid},#{operator})
+      </foreach>
+  </insert>
 </mapper>

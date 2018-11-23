@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookType {
+public class BookType  implements Serializable {
     private Integer id;
 
     private String typeName;
