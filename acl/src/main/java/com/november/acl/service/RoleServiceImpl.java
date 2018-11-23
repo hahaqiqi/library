@@ -2,18 +2,16 @@ package com.november.acl.service;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.november.acl.commons.CacheType;
+import com.november.model.CacheType;
 import com.november.acl.dao.RedisDao;
 import com.november.acl.dao.RoleAclMapper;
 import com.november.acl.dao.RoleAdminMapper;
 import com.november.acl.dao.RoleMapper;
 import com.november.acl.model.Role;
 import com.november.acl.param.RoleParam;
-import com.november.admin.dao.AdminMapper;
 import com.november.exception.ParamException;
 import com.november.util.BeanValidator;
 import com.november.util.JsonMapper;
-import com.november.util.TimeUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.type.TypeReference;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;

@@ -1,4 +1,4 @@
-package com.november.acl.commons;
+package com.november.model;
 
 /**
  * @author skrT
@@ -6,7 +6,9 @@ package com.november.acl.commons;
  */
 public interface CacheType {
 
+    //  集合键前缀
     String LIST_PREFIX = "list_";
 
+    //  是否需要马上更新前缀
     String NEEDUPDATE_PREFIX = "need_update_";
 }
