@@ -53,6 +53,7 @@ public class SpaceController {
     @ResponseBody
     @RequestMapping("/delete.json")
     public JsonData delete(@RequestParam(value = "id") Integer id){
+        log.info("开始删除空间",id);
         spaceser.deleteByPrimaryKey(id);
         return JsonData.success();
     }

@@ -154,7 +154,7 @@ layui.use(['treetable','form','jquery','layer', 'laytpl'],function(){
                             if (result.ret) {
                                 spopSucess(submitType==1?"添加成功":"修改成功");
                                 layer.close(layer.index);
-
+                                window.location.reload();
                                 $("#view").html("");
                             } else {
                                 spopFail(submitType==1?"添加失败":"修改失败",result.msg);
@@ -181,8 +181,10 @@ layui.use(['treetable','form','jquery','layer', 'laytpl'],function(){
             success: function (result) {
                 if(result.ret){
                     spopSucess("删除成功");
+                    window.location.reload();
                 }else{
                     spopFail("删除失败","该项可能已经不存在");
+                    window.location.reload();
                 }
             }
         });

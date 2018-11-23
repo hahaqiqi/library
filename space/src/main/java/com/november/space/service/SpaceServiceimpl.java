@@ -120,7 +120,7 @@ public class SpaceServiceimpl implements SpaceService {
         for(Space sp :listSpace){
             listId.add(sp.getId());
         }
-        return listId;
+        return spacemapper.deleteByPrimaryKey(listId);
     }
     /*
         20 23 24 25 32 33 34 35 36 37
