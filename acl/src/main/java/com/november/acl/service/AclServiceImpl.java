@@ -30,10 +30,10 @@ public class AclServiceImpl implements AclService {
     @Resource
     private RoleAclMapper roleAclMapper;
 
-    public void save(AclParam param) {
+    /*public void save(AclParam param) {
         BeanValidator.check(param);
         if (checkExist(param.getParentId(), param.getName(), param.getId())) {
-            throw new ParamException("当前权限模块下面存在相同名称的权限点");
+            throw new ParamException("当前权限点下面存在相同名称的权限点");
         }
         Acl acl = Acl.builder().aclName(param.getName()).parentId(param.getParentId()).url(param.getUrl())
                 .status(param.getStatus()).seq(param.getSeq()).remark(param.getRemark()).build();
@@ -46,7 +46,7 @@ public class AclServiceImpl implements AclService {
     public void update(AclParam param) {
         BeanValidator.check(param);
         if (checkExist(param.getParentId(), param.getName(), param.getId())) {
-            throw new ParamException("当前权限模块下面存在相同名称的权限点");
+            throw new ParamException("当前权限点下面存在相同名称的权限点");
         }
         Acl before = aclMapper.selectByPrimaryKey(param.getId());
         Preconditions.checkNotNull(before, "待更新的权限点不存在");
@@ -56,14 +56,14 @@ public class AclServiceImpl implements AclService {
         after.setOperateTime(new Date());
         aclMapper.updateByPrimaryKeySelective(after);
 //        sysLogService.saveAclLog(before, after);      //  TODO
-    }
+    }*/
 
     public boolean checkExist(int parentId, String aclName, Integer id) {
         return aclMapper.countByNameAndParentId(parentId, aclName, id) > 0;
     }
 
 
-    public PageResult<Acl> getPageByAclModuleId(int parentId, PageQuery page) {
+    /*public PageResult<Acl> getPageByAclModuleId(int parentId, PageQuery page) {
         BeanValidator.check(page);
         int count = aclMapper.countByParentId(parentId);
         if (count > 0) {
@@ -73,7 +73,7 @@ public class AclServiceImpl implements AclService {
         }
         return PageResult.<Acl>builder().pageNo(page.getPageNo()).pageSize(page.getPageSize()).build();
     }
-
+*/
     @Override
     public List<AclDto> getAll(int rid) {
         //  先得到所有权限点
@@ -121,7 +121,9 @@ public class AclServiceImpl implements AclService {
         for (AclDto dto : rootAclDtoList) {
             //  是否拥有该权限
             if(aclIdByRoleId.contains(dto.getId())){
+                //  设置默认选中
                 dto.setChecked(true);
+                //  全z选点集合删除该权限点
                 aclIdByRoleId.remove(dto.getId());
                 //  如果父节点有则子节点也有
                 dto.setList(sortAclDtoList(dto.getId(),aclDtoList,true,aclIdByRoleId));

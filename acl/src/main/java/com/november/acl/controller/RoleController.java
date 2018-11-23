@@ -40,29 +40,36 @@ public class RoleController {
     }
 
     // 测试模板
-    @RequestMapping("templatesTest.html")
+    /*@RequestMapping("templatesTest.html")
     public ModelAndView test2(){
         return new ModelAndView("templatesTest");
-    }
+    }*/
 
     //  测试页面
-    @RequestMapping("test.html")
+    /*@RequestMapping("test.html")
     public ModelAndView test1(){
         return new ModelAndView("test");
-    }
+    }*/
 
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping("treeTest.html")
     public ModelAndView testTree(){
         return new ModelAndView("treeTest");
-    }
+    }*/
 
-    @RequestMapping("selectTest.html")
+    /*@RequestMapping("selectTest.html")
     public ModelAndView testSelect(){
         return new ModelAndView("selectFormTest");
-    }
+    }*/
 
-    @ResponseBody
+    /*@ResponseBody
+    @RequestMapping("/cache.html")
+    public JsonData testCache(){
+
+        return JsonData.success();
+    }*/
+
+    /*@ResponseBody
     @RequestMapping("tree.json")
     public JsonData getTree(){
         List<TestTree> list = Lists.newArrayList(
@@ -81,7 +88,7 @@ public class RoleController {
         );
 
         return JsonData.success(list,"获取成功");
-    }
+    }*/
 
     @ResponseBody
     @RequestMapping("/save.json")

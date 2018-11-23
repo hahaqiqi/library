@@ -24,7 +24,7 @@ public class AclController {
     @Resource(name = "aclService")
     private AclService aclService;
 
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping("/save.json")
     public JsonData saveAclModule(AclParam param) {
         //  后台日志输出
@@ -40,7 +40,7 @@ public class AclController {
         log.info("开始进行权限点修改,param:{}", param);
         aclService.update(param);
         return JsonData.success();
-    }
+    }*/
 
     @ResponseBody
     @RequestMapping("/tree.json")

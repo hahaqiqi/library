@@ -24,9 +24,6 @@ public class RoleAdminServiceImpl implements RoleAdminService {
     @Resource
     private RoleAdminMapper roleAdminMapper;
 
-    @Resource
-    private AdminMapper adminMapper;
-
     public void changeAdmin(String idStr,int rid){
         if(StringUtils.isBlank(idStr)){
             roleAdminMapper.deleteByRoleId(rid);
@@ -53,7 +50,6 @@ public class RoleAdminServiceImpl implements RoleAdminService {
     public List<AdminDto> packAdminList(List<Admin> list, int rid) {
         List<AdminDto> adminDtoList = Lists.newArrayList();
         List<Integer> adminIdsByRoleId = roleAdminMapper.getAdminIdsByRoleId(rid);
-        clearDisRoleAdmin(adminIdsByRoleId);
         for (Admin admin : list) {
             AdminDto dto = AdminDto.adapt(admin);
             if(adminIdsByRoleId.contains(dto.getId())){
@@ -62,16 +58,6 @@ public class RoleAdminServiceImpl implements RoleAdminService {
             adminDtoList.add(dto);
         }
         return adminDtoList;
-    }
-
-    private void clearDisRoleAdmin(List<Integer> ids){
-        if(CollectionUtils.isNotEmpty(ids)){
-            for (Integer id : ids) {
-                if(adminMapper.selectByPrimaryKey(id) == null){
-                    roleAdminMapper.deleteByAdminId(id);
-                }
-            }
-        }
     }
 
     /*public List<SysUser> getListByRoleId(int roleId) {
