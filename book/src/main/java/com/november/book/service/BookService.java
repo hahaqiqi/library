@@ -49,10 +49,16 @@ public interface BookService {
     public List<Book> listBook();
 
     /**
-     * 分页
+     * 普通分页
      * @return
      */
     public List<Book> pageListBook(int page, int limit);
+
+    /**
+     * 多条件查询分页
+     * @return
+     */
+    public List<Book> pageListBook(int page, int limit,BookParam bookParam);
 
     /**
      * 根据id得到一个Book
@@ -60,5 +66,7 @@ public interface BookService {
      * @return
      */
     public Book byIdBook(Integer id);
+
+    public int changeBookStatus(Integer id,Integer statusId);
 
 }

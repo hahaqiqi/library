@@ -48,7 +48,7 @@ function pageCh(res, curr, count) {
                 , min: 0
                 , max: pageMax
                 , value: curr
-                ,showstep: true
+                ,disabled:true
                 , change: function (value) {
                     if(value==0){
                         return;
@@ -78,6 +78,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         ,slider = layui.slider
         ,$=layui.$//jquery
 
+    form.render();
 
     //向世界问个好
     //layer.msg('Hello World');
@@ -165,7 +166,34 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             case 'refresh': //刷新
                 $(".layui-laypage-btn")[0].click();
                 break;
+            case 'filtrate':
+                if($("#filtrate").css("display")=="block"){
+                    $("#filtrate").css("display","none");
+                }else {
+                    $("#filtrate").css("display", "block");
+                }
+                break;
+
         };
+    });
+
+    //提交筛选
+    $('#filtrateSubmitBookType').on("click",function(){
+        $.ajax({
+            url: '/book/list.json',
+            data: $("#filtrateFrom").serializeArray(),
+            type: 'GET',
+            success: function (result) {
+                if (result.ret) {
+                    spopSucess("成功");
+                } else {
+                    spopFail("失败",result.msg);
+                }
+            },
+            error:function () {
+                spopFail("错误","请检查参数");
+            }
+        });
     });
 
     //监听行工具事件
@@ -192,7 +220,8 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 //layer.msg("删除"+data.id);
                 //向服务端发送删除指令
                 if(deleteBookType(data.id)){
-                    obj.del(); //删除对应行（tr）的DOM结构
+                    //obj.del(); //删除对应行（tr）的DOM结构
+                    $(".layui-laypage-btn")[0].click();
                     spopSucess("删除成功");
                 }else{
                     spopFail("删除失败","该项可能已经不存在");
@@ -214,7 +243,26 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 ,"submitType":1
             }
             showBookTypeInfo("编辑",viewdata);
+        }else if(layEvent === 'browse'){//查看书籍存放地点
+            alert("browse");
+        }else if(layEvent === 'changeStatus'){//下架书籍或恢复书籍
+            $.ajax({
+                url: '/book/changeBookStatus.json',
+                data: {"id": data.id,"statusId":data.status==0?1:0},
+                type: 'GET',
+                success: function (result) {
+                    if (result.ret) {
+                        $(".layui-laypage-btn")[0].click();
+                    } else {
+                        spopFail("修改失败", result.msg);
+                    }
+                },
+                error: function () {
+                    spopFail("修改失败", "未知错误");
+                }
+            });
         }
+
     });
 
     //分页
@@ -261,14 +309,36 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 $("#view").html("");
             }
         });
+        //得到所有书籍类型
+        $.ajax({
+            url: '/bookType/listAll.json',
+            async: false,
+            type: 'GET',
+            success: function (result) {
+                if(result.ret==true){
+                    for(var i=0;i<result.data.length;i++){
+                        if(viewdata.bookTypeId==result.data[i].id){
+                            $("#bookType").append("<option value="+result.data[i].id+" selected>"+result.data[i].typeName+"</option>");
+                            continue;
+                        }
+                        $("#bookType").append("<option value="+result.data[i].id+">"+result.data[i].typeName+"</option>");
+                    }
+                }else{
+                    $("#bookType").append("<option value='null'>加载失败</option>");
+                }
+            },
+            error:function () {
+                $("#bookType").append("<option value='null'>接口异常</option>");
+            }
+    });
+        form.render();
     }
-
 
     //删除单条数据
     function deleteBookType(delid) {
         var delSuccess=false;
         $.ajax({
-            url: '/bookType/delete.json',
+            url: '/book/delete.json',
             data: {"id":delid},
             async:false,
             type: 'GET',
@@ -283,7 +353,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     function batchDeleteBookType(batchStrId) {
         var delSuccessCount=0;
         $.ajax({
-            url: '/bookType/batchDelete.json',
+            url: '/book/batchDelete.json',
             data: {"batchStrId":batchStrId},
             async:false,
             type: 'GET',
@@ -294,6 +364,9 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         return delSuccessCount;
     }
 
+    table.on('look', function(obj){
+        alert("6379");
+    });
 
 
 

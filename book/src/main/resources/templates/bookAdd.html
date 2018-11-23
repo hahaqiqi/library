@@ -20,7 +20,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">图书名称</label>
             <div class="layui-input-inline" style="width: 200px;">
-                <input id="bookName" type="text" name="bookName" placeholder="请输入名称" autocomplete="off"
+                <input id="bookName" type="text" name="bookName" placeholder="请输入" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
@@ -47,12 +47,10 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">书籍类型</label>
+                <label class="layui-form-label">图书类型</label>
                 <div class="layui-input-inline">
-                    <select name="bookTypeId">
-                            <option value="1">45</option>
-                            <option value="2">46</option>
-                            <option value="3">47</option>
+                    <select id="bookType" name="bookTypeId" lay-search>
+
                     </select>
                 </div>
             </div>
@@ -69,7 +67,7 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">数量</label>
             <div class="layui-input-inline" style="width: 200px;">
-                <input id="count" type="text" name="count" placeholder="默认1" autocomplete="off"
+                <input id="count" type="text" name="count"  autocomplete="off"
                        class="layui-input" value="1">
             </div>
         </div>

@@ -1,6 +1,7 @@
 package com.november.book.dao;
 
 import com.november.book.model.Book;
+import com.november.book.param.BookParam;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +29,7 @@ public interface BookMapper {
 
     List<Book> pageList(@Param("page") int page, @Param("limit")int limit);
 
+    List<Book> filtrateSelect(BookParam bookParam);
+
+    int changeBookStatus(@Param("id") Integer id,@Param("statusId") Integer statusId);
 }

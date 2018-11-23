@@ -1,9 +1,8 @@
-package com.november.space.model;
+package com.november.book.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,14 +10,14 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Space implements Serializable{
+public class BookLeaseType  implements Serializable {
     private Integer id;
 
-    private String spaceName;
+    private String typeName;
 
-    private Integer parentId;
+    private Integer score;
 
-    private String level;
+    private Double discount;
 
     private String operator;
 
@@ -34,28 +33,28 @@ public class Space implements Serializable{
         this.id = id;
     }
 
-    public String getSpaceName() {
-        return spaceName;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setSpaceName(String spaceName) {
-        this.spaceName = spaceName == null ? null : spaceName.trim();
+    public void setTypeName(String typeName) {
+        this.typeName = typeName == null ? null : typeName.trim();
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Integer getScore() {
+        return score;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
-    public String getLevel() {
-        return level;
+    public Double getDiscount() {
+        return discount;
     }
 
-    public void setLevel(String level) {
-        this.level = level == null ? null : level.trim();
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 
     public String getOperator() {

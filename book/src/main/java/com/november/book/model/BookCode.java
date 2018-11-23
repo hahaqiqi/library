@@ -1,9 +1,8 @@
-package com.november.space.model;
+package com.november.book.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,14 +10,14 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Space implements Serializable{
+public class BookCode  implements Serializable {
     private Integer id;
 
-    private String spaceName;
+    private Integer bookPriceMin;
 
-    private Integer parentId;
+    private Integer bookPriceMax;
 
-    private String level;
+    private Double bookPrice;
 
     private String operator;
 
@@ -34,28 +33,28 @@ public class Space implements Serializable{
         this.id = id;
     }
 
-    public String getSpaceName() {
-        return spaceName;
+    public Integer getBookPriceMin() {
+        return bookPriceMin;
     }
 
-    public void setSpaceName(String spaceName) {
-        this.spaceName = spaceName == null ? null : spaceName.trim();
+    public void setBookPriceMin(Integer bookPriceMin) {
+        this.bookPriceMin = bookPriceMin;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Integer getBookPriceMax() {
+        return bookPriceMax;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setBookPriceMax(Integer bookPriceMax) {
+        this.bookPriceMax = bookPriceMax;
     }
 
-    public String getLevel() {
-        return level;
+    public Double getBookPrice() {
+        return bookPrice;
     }
 
-    public void setLevel(String level) {
-        this.level = level == null ? null : level.trim();
+    public void setBookPrice(Double bookPrice) {
+        this.bookPrice = bookPrice;
     }
 
     public String getOperator() {

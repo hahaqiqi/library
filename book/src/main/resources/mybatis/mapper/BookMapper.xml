@@ -8,6 +8,7 @@
     <result column="author_name" property="authorName" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="DOUBLE" />
     <result column="press_name" property="pressName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="book_type_id" property="bookTypeId" jdbcType="INTEGER" />
     <result column="book_lease_id" property="bookLeaseId" jdbcType="INTEGER" />
     <result column="book_loss_id" property="bookLossId" jdbcType="INTEGER" />
@@ -20,7 +21,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, book_name, book_code, author_name, price, press_name, book_type_id, book_lease_id, 
+    id, book_name, book_code, author_name, price, press_name,status,book_type_id, book_lease_id,
     book_loss_id, book_lease_type, book_chco_type, book_space_id, operator, operate_time, 
     remark
   </sql>
@@ -58,21 +59,6 @@
       #{id,jdbcType=INTEGER}
     </foreach>
   </delete>
-
-  <insert id="insert2" parameterType="com.november.book.model.Book" >
-    insert into book (id, book_name, book_code, 
-      author_name, price, press_name, 
-      book_type_id, book_lease_id, book_loss_id, 
-      book_lease_type, book_chco_type, book_space_id, 
-      operator, operate_time, remark
-      )
-    values (#{id,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{bookCode,jdbcType=VARCHAR}, 
-      #{authorName,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{pressName,jdbcType=VARCHAR}, 
-      #{bookTypeId,jdbcType=INTEGER}, #{bookLeaseId,jdbcType=INTEGER}, #{bookLossId,jdbcType=INTEGER}, 
-      #{bookLeaseType,jdbcType=INTEGER}, #{bookChcoType,jdbcType=INTEGER}, #{bookSpaceId,jdbcType=INTEGER}, 
-      #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
-      )
-  </insert>
 
   <!--批量添加-->
   <insert id="batchInsert" parameterType="java.util.List"  useGeneratedKeys="true">
@@ -272,6 +258,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <update id="changeBookStatus">
+    update book
+    set status=#{statusId}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
   <!--批量添加-->
   <insert id="insert" parameterType="java.util.List"  useGeneratedKeys="true">
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
@@ -283,5 +275,41 @@
 
     </foreach>
   </insert>
+  <!--筛选查询-->
+  <select id="filtrateSelect" resultType="com.november.book.model.Book" parameterType="com.november.book.param.BookParam">
+    select * FROM
+    <where>
+      <if test="bookName != null" >
+        AND book_name= #{bookName,jdbcType=VARCHAR}
+      </if>
+      <if test="bookCode != null" >
+        AND book_code= #{bookCode,jdbcType=VARCHAR}
+      </if>
+      <if test="authorName != null" >
+        AND author_name= #{authorName,jdbcType=VARCHAR}
+      </if>
+      <if test="price != null" >
+        AND price= #{price,jdbcType=DOUBLE}
+      </if>
+      <if test="pressName != null" >
+        AND press_name= #{pressName,jdbcType=VARCHAR}
+      </if>
+      <if test="bookTypeId != null" >
+        AND book_type_id= #{bookTypeId,jdbcType=INTEGER}
+      </if>
+      <if test="status != null" >
+        AND status= #{status,jdbcType=INTEGER}
+      </if>
+      <if test="bookChcoType != null" >
+        AND book_chco_type #{bookChcoType,jdbcType=INTEGER}
+      </if>
+      <if test="bookSpaceId != null" >
+        AND book_space_id= #{bookSpaceId,jdbcType=INTEGER}
+      </if>
+    </where>
+
+
+  </select>
+
 
 </mapper>

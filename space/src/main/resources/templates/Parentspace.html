@@ -21,8 +21,47 @@
     <button class="layui-btn layui-btn-primary up-all">全部收起</button>
     <button class="layui-btn layui-btn-primary down-all">全部展开</button>
     <button class="layui-btn layui-btn-primary get-checked">获取选中</button>
+    <button class="layui-btn layui-btn-primary add-parentsapce">添加最大父空间</button>
 
     <table class="layui-table layui-form" id="test-tree-table"></table>
+    <div id="view"></div>
+    <script id="demo" type="text/html">
+        <form class="layui-form" action="" id="SpaceForm">
+            <label class="layui-form-label"></label>
+            {{#  if(d.parentId){ }}
+            <input name="parentId" type="hidden" value="{{d.parentId}}"/>
+            {{#  } }}
+            {{#  if(d.id){ }}
+            <input name="id" type="hidden" value="{{d.id}}"/>
+            {{#  } }}
+            <div class="layui-form-item">
+                <label class="layui-form-label">空间名称</label>
+                <div class="layui-input-inline" style="width: 179px;">
+                    <input id="spaceName" type="text" name="spaceName" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.spaceName }}">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-inline">
+                    {{#  if(d.remark === null){ }}
+                    {{d.remark=""}}
+                    {{#  } }}
+                    <textarea id="spaceremark" name="remark" placeholder="请输入备注" class="layui-textarea" value="{{}}">{{d.remark}}</textarea>
+                </div>
+            </div>
+            {{#  if(d.submitType > 0 ){ }}
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <button id="submitSpace" type="button" class="layui-btn" lay-submit lay-filter="save" submitType="{{d.submitType}}">立即提交</button>
+                </div>
+            </div>
+            {{#  } }}
+        </form>
+
+
+    </script>
+
 </body>
 
 </html>
