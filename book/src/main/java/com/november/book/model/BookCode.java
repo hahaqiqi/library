@@ -10,10 +10,14 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookType  implements Serializable {
+public class BookCode  implements Serializable {
     private Integer id;
 
-    private String typeName;
+    private Integer bookPriceMin;
+
+    private Integer bookPriceMax;
+
+    private Double bookPrice;
 
     private String operator;
 
@@ -29,12 +33,28 @@ public class BookType  implements Serializable {
         this.id = id;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public Integer getBookPriceMin() {
+        return bookPriceMin;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName == null ? null : typeName.trim();
+    public void setBookPriceMin(Integer bookPriceMin) {
+        this.bookPriceMin = bookPriceMin;
+    }
+
+    public Integer getBookPriceMax() {
+        return bookPriceMax;
+    }
+
+    public void setBookPriceMax(Integer bookPriceMax) {
+        this.bookPriceMax = bookPriceMax;
+    }
+
+    public Double getBookPrice() {
+        return bookPrice;
+    }
+
+    public void setBookPrice(Double bookPrice) {
+        this.bookPrice = bookPrice;
     }
 
     public String getOperator() {

@@ -34,6 +34,8 @@ public class BookParam {
     @Length(max = 20,message = "出版社长度不能超过20")
     private String pressName;
 
+    private Integer status;
+
     @NotNull(message = "图书类型不能为空")
     private Integer bookTypeId;
 
@@ -41,9 +43,9 @@ public class BookParam {
 
     private Integer bookLossId;
 
-    private Integer bookLeaseType=0;
+    private Integer bookLeaseType;
 
-    private Integer bookChcoType=0;
+    private Integer bookChcoType;
 
     private Integer bookSpaceId;
 
@@ -52,6 +54,6 @@ public class BookParam {
 
     @Min(value = 1,message = "书籍数量必须大于1")
     @NotNull(message = "数量不能为空")
-    private Integer count=1;
+    private Integer count;
 
 }
