@@ -57,4 +57,5 @@ public class AclController {
         aclService.changeAcl(idStr,rid);
         return JsonData.success();
     }
+
 }
