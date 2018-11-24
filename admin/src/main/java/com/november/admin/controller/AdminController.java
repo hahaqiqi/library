@@ -40,7 +40,7 @@ public class AdminController {
     @RequestMapping("/save.json")
     public JsonData saveAclModule(AdminParam param) {
         //  后台日志输出
-        log.info("开始进行权限点添加,param:{}", param);
+        log.info("开始进行管理员添加,param:{}", param);
         adminService.save(param);
         return JsonData.success();
     }
@@ -56,7 +56,7 @@ public class AdminController {
     @RequestMapping("/update.json")
     public JsonData updateAclModule(AdminParam param) {
         //  后台日志输出
-        log.info("开始进行权限点修改,param:{}", param);
+        log.info("开始进行管理员修改,param:{}", param);
         adminService.update(param);
         return JsonData.success();
     }

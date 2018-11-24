@@ -19,8 +19,6 @@ public class AdminDto extends Admin {
 
     private int age;
 
-    private String roleName;
-
     // 转化Acl为AclDto
     public static AdminDto adapt(Admin admin){
         AdminDto dto = new AdminDto();

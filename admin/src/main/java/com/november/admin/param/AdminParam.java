@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -32,10 +33,8 @@ public class AdminParam {
     @Length(min = 2,max = 20,message = "管理员真实姓名长度要在8-20位之间")
     private String adminName;
 
-    @NotNull
-    private Integer adminRole = 2;  // TODO
-
-    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "生日不能为空")
     private Date birthday;
 
     @NotBlank(message = "管理员身份证号不能为空")
