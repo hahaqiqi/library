@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.november.admin.dao.AdminMapper" >
-  <resultMap id="BaseResultMap" type="com.november.admin.model.Admin" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="admin_code" property="adminCode" jdbcType="VARCHAR" />
-    <result column="admin_pwd" property="adminPwd" jdbcType="VARCHAR" />
-    <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
-    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
-    <result column="id_card" property="idCard" jdbcType="VARCHAR" />
-    <result column="operator" property="operator" jdbcType="VARCHAR" />
-    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.november.admin.dao.AdminMapper">
+    <resultMap id="BaseResultMap" type="com.november.admin.model.Admin">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="admin_code" property="adminCode" jdbcType="VARCHAR"/>
+        <result column="admin_pwd" property="adminPwd" jdbcType="VARCHAR"/>
+        <result column="admin_name" property="adminName" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="TIMESTAMP"/>
+        <result column="id_card" property="idCard" jdbcType="VARCHAR"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, admin_code, admin_pwd, admin_name, birthday, id_card, operator, operate_time,
     remark
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from admin
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from admin
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from admin
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.november.admin.model.Admin" >
+    <insert id="insert" parameterType="com.november.admin.model.Admin">
     insert into admin (id, admin_code, admin_pwd, 
       admin_name, birthday,
       id_card, operator, operate_time, 
@@ -36,98 +36,98 @@
       #{idCard,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.november.admin.model.Admin" >
-    insert into admin
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="adminCode != null" >
-        admin_code,
-      </if>
-      <if test="adminPwd != null" >
-        admin_pwd,
-      </if>
-      <if test="adminName != null" >
-        admin_name,
-      </if>
-      <if test="birthday != null" >
-        birthday,
-      </if>
-      <if test="idCard != null" >
-        id_card,
-      </if>
-      <if test="operator != null" >
-        operator,
-      </if>
-      <if test="operateTime != null" >
-        operate_time,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="adminCode != null" >
-        #{adminCode,jdbcType=VARCHAR},
-      </if>
-      <if test="adminPwd != null" >
-        #{adminPwd,jdbcType=VARCHAR},
-      </if>
-      <if test="adminName != null" >
-        #{adminName,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null" >
-        #{birthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="idCard != null" >
-        #{idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null" >
-        #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null" >
-        #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.november.admin.model.Admin" >
-    update admin
-    <set >
-      <if test="adminCode != null" >
-        admin_code = #{adminCode,jdbcType=VARCHAR},
-      </if>
-      <if test="adminPwd != null" >
-        admin_pwd = #{adminPwd,jdbcType=VARCHAR},
-      </if>
-      <if test="adminName != null" >
-        admin_name = #{adminName,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null" >
-        birthday = #{birthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="idCard != null" >
-        id_card = #{idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null" >
-        operator = #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null" >
-        operate_time = #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.november.admin.model.Admin" >
+    <insert id="insertSelective" parameterType="com.november.admin.model.Admin">
+        insert into admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="adminCode != null">
+                admin_code,
+            </if>
+            <if test="adminPwd != null">
+                admin_pwd,
+            </if>
+            <if test="adminName != null">
+                admin_name,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="idCard != null">
+                id_card,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+            <if test="operateTime != null">
+                operate_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="adminCode != null">
+                #{adminCode,jdbcType=VARCHAR},
+            </if>
+            <if test="adminPwd != null">
+                #{adminPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="adminName != null">
+                #{adminName,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="idCard != null">
+                #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operateTime != null">
+                #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.november.admin.model.Admin">
+        update admin
+        <set>
+            <if test="adminCode != null">
+                admin_code = #{adminCode,jdbcType=VARCHAR},
+            </if>
+            <if test="adminPwd != null">
+                admin_pwd = #{adminPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="adminName != null">
+                admin_name = #{adminName,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="idCard != null">
+                id_card = #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.november.admin.model.Admin">
     update admin
     set admin_code = #{adminCode,jdbcType=VARCHAR},
       admin_pwd = #{adminPwd,jdbcType=VARCHAR},
@@ -140,23 +140,35 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="getAll" resultMap="BaseResultMap">
-      select <include refid="Base_Column_List" /> from admin
-  </select>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from admin
+    </select>
 
-  <select id="countAll" resultType="int">
+    <select id="countAll" resultType="int">
       select count(1) from admin
   </select>
 
-  <select id="getPageList" resultMap="BaseResultMap" parameterType="map">
-      select <include refid="Base_Column_List" /> from admin
-      limit #{page},#{limit}
-  </select>
+    <select id="getPageList" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from admin
+        limit #{page},#{limit}
+    </select>
 
-  <select id="getAdminByAdminCode" resultType="com.november.model.Admin">
-    select
-    <include refid="Base_Column_List" />
-    from admin
-    where admin_code = #{adminCode}
-  </select>
+    <select id="getAdminByAdminCode" resultType="com.november.model.Admin">
+        select
+        <include refid="Base_Column_List"/>
+        from admin
+        where admin_code = #{adminCode}
+    </select>
+
+    <select id="countByIdCard" resultType="int" parameterType="map">
+        select count(1) from admin
+        where id_card = #{idCard}
+        <if test="id!=null">
+            id!=#{id}
+        </if>
+    </select>
 </mapper>
