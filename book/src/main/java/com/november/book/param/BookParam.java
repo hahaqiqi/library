@@ -9,6 +9,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,6 +30,9 @@ public class BookParam {
     @Min(value = 0,message = "价格必须大于0")
     @NotNull(message = "价格不能为空")
     private Double price;
+
+    private Double price_min;
+    private Double price_max;
 
     @NotBlank(message = "出版社不能为空")
     @Length(max = 20,message = "出版社长度不能超过20")
@@ -55,5 +59,11 @@ public class BookParam {
     @Min(value = 1,message = "书籍数量必须大于1")
     @NotNull(message = "数量不能为空")
     private Integer count;
+
+    private Integer page;
+
+    private Integer limit;
+
+    private List<Integer> whereList;
 
 }

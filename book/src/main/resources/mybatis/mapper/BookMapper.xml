@@ -1,245 +1,245 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.november.book.dao.BookMapper" >
-  <resultMap id="BaseResultMap" type="com.november.book.model.Book" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="book_name" property="bookName" jdbcType="VARCHAR" />
-    <result column="book_code" property="bookCode" jdbcType="VARCHAR" />
-    <result column="author_name" property="authorName" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DOUBLE" />
-    <result column="press_name" property="pressName" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="book_type_id" property="bookTypeId" jdbcType="INTEGER" />
-    <result column="book_lease_id" property="bookLeaseId" jdbcType="INTEGER" />
-    <result column="book_loss_id" property="bookLossId" jdbcType="INTEGER" />
-    <result column="book_lease_type" property="bookLeaseType" jdbcType="INTEGER" />
-    <result column="book_chco_type" property="bookChcoType" jdbcType="INTEGER" />
-    <result column="book_space_id" property="bookSpaceId" jdbcType="INTEGER" />
-    <result column="operator" property="operator" jdbcType="VARCHAR" />
-    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-  </resultMap>
+<mapper namespace="com.november.book.dao.BookMapper">
+    <resultMap id="BaseResultMap" type="com.november.book.model.Book">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="book_code" property="bookCode" jdbcType="VARCHAR"/>
+        <result column="author_name" property="authorName" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DOUBLE"/>
+        <result column="press_name" property="pressName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="book_type_id" property="bookTypeId" jdbcType="INTEGER"/>
+        <result column="book_lease_id" property="bookLeaseId" jdbcType="INTEGER"/>
+        <result column="book_loss_id" property="bookLossId" jdbcType="INTEGER"/>
+        <result column="book_lease_type" property="bookLeaseType" jdbcType="INTEGER"/>
+        <result column="book_chco_type" property="bookChcoType" jdbcType="INTEGER"/>
+        <result column="book_space_id" property="bookSpaceId" jdbcType="INTEGER"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
 
-  <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
     id, book_name, book_code, author_name, price, press_name,status,book_type_id, book_lease_id,
     book_loss_id, book_lease_type, book_chco_type, book_space_id, operator, operate_time, 
     remark
   </sql>
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from book
-    where id = #{id,jdbcType=INTEGER}
-  </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from book
+        where id = #{id,jdbcType=INTEGER}
+    </select>
 
-  <select id="count" resultType="java.lang.Integer" >
+    <select id="count" resultType="java.lang.Integer">
     select COUNT(1) FROM book
   </select>
 
-  <select id="list" resultMap="BaseResultMap">
+    <select id="list" resultMap="BaseResultMap">
     SELECT * FROM book
   </select>
 
-  <select id="pageList" resultMap="BaseResultMap">
+    <select id="pageList" resultMap="BaseResultMap">
     SELECT * FROM book LIMIT #{page},#{limit}
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from book
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <!--批量删除-->
-  <delete id="bacthDelete" parameterType="java.util.List">
-    delete from book
-    where id
-    in
-    <foreach collection="list" item="id" open="(" separator="," close=")">
-      #{id,jdbcType=INTEGER}
-    </foreach>
-  </delete>
+    <!--批量删除-->
+    <delete id="bacthDelete" parameterType="java.util.List">
+        delete from book
+        where id
+        in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
 
-  <!--批量添加-->
-  <insert id="batchInsert" parameterType="java.util.List"  useGeneratedKeys="true">
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into book
-    (
-    book_name, book_code, author_name, price, press_name, book_type_id, book_lease_id,
-    book_loss_id, book_lease_type, book_chco_type, book_space_id, operator,
-    remark
-    )
-    value
-      <foreach collection="list" item="params" index="index" separator=",">
+    <!--批量添加-->
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into book
         (
-        #{params.bookName,jdbcType=VARCHAR},
-        #{params.bookCode,jdbcType=VARCHAR},
-        #{params.authorName,jdbcType=VARCHAR},
-        #{params.price,jdbcType=DOUBLE},
-        #{params.pressName,jdbcType=VARCHAR},
-        #{params.bookTypeId,jdbcType=INTEGER},
-        #{params.bookLeaseId,jdbcType=INTEGER},
-        #{params.bookLossId,jdbcType=INTEGER},
-        #{params.bookLeaseType,jdbcType=INTEGER},
-        #{params.bookChcoType,jdbcType=INTEGER},
-        #{params.bookSpaceId,jdbcType=INTEGER},
-        #{params.operator,jdbcType=VARCHAR},
-        #{params.remark,jdbcType=VARCHAR}
+        book_name, book_code, author_name, price, press_name, book_type_id, book_lease_id,
+        book_loss_id, book_lease_type, book_chco_type, book_space_id, operator,
+        remark
         )
-      </foreach>
+        value
+        <foreach collection="list" item="params" index="index" separator=",">
+            (
+            #{params.bookName,jdbcType=VARCHAR},
+            #{params.bookCode,jdbcType=VARCHAR},
+            #{params.authorName,jdbcType=VARCHAR},
+            #{params.price,jdbcType=DOUBLE},
+            #{params.pressName,jdbcType=VARCHAR},
+            #{params.bookTypeId,jdbcType=INTEGER},
+            #{params.bookLeaseId,jdbcType=INTEGER},
+            #{params.bookLossId,jdbcType=INTEGER},
+            #{params.bookLeaseType,jdbcType=INTEGER},
+            #{params.bookChcoType,jdbcType=INTEGER},
+            #{params.bookSpaceId,jdbcType=INTEGER},
+            #{params.operator,jdbcType=VARCHAR},
+            #{params.remark,jdbcType=VARCHAR}
+            )
+        </foreach>
 
-  </insert>
+    </insert>
 
-  <insert id="insertSelective" parameterType="com.november.book.model.Book" >
-    insert into book
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="bookName != null" >
-        book_name,
-      </if>
-      <if test="bookCode != null" >
-        book_code,
-      </if>
-      <if test="authorName != null" >
-        author_name,
-      </if>
-      <if test="price != null" >
-        price,
-      </if>
-      <if test="pressName != null" >
-        press_name,
-      </if>
-      <if test="bookTypeId != null" >
-        book_type_id,
-      </if>
-      <if test="bookLeaseId != null" >
-        book_lease_id,
-      </if>
-      <if test="bookLossId != null" >
-        book_loss_id,
-      </if>
-      <if test="bookLeaseType != null" >
-        book_lease_type,
-      </if>
-      <if test="bookChcoType != null" >
-        book_chco_type,
-      </if>
-      <if test="bookSpaceId != null" >
-        book_space_id,
-      </if>
-      <if test="operator != null" >
-        operator,
-      </if>
-      <if test="operateTime != null" >
-        operate_time,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="bookName != null" >
-        #{bookName,jdbcType=VARCHAR},
-      </if>
-      <if test="bookCode != null" >
-        #{bookCode,jdbcType=VARCHAR},
-      </if>
-      <if test="authorName != null" >
-        #{authorName,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        #{price,jdbcType=DOUBLE},
-      </if>
-      <if test="pressName != null" >
-        #{pressName,jdbcType=VARCHAR},
-      </if>
-      <if test="bookTypeId != null" >
-        #{bookTypeId,jdbcType=INTEGER},
-      </if>
-      <if test="bookLeaseId != null" >
-        #{bookLeaseId,jdbcType=INTEGER},
-      </if>
-      <if test="bookLossId != null" >
-        #{bookLossId,jdbcType=INTEGER},
-      </if>
-      <if test="bookLeaseType != null" >
-        #{bookLeaseType,jdbcType=INTEGER},
-      </if>
-      <if test="bookChcoType != null" >
-        #{bookChcoType,jdbcType=INTEGER},
-      </if>
-      <if test="bookSpaceId != null" >
-        #{bookSpaceId,jdbcType=INTEGER},
-      </if>
-      <if test="operator != null" >
-        #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null" >
-        #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+    <insert id="insertSelective" parameterType="com.november.book.model.Book">
+        insert into book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="bookName != null">
+                book_name,
+            </if>
+            <if test="bookCode != null">
+                book_code,
+            </if>
+            <if test="authorName != null">
+                author_name,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="pressName != null">
+                press_name,
+            </if>
+            <if test="bookTypeId != null">
+                book_type_id,
+            </if>
+            <if test="bookLeaseId != null">
+                book_lease_id,
+            </if>
+            <if test="bookLossId != null">
+                book_loss_id,
+            </if>
+            <if test="bookLeaseType != null">
+                book_lease_type,
+            </if>
+            <if test="bookChcoType != null">
+                book_chco_type,
+            </if>
+            <if test="bookSpaceId != null">
+                book_space_id,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+            <if test="operateTime != null">
+                operate_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="bookName != null">
+                #{bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookCode != null">
+                #{bookCode,jdbcType=VARCHAR},
+            </if>
+            <if test="authorName != null">
+                #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="pressName != null">
+                #{pressName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookTypeId != null">
+                #{bookTypeId,jdbcType=INTEGER},
+            </if>
+            <if test="bookLeaseId != null">
+                #{bookLeaseId,jdbcType=INTEGER},
+            </if>
+            <if test="bookLossId != null">
+                #{bookLossId,jdbcType=INTEGER},
+            </if>
+            <if test="bookLeaseType != null">
+                #{bookLeaseType,jdbcType=INTEGER},
+            </if>
+            <if test="bookChcoType != null">
+                #{bookChcoType,jdbcType=INTEGER},
+            </if>
+            <if test="bookSpaceId != null">
+                #{bookSpaceId,jdbcType=INTEGER},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operateTime != null">
+                #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.november.book.model.Book" >
-    update book
-    <set >
-      <if test="bookName != null" >
-        book_name = #{bookName,jdbcType=VARCHAR},
-      </if>
-      <if test="bookCode != null" >
-        book_code = #{bookCode,jdbcType=VARCHAR},
-      </if>
-      <if test="authorName != null" >
-        author_name = #{authorName,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=DOUBLE},
-      </if>
-      <if test="pressName != null" >
-        press_name = #{pressName,jdbcType=VARCHAR},
-      </if>
-      <if test="bookTypeId != null" >
-        book_type_id = #{bookTypeId,jdbcType=INTEGER},
-      </if>
-      <if test="bookLeaseId != null" >
-        book_lease_id = #{bookLeaseId,jdbcType=INTEGER},
-      </if>
-      <if test="bookLossId != null" >
-        book_loss_id = #{bookLossId,jdbcType=INTEGER},
-      </if>
-      <if test="bookLeaseType != null" >
-        book_lease_type = #{bookLeaseType,jdbcType=INTEGER},
-      </if>
-      <if test="bookChcoType != null" >
-        book_chco_type = #{bookChcoType,jdbcType=INTEGER},
-      </if>
-      <if test="bookSpaceId != null" >
-        book_space_id = #{bookSpaceId,jdbcType=INTEGER},
-      </if>
-      <if test="operator != null" >
-        operator = #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null" >
-        operate_time = #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.november.book.model.Book">
+        update book
+        <set>
+            <if test="bookName != null">
+                book_name = #{bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookCode != null">
+                book_code = #{bookCode,jdbcType=VARCHAR},
+            </if>
+            <if test="authorName != null">
+                author_name = #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="pressName != null">
+                press_name = #{pressName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookTypeId != null">
+                book_type_id = #{bookTypeId,jdbcType=INTEGER},
+            </if>
+            <if test="bookLeaseId != null">
+                book_lease_id = #{bookLeaseId,jdbcType=INTEGER},
+            </if>
+            <if test="bookLossId != null">
+                book_loss_id = #{bookLossId,jdbcType=INTEGER},
+            </if>
+            <if test="bookLeaseType != null">
+                book_lease_type = #{bookLeaseType,jdbcType=INTEGER},
+            </if>
+            <if test="bookChcoType != null">
+                book_chco_type = #{bookChcoType,jdbcType=INTEGER},
+            </if>
+            <if test="bookSpaceId != null">
+                book_space_id = #{bookSpaceId,jdbcType=INTEGER},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
-  <update id="updateByPrimaryKey" parameterType="com.november.book.model.Book" >
+    <update id="updateByPrimaryKey" parameterType="com.november.book.model.Book">
     update book
     set book_name = #{bookName,jdbcType=VARCHAR},
       book_code = #{bookCode,jdbcType=VARCHAR},
@@ -258,58 +258,199 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="changeBookStatus">
+    <update id="changeBookStatus">
     update book
     set status=#{statusId}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <!--批量添加-->
-  <insert id="insert" parameterType="java.util.List"  useGeneratedKeys="true">
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
-      SELECT LAST_INSERT_ID() </selectKey>
-    insert into description ( dataname, dataexplain, type, name, add_date ) values
+    <!--批量修改所有-->
+    <update id="bacthUpdateAll" parameterType="com.november.book.param.BookParam">
+        update book
+        <trim prefix="set" suffixOverrides=",">
+            <if test="bookName != null and bookName != '' ">
+                book_name= #{bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="authorName != null and authorName !='' ">
+                author_name= #{authorName,jdbcType=VARCHAR},
+            </if>
 
-    <foreach collection="list" item="params" index="index" separator=",">
-    ( #{params.dataname,jdbcType=VARCHAR}, #{params.dataexplain,jdbcType=VARCHAR}, #{params.type,jdbcType=VARCHAR}, #{params.name,jdbcType=VARCHAR}, curdate())
+            <if test='price != null'>
+               price = #{price,jdbcType=DOUBLE},
+            </if>
 
-    </foreach>
-  </insert>
-  <!--筛选查询-->
-  <select id="filtrateSelect" resultType="com.november.book.model.Book" parameterType="com.november.book.param.BookParam">
-    select * FROM
-    <where>
-      <if test="bookName != null" >
-        AND book_name= #{bookName,jdbcType=VARCHAR}
-      </if>
-      <if test="bookCode != null" >
-        AND book_code= #{bookCode,jdbcType=VARCHAR}
-      </if>
-      <if test="authorName != null" >
-        AND author_name= #{authorName,jdbcType=VARCHAR}
-      </if>
-      <if test="price != null" >
-        AND price= #{price,jdbcType=DOUBLE}
-      </if>
-      <if test="pressName != null" >
-        AND press_name= #{pressName,jdbcType=VARCHAR}
-      </if>
-      <if test="bookTypeId != null" >
-        AND book_type_id= #{bookTypeId,jdbcType=INTEGER}
-      </if>
-      <if test="status != null" >
-        AND status= #{status,jdbcType=INTEGER}
-      </if>
-      <if test="bookChcoType != null" >
-        AND book_chco_type #{bookChcoType,jdbcType=INTEGER}
-      </if>
-      <if test="bookSpaceId != null" >
-        AND book_space_id= #{bookSpaceId,jdbcType=INTEGER}
-      </if>
-    </where>
+            <if test="pressName != null and pressName !='' ">
+                press_name= #{pressName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookTypeId != null ">
+                book_type_id= #{bookTypeId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                 status= #{status,jdbcType=INTEGER},
+            </if>
+            <if test="bookChcoType != null ">
+                 book_chco_type =#{bookChcoType,jdbcType=INTEGER},
+            </if>
+            <if test="bookSpaceId != null ">
+                 book_space_id= #{bookSpaceId,jdbcType=INTEGER},
+            </if>
+            <if test="bookLeaseType != null ">
+                book_lease_type= #{bookLeaseType,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </update>
+
+    <!--批量修改筛选-->
+    <update id="bacthUpdateWhere" parameterType="com.november.book.param.BookParam">
+        update book
+        <trim prefix="set" suffixOverrides=",">
+            <if test="bookName != null and bookName != '' ">
+                book_name= #{bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="authorName != null and authorName !='' ">
+                author_name= #{authorName,jdbcType=VARCHAR},
+            </if>
+
+            <if test='price != null'>
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+
+            <if test="pressName != null and pressName !='' ">
+                press_name= #{pressName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookTypeId != null ">
+                book_type_id= #{bookTypeId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status= #{status,jdbcType=INTEGER},
+            </if>
+            <if test="bookChcoType != null ">
+                book_chco_type =#{bookChcoType,jdbcType=INTEGER},
+            </if>
+            <if test="bookSpaceId != null ">
+                book_space_id= #{bookSpaceId,jdbcType=INTEGER},
+            </if>
+            <if test="bookLeaseType != null ">
+                book_lease_type= #{bookLeaseType,jdbcType=INTEGER},
+            </if>
+        </trim>
+        where id
+        in
+        <foreach collection="whereList" item="id" open="(" separator="," close=")">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <!--批量添加-->
+    <insert id="insert" parameterType="java.util.List" useGeneratedKeys="true">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into description ( dataname, dataexplain, type, name, add_date ) values
+
+        <foreach collection="list" item="params" index="index" separator=",">
+            ( #{params.dataname,jdbcType=VARCHAR}, #{params.dataexplain,jdbcType=VARCHAR},
+            #{params.type,jdbcType=VARCHAR}, #{params.name,jdbcType=VARCHAR}, curdate())
+
+        </foreach>
+    </insert>
+    <!--筛选查询分页-->
+    <select id="filtrateSelect" resultMap="BaseResultMap" parameterType="com.november.book.param.BookParam">
+        select * FROM book
+        <where>
+            <if test="bookName != null and bookName != '' ">
+                AND book_name= #{bookName,jdbcType=VARCHAR}
+            </if>
+            <if test="bookCode != null and bookCode !='' ">
+                AND book_code= #{bookCode,jdbcType=VARCHAR}
+            </if>
+            <if test="authorName != null and authorName !='' ">
+                AND author_name= #{authorName,jdbcType=VARCHAR}
+            </if>
+
+            <if test='price_min != null and price_max != null '>
+                AND price &gt;= #{price_min,jdbcType=DOUBLE}
+                AND price &lt;= #{price_max,jdbcType=DOUBLE}
+            </if>
+
+            <if test='price_min != null and price_max == null '>
+                AND price &gt;= #{price_min,jdbcType=DOUBLE}
+            </if>
+
+            <if test='price_min == null and price_max != null '>
+                AND price &lt;= #{price_max,jdbcType=DOUBLE}
+            </if>
+
+            <if test="pressName != null and pressName !='' ">
+                AND press_name= #{pressName,jdbcType=VARCHAR}
+            </if>
+            <if test="bookTypeId != null ">
+                AND book_type_id= #{bookTypeId,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                AND status= #{status,jdbcType=INTEGER}
+            </if>
+            <if test="bookChcoType != null ">
+                AND book_chco_type =#{bookChcoType,jdbcType=INTEGER}
+            </if>
+            <if test="bookSpaceId != null ">
+                AND book_space_id= #{bookSpaceId,jdbcType=INTEGER}
+            </if>
+        </where>
+        LIMIT #{page},#{limit}
+
+    </select>
+
+    <!--筛选查询所有 id-->
+    <select id="filtrateSelectAllId" resultMap="BaseResultMap" parameterType="com.november.book.param.BookParam">
+        select id FROM book
+        <where>
+            <if test="bookName != null and bookName != '' ">
+                AND book_name= #{bookName,jdbcType=VARCHAR}
+            </if>
+            <if test="bookCode != null and bookCode !='' ">
+                AND book_code= #{bookCode,jdbcType=VARCHAR}
+            </if>
+            <if test="authorName != null and authorName !='' ">
+                AND author_name= #{authorName,jdbcType=VARCHAR}
+            </if>
+
+            <if test='price_min != null and price_max != null '>
+                AND price &gt;= #{price_min,jdbcType=DOUBLE}
+                AND price &lt;= #{price_max,jdbcType=DOUBLE}
+            </if>
+
+            <if test='price_min != null and price_max == null '>
+                AND price &gt;= #{price_min,jdbcType=DOUBLE}
+            </if>
+
+            <if test='price_min == null and price_max != null '>
+                AND price &lt;= #{price_max,jdbcType=DOUBLE}
+            </if>
 
 
-  </select>
+            <if test="price != null ">
+                AND price= #{price,jdbcType=DOUBLE}
+            </if>
 
+
+            <if test="pressName != null and pressName !='' ">
+                AND press_name= #{pressName,jdbcType=VARCHAR}
+            </if>
+            <if test="bookTypeId != null ">
+                AND book_type_id= #{bookTypeId,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                AND status= #{status,jdbcType=INTEGER}
+            </if>
+            <if test="bookChcoType != null ">
+                AND book_chco_type =#{bookChcoType,jdbcType=INTEGER}
+            </if>
+            <if test="bookSpaceId != null ">
+                AND book_space_id= #{bookSpaceId,jdbcType=INTEGER}
+            </if>
+        </where>
+
+    </select>
 
 </mapper>

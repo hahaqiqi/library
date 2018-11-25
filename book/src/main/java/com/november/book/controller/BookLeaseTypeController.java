@@ -2,7 +2,9 @@ package com.november.book.controller;
 
 import com.november.book.model.BookLeaseType;
 import com.november.book.param.BookLeaseTypeParam;
+import com.november.book.param.BookParam;
 import com.november.book.service.BookLeaseTypeService;
+import com.november.book.service.BookService;
 import com.november.common.JsonData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,8 @@ public class BookLeaseTypeController {
 
     @Resource(name = "bookLeaseTypeService")
     private BookLeaseTypeService bookLeaseTypeService;
+    @Resource(name = "bookService")
+    private BookService bookService;
 
     @RequestMapping(value = "/bookLeaseType.html")
     public String toBookLeaseTpe(){
@@ -42,8 +46,20 @@ public class BookLeaseTypeController {
     @RequestMapping(value = "/delete.json",method =RequestMethod.GET)
     @ResponseBody
     public JsonData delete(Integer id){
+        //先更改书籍表中关联了该id的值
+        BookParam bookParam=new BookParam();
+        bookParam.setBookLeaseType(0);
+        bookService.batchUpdate(bookParam);
+        //删除本表数据
         bookLeaseTypeService.deleteBookLeaseType(id);
         return JsonData.success();
+    }
+
+    @RequestMapping(value = "/listAll.json",method =RequestMethod.GET)
+    @ResponseBody
+    public JsonData listAllBookType(){
+        List<BookLeaseType> listBookLeaseType=bookLeaseTypeService.listBookLeaseType();
+        return JsonData.success(listBookLeaseType);
     }
 
     @RequestMapping(value = "/list.json",method =RequestMethod.GET)

@@ -38,7 +38,8 @@ public class BookServiceImpl implements BookService {
             }else{
                 book.setOperator("admin");
             }
-
+            //默认未上架
+            book.setStatus(0);
             book.setOperateTime(new Date());
             book.setBookCode(BookCodeUtil.getBookCode());
             listBook.add(book);
@@ -99,6 +100,8 @@ public class BookServiceImpl implements BookService {
         if(bookParam==null){    //无条件查询所有
             return bookMapper.pageList((page-1)*limit,limit);
         }else{
+            bookParam.setPage((page-1)*limit);
+            bookParam.setLimit(limit);
             return bookMapper.filtrateSelect(bookParam);
         }
     }
@@ -111,5 +114,23 @@ public class BookServiceImpl implements BookService {
     @Override
     public int changeBookStatus(Integer id, Integer statusId) {
         return bookMapper.changeBookStatus(id,statusId);
+    }
+
+    @Override
+    public List<Book> whereListBook(BookParam param) {
+        if(param==null){
+            return null;
+        }else {
+            return bookMapper.filtrateSelectAllId(param);
+        }
+    }
+
+    @Override
+    public int batchUpdate(BookParam param) {
+        if(param.getWhereList()==null){
+            return bookMapper.bacthUpdateAll(param);
+        }else {
+            return bookMapper.bacthUpdateWhere(param);
+        }
     }
 }
