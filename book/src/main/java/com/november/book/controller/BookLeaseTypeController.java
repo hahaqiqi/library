@@ -75,8 +75,8 @@ public class BookLeaseTypeController {
     @RequestMapping(value = "/select.json",method =RequestMethod.GET)
     @ResponseBody
     public JsonData select(Integer id){
-        //BookCode bookCode= bookCodeService.byIdBookCode(id);
-        return JsonData.success(null);
+        BookLeaseType bookLeaseType=bookLeaseTypeService.byIdBookLeaseType(id);
+        return JsonData.success(bookLeaseType);
     }
 
 

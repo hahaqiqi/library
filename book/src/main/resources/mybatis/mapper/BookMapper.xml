@@ -45,6 +45,17 @@
     SELECT * FROM book LIMIT #{page},#{limit}
   </select>
 
+    <select id="getBookByCode" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from book
+        where book_code
+        in
+        <foreach collection="list" item="code" open="(" separator="," close=")">
+            #{code}
+        </foreach>
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from book
     where id = #{id,jdbcType=INTEGER}

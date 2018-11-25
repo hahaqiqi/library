@@ -38,4 +38,6 @@ public interface BookMapper {
     int bacthUpdateAll(BookParam param);
 
     int bacthUpdateWhere(BookParam param);
+
+    List<Book> getBookByCode(List<String> list);
 }

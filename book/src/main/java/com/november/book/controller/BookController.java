@@ -33,6 +33,11 @@ public class BookController {
         return "bookAdd";
     }
 
+    @RequestMapping(value = "/bookBorrow.html")  //直接拦截借书的页面
+    public String toBookBorrow() {
+        return "bookBorrow";
+    }
+
     @RequestMapping(value = "/save.json", method = RequestMethod.POST)
     @ResponseBody
     public JsonData saveBookType(BookParam param) {
@@ -47,7 +52,7 @@ public class BookController {
         return JsonData.success();
     }
 
-    @RequestMapping(value = "/batchUpdate.json", method = RequestMethod.POST)
+    @RequestMapping(value = "/batchUpdate.json", method = RequestMethod.POST)  //修改
     @ResponseBody
     public JsonData batchUpdateBookType(HttpServletRequest request,BookParam param) {
         try {
@@ -106,7 +111,7 @@ public class BookController {
         return JsonData.success();
     }
 
-    @RequestMapping(value = "/list.json", method = RequestMethod.GET)
+    @RequestMapping(value = "/list.json", method = RequestMethod.GET)//查 包括高级查询
     @ResponseBody
     public JsonData listBookType(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -135,8 +140,8 @@ public class BookController {
         return JsonData.success();
     }
 
-    //批量删除
-    @RequestMapping(value = "/batchDelete.json", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/batchDelete.json", method = RequestMethod.GET)//批量删除
     @ResponseBody
     public JsonData batchDeleteBookType(String batchStrId) {
         List<Integer> list = new ArrayList<>();
@@ -152,6 +157,25 @@ public class BookController {
     @ResponseBody
     public JsonData changeBookStatus(Integer id, Integer statusId) {
         bookService.changeBookStatus(id, statusId);
+        return JsonData.success();
+    }
+
+    @RequestMapping(value = "/searchBook.json", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonData searchBook(String searchVal) {
+        String params[] = searchVal.split(",");
+        List<String> listStr=new ArrayList<>();
+        for(String str:params){
+            listStr.add(str);
+        }
+        List<Book> list=bookService.getBookByCode(listStr);
+        return JsonData.pageSuccess(list,0,0);
+    }
+
+    @RequestMapping(value = "/bookState.json", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonData bookState(Integer id) {//根据书籍id判断 未上架,可借阅,被借阅
+
         return JsonData.success();
     }
 

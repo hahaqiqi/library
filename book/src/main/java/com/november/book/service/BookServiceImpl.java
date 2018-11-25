@@ -133,4 +133,24 @@ public class BookServiceImpl implements BookService {
             return bookMapper.bacthUpdateWhere(param);
         }
     }
+
+    @Override
+    public List<Book> getBookByCode(List<String> list) {
+        if(list.size()<=0){
+            return null;
+        }
+        return bookMapper.getBookByCode(list);
+    }
+
+    @Override
+    public String bookState(Integer id) {
+        Book book=bookMapper.selectByPrimaryKey(id);
+        if(book.getStatus()==0){
+            return "未上架";
+        }
+        if(book.getBookLeaseId()!=null){
+            return "被借阅";
+        }
+        return "可借阅";
+    }
 }
