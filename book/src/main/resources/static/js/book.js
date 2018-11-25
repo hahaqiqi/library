@@ -37,7 +37,7 @@ var pageOldMax;
 var sliderPage;
 var pageMax;
 function pageCh(res, curr, count) {
-    layui.use(['slider','jquery'], function() {
+    /*layui.use(['slider','jquery'], function() {
         var slider = layui.slider //滑块
         ,$=layui.$                  //jquery
         pageMax=Math.ceil(count/res.limit);
@@ -54,7 +54,7 @@ function pageCh(res, curr, count) {
                         return;
                     }
                     if(value!=$('.layui-input').val()) {
-                        $('.layui-input').val(value)
+                        $('.layui-input').val(value);
                         $('.layui-laypage-btn').click();
                     }
                 }
@@ -62,7 +62,7 @@ function pageCh(res, curr, count) {
         }else{
             sliderPage.setValue(curr);
         }
-    });
+    });*/
 }
 
 layui.config({
@@ -77,6 +77,49 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         ,laytpl = layui.laytpl //模板
         ,slider = layui.slider
         ,$=layui.$//jquery
+
+    //得到所有书籍类型
+    $.ajax({
+        url: '/bookType/listAll.json',
+        async: false,
+        type: 'GET',
+        success: function (result) {
+            if(result.ret==true){
+                for(var i=0;i<result.data.length;i++){
+                    $(".bookType").append("<option value="+result.data[i].id+">"+result.data[i].typeName+"</option>");
+                }
+            }else{
+                $(".bookType").append("<option value='null'>加载失败</option>");
+            }
+        },
+        error:function () {
+            $(".bookType").append("<option value='null'>接口异常</option>");
+        }
+    });
+    //得到所有限时活动
+    $.ajax({
+        url: '/bookLeaseType/listAll.json',
+        async: false,
+        type: 'GET',
+        success: function (result) {
+            if(result.ret==true){
+                if(result.data.length<=0){
+                    $("#updateBookLeaseType").append("<option value=''>无</option>");
+                }else {
+                    for (var i = 0; i < result.data.length; i++) {
+                        $("#updateBookLeaseType").append("<option value=" + result.data[i].id + ">" + result.data[i].typeName + "</option>");
+                    }
+                }
+            }else{
+                $("#updateBookLeaseType").append("<option value='null'>加载失败</option>");
+            }
+        },
+        error:function () {
+            $(".bookType").append("<option value='null'>接口异常</option>");
+        }
+    });
+
+
 
     form.render();
 
@@ -111,28 +154,6 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 showBookTypeInfo("新增",viewdata);
                 break;*/
             case 'update':
-                if(data.length === 0){
-                    layer.msg('请选择一行');
-                } else if(data.length > 1){
-                    layer.msg('只能同时编辑一个');
-                } else {
-                    //layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
-                    editObj=checkStatus.data[0];
-                    var viewdata = { //数据
-                        "bookName":data[0].bookName
-                        ,"bookCode":data[0].bookCode
-                        ,"authorName":data[0].authorName
-                        ,"price":data[0].price
-                        ,"pressName":data[0].pressName
-                        ,"bookTypeId":data[0].bookTypeId
-                        ,"bookChcoType":data[0].bookChcoType
-                        ,"bookSpaceId":data.bookSpaceId
-                        ,"remark":data[0].remark
-                        ,"id":data[0].id
-                        ,"submitType":1
-                    }
-                    showBookTypeInfo("编辑",viewdata);
-                }
                 break;
             case 'delete':
                 if(data.length === 0){
@@ -164,30 +185,86 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 }
                 break;
             case 'refresh': //刷新
-                $(".layui-laypage-btn")[0].click();
+                $('#refiltrateSubmitBookType').click();
                 break;
             case 'filtrate':
-                if($("#filtrate").css("display")=="block"){
+                $("#filtrate").css("display", "block");
+                layer.open({
+                    type: 1,
+                    title:'高级搜索和修改',
+                    shade :0.4,
+                    closeBtn:0,
+                    shadeClose:true,
+                    content: $("#filtrate"),
+                    area: '900px',
+                    cancel:function(){
+
+                    },
+                    end:function () {
+                        $("#filtrate").css("display","none");
+                    }
+                });
+
+
+
+                /*if($("#filtrate").css("display")=="block"){
                     $("#filtrate").css("display","none");
                 }else {
                     $("#filtrate").css("display", "block");
-                }
+                }*/
+                form.render();
                 break;
 
         };
     });
 
+
     //提交筛选
     $('#filtrateSubmitBookType').on("click",function(){
         $.ajax({
-            url: '/book/list.json',
+            url: '/book/setFiltrate.json',
             data: $("#filtrateFrom").serializeArray(),
             type: 'GET',
             success: function (result) {
                 if (result.ret) {
-                    spopSucess("成功");
+                    $('.layui-table-page .layui-input').val(1);
+                    $('.layui-laypage-btn').click();
                 } else {
-                    spopFail("失败",result.msg);
+                    spopFail("错误",result.msg);
+                }
+            },
+            error:function () {
+                spopFail("错误","请检查参数");
+            }
+        });
+    });
+    //清空条件
+    $('#refiltrateSubmitBookType').on("click",function(){
+        $.ajax({
+            url: '/book/reFiltrate.json',
+            type: 'GET',
+            success: function (result) {
+                $("#filtrateFrom")[0].reset();
+                $("#updateFiltrateFrom")[0].reset();
+                layer.close(layer.index);
+                $('.layui-table-page .layui-input').val(1);
+                $('.layui-laypage-btn').click();
+            },
+        });
+    });
+    //更改筛选
+    $('#updateFiltrateSubmitBookType').on("click",function(){
+        $.ajax({
+            url: '/book/batchUpdate.json',
+            data: $("#updateFiltrateFrom").serializeArray(),
+            type: 'POST',
+            success: function (result) {
+                if (result.ret) {
+                    spopSucess("修改成功");
+                    layer.close(layer.index);
+                    $(".layui-laypage-btn")[0].click();
+                } else {
+                    spopFail("错误",result.msg);
                 }
             },
             error:function () {
@@ -373,3 +450,26 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 });
 
 
+/*
+if(data.length === 0){
+    layer.msg('请选择一行');
+} else if(data.length > 1){
+    layer.msg('只能同时编辑一个');
+} else {
+    //layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
+    editObj=checkStatus.data[0];
+    var viewdata = { //数据
+        "bookName":data[0].bookName
+        ,"bookCode":data[0].bookCode
+        ,"authorName":data[0].authorName
+        ,"price":data[0].price
+        ,"pressName":data[0].pressName
+        ,"bookTypeId":data[0].bookTypeId
+        ,"bookChcoType":data[0].bookChcoType
+        ,"bookSpaceId":data.bookSpaceId
+        ,"remark":data[0].remark
+        ,"id":data[0].id
+        ,"submitType":1
+    }
+    showBookTypeInfo("编辑",viewdata);
+}*/

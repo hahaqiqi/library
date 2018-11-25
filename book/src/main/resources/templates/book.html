@@ -16,10 +16,7 @@
         }
 
         #filtrate {
-            border: 1px solid red;
-            width: 80%;
-            display: block;
-            margin-left: 120px;
+            width: 90%;
             display: none;
         }
     </style>
@@ -45,7 +42,7 @@
         <th lay-data="{field:'bookChcoType',sort: true,templet:function(obj){if(obj.bookChcoType==0){return '免费'}else{ return '收费' } }}">
             收费方式
         </th>
-        <th lay-data="{field:'status',toolbar:'#bookstatus',hide:true,align:'center'}">状态</th>
+        <th lay-data="{field:'status',toolbar:'#bookstatus',align:'center'}">状态</th>
         <th lay-data="{field:'bookSpaceId',sort: true,toolbar:'#bookSpace',hide:true,align:'center'}">存放地点</th>
         <th lay-data="{field:'operator',hide:true,  sort: true}">创建人</th>
         <th lay-data="{field:'operateTime',sort: true,hide:true,align:'center',templet:function(operateTime){return createTime(operateTime)} }">
@@ -62,11 +59,184 @@
 </div>-->
 <div id="view"></div>
 
+<div id="filtrate">
+    <div style="display: inline-block">
+        <form class="layui-form" id="filtrateFrom">
+            <div class="layui-form-item">
+                <label class="layui-form-label">图书名称</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input id="filtrateBookName" type="text" name="bookName" placeholder="请输入" autocomplete="off"
+                           class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">编号</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input id="filtrateBookCode" type="text" name="bookCode" placeholder="请输入" autocomplete="off"
+                           class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">作者</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input id="filtrateAuthorName" type="text" name="authorName" placeholder="请输入" autocomplete="off"
+                           class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">价格范围</label>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">出版社</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input id="filtratePressName" type="text" name="pressName" placeholder="请输入" autocomplete="off"
+                           class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">书籍类型</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <select class="bookType" name="bookTypeId">
+                        <option value='' selected>全部</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">收费方式</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <select name="bookChcoType">
+                        <option value="" selected>全部</option>
+                        <option value="0">免费</option>
+                        <option value="1">收费</option>
+                    </select>
+                </div>
+            </div>
+            <!--<div class="layui-form-item">
+                <label class="layui-form-label">存放地点ID</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input id="filtrateBookSpaceId" type="text" name="bookSpaceId" placeholder="请输入" autocomplete="off"
+                           class="layui-input" value="">
+                </div>
+            </div>-->
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline" style="width: 260px;">
+                    <input type="radio" name="status" value="1" title="正常" checked>
+                    <input type="radio" name="status" value="0" title="下架">
+                    <input type="radio" name="status" value="" title="全部">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <button id="filtrateSubmitBookType" type="button" class="layui-btn" lay-submit lay-filter="save">
+                        提交筛选
+                    </button>
+                    <button id="refiltrateSubmitBookType" type="button" class="layui-btn" lay-submit lay-filter="save">
+                        清空筛选
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--//-->
+    <div style="display: inline-block">
+        <form class="layui-form" id="updateFiltrateFrom">
+            <div class="layui-form-item">
+                <label class="layui-form-label">图书名称</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input id="updateFiltrateBookName" type="text" name="bookName" placeholder="不更改" autocomplete="off"
+                           class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">作者</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input id="updateFiltrateAuthorName" type="text" name="authorName" placeholder="不更改" autocomplete="off"
+                           class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">价格</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" name="price" placeholder="不更改" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">出版社</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input id="updateFiltratePressName" type="text" name="pressName" placeholder="不更改" autocomplete="off"
+                           class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">书籍类型</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <select class="bookType" name="bookTypeId">
+                        <option value="" selected>不更改</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">收费方式</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <select name="bookChcoType">
+                        <option value="" selected>不更改</option>
+                        <option value="0">免费</option>
+                        <option value="1">收费</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">存放地点ID</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input id="updateFiltrateBookSpaceId" type="text" name="bookSpaceId" placeholder="不更改" autocomplete="off"
+                           class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">租借类型</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <select id="updateBookLeaseType" name="bookLeaseType">
+                        <option value="" selected>不更改</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline" style="width: 260px;">
+                    <input type="radio" name="status" value="1" title="正常">
+                    <input type="radio" name="status" value="0" title="下架">
+                    <input type="radio" name="status" value="" title="不更改" checked>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-block">
+                    <button id="updateFiltrateSubmitBookType" type="button" class="layui-btn" lay-submit lay-filter="save">
+                        提交更改
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script type="text/html" id="bookstatus">
     {{# if(d.status>0){ }}
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="changeStatus">正常(点击下架)</a>
     {{# }else{ }}
-    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="changeStatus">下架(点击恢复)</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="changeStatus">下架(点击上架)</a>
     {{# } }}
 </script>
 
@@ -181,9 +351,6 @@
         <!--<div class="layui-inline" lay-event="add">
             <i class="layui-icon layui-icon-add-1"></i>
         </div>-->
-        <div class="layui-inline" lay-event="update">
-            <i class="layui-icon layui-icon-edit"></i>
-        </div>
         <div class="layui-inline" lay-event="delete">
             <i class="layui-icon layui-icon-delete"></i>
         </div>
@@ -193,76 +360,9 @@
         <div class="layui-inline" lay-event="filtrate">
             <i class="layui-icon layui-icon-app"></i>
         </div>
-        <div id="filtrate">
-            <form id="filtrateFrom">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">图书名称</label>
-                    <div class="layui-input-inline" style="width: 200px;">
-                        <input id="filtrateBookName" type="text" name="bookName" placeholder="请输入" autocomplete="off"
-                               class="layui-input" value="{{ d.bookName }}">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">编号</label>
-                    <div class="layui-input-inline" style="width: 200px;">
-                        <input id="filtrateBookCode" type="text" name="bookCode" placeholder="请输入" autocomplete="off"
-                               class="layui-input" value="{{ d.bookCode }}">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">作者</label>
-                    <div class="layui-input-inline" style="width: 200px;">
-                        <input id="filtrateAuthorName" type="text" name="authorName" placeholder="请输入" autocomplete="off"
-                               class="layui-input" value="{{ d.authorName }}">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">价格</label>
-                    <div class="layui-input-inline" style="width: 200px;">
-                        <input id="filtratePrice" type="text" name="price" placeholder="请输入" autocomplete="off"
-                               class="layui-input" value="{{ d.price }}">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">出版社</label>
-                    <div class="layui-input-inline" style="width: 200px;">
-                        <input id="filtratePressName" type="text" name="pressName" placeholder="请输入" autocomplete="off"
-                               class="layui-input" value="{{ d.pressName }}">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">书籍类型</label>
-                    <div class="layui-input-inline" style="width: 200px;">
-                        <select id="filtratePookType" name="bookTypeId" lay-verify="required">
-
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">收费方式</label>
-                    <div class="layui-input-inline" style="width: 200px;">
-                        <select name="bookChcoType" lay-verify="required">
-                            <option value="0" selected>免费</option>
-                            <option value="1">收费</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">存放地点</label>
-                    <div class="layui-input-inline" style="width: 200px;">
-                        <input id="filtrateBookSpaceId" type="text" name="bookSpaceId" placeholder="请输入" autocomplete="off"
-                               class="layui-input" value="{{ d.bookSpaceId }}">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label"></label>
-                    <div class="layui-input-block">
-                        <button id="filtrateSubmitBookType" type="button" class="layui-btn" lay-submit lay-filter="save">提交筛选
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
+        <!--<div class="layui-inline" lay-event="update">
+            <i class="layui-icon layui-icon-edit"></i>
+        </div>-->
     </div>
 </script>
 

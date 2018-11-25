@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
+    <link th:href="@{/spop-0.1.3/dist/spop.css}" rel="stylesheet">
+    <link th:href="@{/css/spop.css}" rel="stylesheet">
+    <link th:href="@{/css/bookBorrow.css}" rel="stylesheet">
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/js/bookBorrow.js}"></script>
+    <script th:src="@{/js/spopUtil.js}"></script>
+    <script th:src="@{/spop-0.1.3/dist/spop.js}"></script>
+</head>
+<body>
+<div id="searchBox">
+    <input id="searchInput" type="text" name="title" placeholder="图书编号" class="layui-input">
+    <img id="searchBut" src="/img/sousuo.png"/>
+</div>
+<div style="margin-left:0px;margin-top:20px;border:1px solid #17dea6;">
+    <div id="searchTable"></div>
+
+    <div id="searchEmailBox">
+        <input id="userEmailInput" type="text" name="title" placeholder="用户邮箱" class="layui-input">
+        <img id="searchEmailBut" src="/img/sousuo.png"/>
+
+        <input type="text" name="" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+        <button class="layui-btn" lay-filter="formDemo">验证验证码</button>
+    </div>
+</div>
+
+</body>
+
+</html>

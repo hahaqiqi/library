@@ -129,7 +129,7 @@ create table if not exists `book`(
 	`press_name` varchar(20) not null comment '出版社名称',
 	`book_type_id` int not null comment '书籍类型id',
 	`book_lease_id`	int	comment '书籍租借id',
-	`book_loss_id` int not null comment '书籍损耗id',
+	`book_loss_id` int  comment '书籍损耗id',
 	`book_lease_type` int	comment '书籍租借类型id',
 	`book_chco_type` int not null comment '书籍收费方式，0为免费，1为收费，收费规则根据 book_code表',
 	`book_space_id` int comment '书籍空间id',
