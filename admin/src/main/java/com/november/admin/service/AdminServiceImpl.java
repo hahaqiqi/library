@@ -97,4 +97,9 @@ public class AdminServiceImpl implements AdminService {
     public void delete(int adminId) {
         adminMapper.deleteByPrimaryKey(adminId);
     }
+
+    @Override
+    public Admin getAdminByAdminCode(String adminCode) {
+        return adminMapper.getAdminByAdminCode(adminCode);
+    }
 }

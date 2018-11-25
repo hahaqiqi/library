@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @create 2018/11/23 11:53
  */
 
-@Component
+@Component(value = "aclRedisDao")
 public class RedisDao {
 
     @Autowired

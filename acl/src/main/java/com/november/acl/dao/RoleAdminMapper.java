@@ -27,4 +27,6 @@ public interface RoleAdminMapper {
     void batchInsert(@Param("ids") List<Integer> ids,@Param("rid") int rid,@Param("operator") String operator);
 
     int countByAdminId(@Param("adminId") int adminId);
+
+    List<Integer> getRoleIdsByAdminId(@Param("adminId") int adminId);
 }

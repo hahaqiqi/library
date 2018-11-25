@@ -120,12 +120,6 @@ public class RoleController {
         return JsonData.success(roleList);
     }
 
-    @RequestMapping("/roleTree.json")
-    @ResponseBody
-    public JsonData roleTree(@RequestParam("roleId") int roleId) {
-        return JsonData.success();
-    }
-
     @ResponseBody
     @RequestMapping("/changeAdmin.json")
     public JsonData changeAdmin(String idStr,int rid) {

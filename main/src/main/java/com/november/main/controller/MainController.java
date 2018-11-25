@@ -6,6 +6,7 @@ import com.november.common.RequestHolder;
 import com.november.demo2.service.BillService;
 import com.november.main.param.LoginParam;
 import com.november.main.service.LoginService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,11 @@ public class MainController {
     @RequestMapping(value = "/home.html")
     public String home(){ return "home"; }
 
+    @RequestMapping(value = "/login.html")
+    public String login(){
+        return "login";
+    }
+
     @ResponseBody
     @RequestMapping(value = "/login.json")
     public JsonData login(LoginParam param, HttpServletRequest request){
@@ -38,6 +44,10 @@ public class MainController {
         return JsonData.success();
     }
 
+    @RequestMapping(value = "/logout.html")
+    public String logout(){
+        return "logout";
+    }
 
     @RequestMapping(value = "/user.html")
     public String userPage(){
@@ -54,5 +64,15 @@ public class MainController {
         return "test1";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/error.html")
+    public JsonData error(){
+        return JsonData.fail("无权限访问");
+    }
 
+    @ResponseBody
+    @RequestMapping(value = "/unauth.json")
+    public JsonData unauth(){
+        return JsonData.fail("无权限访问");
+    }
 }

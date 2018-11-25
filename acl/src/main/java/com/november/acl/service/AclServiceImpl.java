@@ -4,16 +4,23 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.november.acl.dao.AclMapper;
+import com.november.acl.dao.RedisDao;
 import com.november.acl.dao.RoleAclMapper;
 import com.november.acl.dto.AclDto;
 import com.november.acl.model.Acl;
 import com.november.acl.param.AclParam;
+import com.november.common.ApplicationContextHelper;
 import com.november.exception.ParamException;
+import com.november.model.CacheType;
 import com.november.util.BeanValidator;
+import com.november.util.JsonMapper;
 import com.november.util.PageQuery;
 import com.november.util.PageResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.codehaus.jackson.type.TypeReference;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +36,12 @@ public class AclServiceImpl implements AclService {
 
     @Resource
     private RoleAclMapper roleAclMapper;
+
+    @Resource(name = "aclRedisDao")
+    private RedisDao redisDao;
+
+    @Resource
+    private ShiroService shiroService;
 
     /*public void save(AclParam param) {
         BeanValidator.check(param);
@@ -76,10 +89,22 @@ public class AclServiceImpl implements AclService {
 */
     @Override
     public List<AclDto> getAll(int rid) {
-        //  先得到所有权限点
-        List<Acl> all = aclMapper.getAll();
+        //  先创建一个集合
+        List<Acl> all = Lists.newArrayList();
+        //  获取redis中的值
+        String value = redisDao.getValue(CacheType.LIST_PREFIX+"acl");
+        //  判断是否为空
+        if(StringUtils.isNotBlank(value)){
+            //  转化为值
+            all = JsonMapper.string2Obj(value, new TypeReference<List<Acl>>() {
+            });
+        }else{
+            //  得到所有权限点
+            all = aclMapper.getAll();
+        }
         //  处理成树
         List<AclDto> aclTree = getAclTree(all,rid);
+        //  返回值
         return aclTree;
     }
 
@@ -184,6 +209,9 @@ public class AclServiceImpl implements AclService {
     public void changeAcl(String idStr,int rid){
         if(StringUtils.isBlank(idStr)){
             roleAclMapper.deleteByRoleId(rid);
+            if(ApplicationContextHelper.propBean(ShiroFilterFactoryBean.class)!=null){
+                shiroService.updatePermission(ApplicationContextHelper.propBean(ShiroFilterFactoryBean.class));
+            }
             return;
         }
         String[] strs = StringUtils.split(idStr, ",");
@@ -197,6 +225,17 @@ public class AclServiceImpl implements AclService {
         }
         roleAclMapper.deleteByRoleId(rid);
         batchRoleAcl(aclIds,rid);
+        if(ApplicationContextHelper.propBean(ShiroFilterFactoryBean.class)!=null){
+            shiroService.updatePermission(ApplicationContextHelper.propBean(ShiroFilterFactoryBean.class));
+        }
+    }
+
+    @Override
+    public List<Acl> getByIds(List<Integer> ids) {
+        if(CollectionUtils.isEmpty(ids)){
+            return Lists.newArrayList();
+        }
+        return aclMapper.getByIdList(ids);
     }
 
     private void batchRoleAcl(List<Integer> ids,int rid){
