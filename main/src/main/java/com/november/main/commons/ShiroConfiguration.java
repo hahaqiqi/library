@@ -20,25 +20,6 @@ import java.util.Map;
 public class ShiroConfiguration {
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, ShiroService shiroService) {
-        ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
-        shiroFilter.setSecurityManager(securityManager);
-        Map<String, Filter> filterMap = new LinkedHashMap<>(1);
-        filterMap.put("roles", rolesAuthorizationFilter());
-        shiroFilter.setFilters(filterMap);
-        //登录的网页
-        shiroFilter.setLoginUrl("/login.html");
-        //首页
-        shiroFilter.setSuccessUrl("/home.html");
-        //无权限时url
-        shiroFilter.setUnauthorizedUrl("/unauth.json");
-        //错误页面，认证不通过跳转
-        shiroFilter.setUnauthorizedUrl("/error.json");
-        shiroFilter.setFilterChainDefinitionMap(shiroService.loadFilterChainDefinitions());
-        return shiroFilter;
-    }
-
-    @Bean
     public CustomRolesAuthorizationFilter rolesAuthorizationFilter() {
         return new CustomRolesAuthorizationFilter();
     }
@@ -73,6 +54,25 @@ public class ShiroConfiguration {
         proxy.setTargetBeanName("shiroFilter");
         filterRegistrationBean.setFilter(proxy);
         return filterRegistrationBean;
+    }
+
+    @Bean("shiroFilter")
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager, ShiroService shiroService) {
+        ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
+        shiroFilter.setSecurityManager(securityManager);
+        Map<String, Filter> filterMap = new LinkedHashMap<>(1);
+        filterMap.put("roles", rolesAuthorizationFilter());
+        shiroFilter.setFilters(filterMap);
+        //登录的网页
+        shiroFilter.setLoginUrl("/login.html");
+        //首页
+        shiroFilter.setSuccessUrl("/home.html");
+        //无权限时url
+        shiroFilter.setUnauthorizedUrl("/unauth.json");
+        //错误页面，认证不通过跳转
+        shiroFilter.setUnauthorizedUrl("/error.json");
+        shiroFilter.setFilterChainDefinitionMap(shiroService.loadFilterChainDefinitions());
+        return shiroFilter;
     }
 
     //将自己的验证方式加入容器

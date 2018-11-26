@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.november.acl.dao.AclMapper" >
-  <resultMap id="BaseResultMap" type="com.november.acl.model.Acl" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="acl_name" property="aclName" jdbcType="VARCHAR" />
-    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="seq" property="seq" jdbcType="INTEGER" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="operator" property="operator" jdbcType="VARCHAR" />
-    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, acl_name, parent_id, status, seq, url, operator, operate_time, remark
+<mapper namespace="com.november.acl.dao.AclMapper">
+    <resultMap id="BaseResultMap" type="com.november.acl.model.Acl">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="acl_name" property="aclName" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="seq" property="seq" jdbcType="INTEGER"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="is_cata" property="isCata" jdbcType="INTEGER"/>
+        <result column="oper_type_id" property="operTypeId" jdbcType="INTEGER"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, acl_name, parent_id, status, seq, url,is_cata,oper_type_id, operator, operate_time, remark
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from acl
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from acl
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from acl
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.november.acl.model.Acl" >
+    <insert id="insert" parameterType="com.november.acl.model.Acl">
     insert into acl (id, acl_name, parent_id, 
       status, seq, type, 
       url, operator, operate_time, 
@@ -35,107 +37,107 @@
       #{url,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.november.acl.model.Acl" >
-    insert into acl
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="aclName != null" >
-        acl_name,
-      </if>
-      <if test="parentId != null" >
-        parent_id,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="seq != null" >
-        seq,
-      </if>
-      <if test="type != null" >
-        type,
-      </if>
-      <if test="url != null" >
-        url,
-      </if>
-      <if test="operator != null" >
-        operator,
-      </if>
-      <if test="operateTime != null" >
-        operate_time,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="aclName != null" >
-        #{aclName,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null" >
-        #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="seq != null" >
-        #{seq,jdbcType=INTEGER},
-      </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="url != null" >
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null" >
-        #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null" >
-        #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.november.acl.model.Acl" >
-    update acl
-    <set >
-      <if test="aclName != null" >
-        acl_name = #{aclName,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="seq != null" >
-        seq = #{seq,jdbcType=INTEGER},
-      </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="operator != null" >
-        operator = #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null" >
-        operate_time = #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.november.acl.model.Acl" >
+    <insert id="insertSelective" parameterType="com.november.acl.model.Acl">
+        insert into acl
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="aclName != null">
+                acl_name,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="seq != null">
+                seq,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+            <if test="operateTime != null">
+                operate_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="aclName != null">
+                #{aclName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="seq != null">
+                #{seq,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operateTime != null">
+                #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.november.acl.model.Acl">
+        update acl
+        <set>
+            <if test="aclName != null">
+                acl_name = #{aclName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="seq != null">
+                seq = #{seq,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.november.acl.model.Acl">
     update acl
     set acl_name = #{aclName,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=INTEGER},
@@ -147,49 +149,79 @@
       operate_time = #{operateTime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
-  </update>
+    </update>
 
-  <select id="countByNameAndParentId" parameterType="map" resultType="int">
+    <select id="countByNameAndParentId" parameterType="map" resultType="int">
+        SELECT count(1)
+        FROM acl
+        WHERE parentId = #{parentId}
+        AND acl_name = #{aclName}
+        <if test="id != null">
+            AND id != #{id}
+        </if>
+    </select>
+
+    <select id="countByParentId" parameterType="map" resultType="int">
     SELECT count(1)
     FROM acl
     WHERE parentId = #{parentId}
-    AND acl_name = #{aclName}
-    <if test="id != null">
-      AND id != #{id}
-    </if>
-  </select>
+    </select>
 
-  <select id="countByParentId" parameterType="map" resultType="int">
-    SELECT count(1)
-    FROM acl
-    WHERE parentId = #{parentId}
-  </select>
+    <select id="getPageByParentId" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM acl
+        WHERE parentId = #{parentId}
+        ORDER BY seq ASC, name ASC
+        limit #{page.offset}, #{page.pageSize}
+    </select>
 
-  <select id="getPageByParentId" parameterType="map" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List" />
-    FROM acl
-    WHERE parentId = #{parentId}
-    ORDER BY seq ASC, name ASC
-    limit #{page.offset}, #{page.pageSize}
-  </select>
+    <select id="getAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM acl
+    </select>
 
-  <select id="getAll" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List" />
-    FROM acl
-  </select>
+    <select id="getByIdList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM acl
+        WHERE id IN
+        <foreach collection="idList" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 
-  <select id="getByIdList" parameterType="map" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List" />
-    FROM acl
-    WHERE id IN
-    <foreach collection="idList" item="id" open="(" close=")" separator=",">
-      #{id}
-    </foreach>
-  </select>
+    <select id="getByUrl" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM acl
+        WHERE url = #{url} <!-- url is not null and url != '' and  #{url} REGEXP url-->
+    </select>
 
-  <select id="getByUrl" parameterType="string" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List" />
-    FROM acl
-    WHERE url = #{url} <!-- url is not null and url != '' and  #{url} REGEXP url-->
-  </select>
+    <select id="getOperType" resultType="com.november.acl.model.OperType">
+      select * from oper_type
+    </select>
+
+    <select id="getRootAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from acl
+        where is_cata = 1
+    </select>
+
+    <select id="getAclsByOperType" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from acl
+        <where>
+            <if test="operTypeId != null">
+                oper_type_id in
+                <foreach collection="operTypeId" item="id" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+            and parent_id = #{parentId}
+        </where>
+    </select>
 </mapper>

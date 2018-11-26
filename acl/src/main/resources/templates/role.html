@@ -267,6 +267,12 @@
                                 openall: true
                             });
                             $("#role-oper").show("fast");
+                        }else{
+                            spop({
+                                template: '<h4 class="spop-title">加载权限点</h4>' + result.msg,
+                                group: 'submit-status',
+                                style: 'error',
+                            });
                         }
                     }
                 });

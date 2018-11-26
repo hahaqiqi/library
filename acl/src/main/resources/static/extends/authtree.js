@@ -90,10 +90,25 @@ layui.define(['jquery', 'form'], function(exports){
 					var elem = $(that).prev();
 					var checked = elem.is(':checked');
 
-					if (autochecked) {
+                    if (autochecked) {
+                        if (checked) {
+                            /*查找child的前边一个元素，并将里边的checkbox选中状态改为true。*/
+                            elem.parents('.auth-child').prev().find('input[type="checkbox"]').prop('checked', true);
+                        }
+                        var childs = elem.parent().next().find('input[type="checkbox"]').prop('checked', checked);
+                    }
+                    if (autoclose) {
+                        if (checked) {
+                            // pass
+                        } else {
+                            // 自动关闭父级选中节点
+                            obj._autoclose($(that).parent());
+                        }
+                    }
+					/*if (autochecked) {
                         var flag = true;
 						if (checked) {
-							/*查找child的前边一个元素，并将里边的checkbox选中状态改为true。*/
+							/!*查找child的前边一个元素，并将里边的checkbox选中状态改为true。*!/
                             var divs = elem.parent().parent().siblings();
                             for(var i=0;i<divs.length;i++){
                             	var a = $(divs[i]).children("div:first").children("input[type='checkbox']").prop("checked");
@@ -118,7 +133,7 @@ layui.define(['jquery', 'form'], function(exports){
 							// 自动关闭父级选中节点
 							obj._autoclose($(that).parent());
 						}
-					}
+					}*/
 					/*console.log(childs);*/
 					form.render('checkbox');
 					// 变动则存一下临时状态
