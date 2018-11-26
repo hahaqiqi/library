@@ -45,7 +45,7 @@
 <script id="demo" type="text/html">
     <form class="layui-form" action="" id="adminForm">
         {{#  if(d.submitType == 2 ){ }}
-        <input type="hidden" name="id" />
+        <input type="hidden" name="id" value="{{ d.id || '' }}"/>
         {{#  } }}
         {{#  if(d.submitType != 2 ){ }}
         <div class="layui-form-item">
