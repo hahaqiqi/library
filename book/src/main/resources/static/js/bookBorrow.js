@@ -116,7 +116,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             return;
         }
         //通过ajax得到验证码
-        verificationCode="123456";
+        verificationCode=getCode(userEmailInput);
 
 
         $('#getCodeBut').attr("class","layui-btn layui-btn-disabled");
@@ -196,6 +196,28 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         });
 
     });
+
+    //获得验证码
+    function getCode(inputCode) {
+        var code="";
+        $.ajax({
+            url: 'book/getCode.json',
+            data: {"email":inputCode},
+            async:false,
+            type: 'GET',
+            success: function (result) {
+                if(result.ret){
+                    code=result.data;
+                }else{
+                    spopFail("获取失败","");
+                }
+            },
+            error:function () {
+                spopFail("获取失败","");
+            }
+        });
+        return code;
+    }
 
 });
 

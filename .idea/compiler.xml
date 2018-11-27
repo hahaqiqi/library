@@ -11,7 +11,6 @@
         <module name="book" />
         <module name="demo2" />
         <module name="main" />
-        <module name="public" />
         <module name="space" />
         <module name="user" />
       </profile>
