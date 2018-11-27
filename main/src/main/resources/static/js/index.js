@@ -196,7 +196,6 @@ new Vue({
                 }, 100);
 
                 $(document).on('click', '.layui-nav-item a', function() {
-                    $(this).
                     $(this).addClass('active');
                     $(this).parents('.layui-nav-item').siblings().find('a').removeClass('active');
                     $(this).parents('.layui-nav-item').siblings().removeClass('layui-this');
@@ -208,7 +207,7 @@ new Vue({
                     $(elem).siblings().find('a').removeClass('active');
                 });
                 // 监听点击tab
-                $(document).on('click', '.layui-tab li', function() {
+                $(document).on('dblclick', '.layui-tab li', function() {
                     var pid = $(this).attr('lay-id');
                     refreshTab(pid);
                 });
