@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.november.book.dao.SpaceBook" >
+<mapper namespace="com.november.book.dao.SpaceBookMapper" >
   <resultMap id="BaseResultMap" type="com.november.book.model.Book" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="book_name" property="bookName" jdbcType="VARCHAR" />
@@ -26,8 +26,12 @@
     remark
   </sql>
 
-  <select id="selectSpaceBook" resultType="" parameterType="">
-    select book_name,author_name,price,press_name from Book where book_space_id=#{bookspaceid,jdbcType=INTEGER}
+  <select id="selectSpaceBook" resultMap="BaseResultMap" parameterType="java.util.List">
+    select * from Book where book_space_id
+    in
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
   </select>
 
 

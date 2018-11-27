@@ -5,8 +5,8 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface SpaceBook {
+public interface SpaceBookMapper {
 
-    List<Book> selectSpaceBook(@Param("bookspaceid") Integer bookspaceid);
+    List<Book> selectSpaceBook(List<Integer> list);
 
 }

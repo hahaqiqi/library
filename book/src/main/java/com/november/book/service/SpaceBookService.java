@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface SpaceBookService {
 
-    List<Book> selectSpaceBook(Integer bookspaceid);
+    List<Book> selectSpaceBook(List<Integer> bookspaceid);
 
 }
