@@ -2,45 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66a4b5d8-29aa-43b7-830d-4da656c39ca7" name="Default" comment="Merge branch 'master' of https://github.com/hahaqiqi/library&#10;&#10;# Conflicts:&#10;#&#9;public/pom.xml">
-      <change afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/model/OperType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/RoleAclServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/ShiroService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/ShiroServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/november/main/commons/CustomRolesAuthorizationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/november/main/commons/MyShiroRealm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/src/main/java/com/november/main/commons/ShiroConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/acl/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/controller/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/controller/RoleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/dao/AclMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/dao/AclMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/dao/RedisDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/dao/RedisDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/dao/RoleAclMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/dao/RoleAclMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/dao/RoleAdminMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/dao/RoleAdminMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/model/Acl.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/model/Acl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/AclService.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/AclService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/AclServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/AclServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/RoleAclService.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/RoleAclService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/RoleAdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/RoleAdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/RoleAdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/RoleAdminServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/RoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/RoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/java/com/november/acl/service/RoleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/resources/mybatis/mapper/AclMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/resources/mybatis/mapper/AclMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/resources/mybatis/mapper/RoleAclMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/resources/mybatis/mapper/RoleAclMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/resources/mybatis/mapper/RoleAdminMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/resources/mybatis/mapper/RoleAdminMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/resources/static/extends/authtree.js" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/resources/static/extends/authtree.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/acl/src/main/resources/templates/role.html" beforeDir="false" afterPath="$PROJECT_DIR$/acl/src/main/resources/templates/role.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/november/admin/service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/november/admin/service/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/november/admin/service/AdminServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/november/admin/service/AdminServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/resources/mybatis/mapper/AdminMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/mybatis/mapper/AdminMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/resources/static/js/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/static/js/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/src/main/resources/templates/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/admin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/main/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/november/main/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/november/main/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/java/com/november/main/service/LoginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/java/com/november/main/service/LoginServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/src/main/resources/public/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/src/main/resources/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/public/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/src/main/java/com/november/common/ApplicationContextHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/public/src/main/java/com/november/common/ApplicationContextHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/target/classes/com/november/common/ApplicationContextHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/public/target/classes/com/november/common/ApplicationContextHelper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book/src/main/resources/static/js/bookBorrow.js" beforeDir="false" afterPath="$PROJECT_DIR$/book/src/main/resources/static/js/bookBorrow.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/space/target/" />
@@ -59,7 +22,26 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="bookBorrow.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/book/src/main/resources/static/js/bookBorrow.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="212">
+              <caret line="129" column="17" lean-forward="true" selection-start-line="129" selection-start-column="17" selection-end-line="129" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bookBorrow.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/book/src/main/resources/templates/bookBorrow.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="27" column="105" lean-forward="true" selection-start-line="27" selection-start-column="105" selection-end-line="27" selection-end-column="105" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -124,9 +106,9 @@
         <option value="$PROJECT_DIR$/public/src/main/java/com/november/util/Email.java" />
         <option value="$PROJECT_DIR$/book/src/main/java/com/november/book/controller/BookController.java" />
         <option value="$PROJECT_DIR$/book/src/main/resources/templates/bookBorrow.html" />
-        <option value="$PROJECT_DIR$/book/src/main/resources/static/js/bookBorrow.js" />
         <option value="$PROJECT_DIR$/sql结构.txt" />
         <option value="$PROJECT_DIR$/public/pom.xml" />
+        <option value="$PROJECT_DIR$/book/src/main/resources/static/js/bookBorrow.js" />
       </list>
     </option>
   </component>
@@ -181,18 +163,56 @@
             <path>
               <item name="library" type="b2602c69:ProjectViewProjectNode" />
               <item name="library" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="book" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="library" type="b2602c69:ProjectViewProjectNode" />
               <item name="library" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="library" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
+              <item name="book" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="library" type="462c0819:PsiDirectoryNode" />
+              <item name="book" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="library" type="462c0819:PsiDirectoryNode" />
+              <item name="book" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="library" type="462c0819:PsiDirectoryNode" />
+              <item name="book" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="library" type="462c0819:PsiDirectoryNode" />
+              <item name="book" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="library" type="462c0819:PsiDirectoryNode" />
+              <item name="book" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -452,7 +472,7 @@
       <workItem from="1543121873365" duration="24004000" />
       <workItem from="1543192673457" duration="23986000" />
       <workItem from="1543234778433" duration="6033000" />
-      <workItem from="1543279140947" duration="5040000" />
+      <workItem from="1543279140947" duration="8009000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1542011677095</created>
@@ -637,7 +657,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="184500000" />
+    <option name="totallyTimeSpent" value="187469000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -650,6 +670,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32879046" />
@@ -674,7 +695,7 @@
       <window_info id="UI Designer" order="3" />
       <window_info anchor="right" id="Theme Preview" order="9" />
       <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.16524702" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.23850085" />
       <window_info anchor="bottom" id="Thumbnails" order="14" weight="0.32879046" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -1073,24 +1094,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/book/src/main/resources/templates/bookBorrow.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="27" column="67" selection-start-line="27" selection-start-column="67" selection-end-line="27" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sql结构.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
           <caret line="153" column="4" selection-start-line="153" selection-start-column="4" selection-end-line="153" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/book/src/main/resources/static/js/bookBorrow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="184" column="32" lean-forward="true" selection-start-line="184" selection-start-column="32" selection-end-line="184" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -1112,6 +1119,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
           <caret line="20" column="21" lean-forward="true" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book/src/main/resources/templates/bookBorrow.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="27" column="105" lean-forward="true" selection-start-line="27" selection-start-column="105" selection-end-line="27" selection-end-column="105" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book/src/main/resources/static/js/bookBorrow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="129" column="17" lean-forward="true" selection-start-line="129" selection-start-column="17" selection-end-line="129" selection-end-column="17" />
         </state>
       </provider>
     </entry>
