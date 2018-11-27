@@ -8,14 +8,18 @@ import java.util.List;
 
 @Service("spaceService")
 public interface SpaceService {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer id);//根据ID删除
 
-    int insert(SpaceParam record);
+    int insert(SpaceParam record);//添加父空间
 
-    List<Space> selectList();
+    List<Space> selectList();//查询空间
 
-    int updateByPrimaryKey(SpaceParam record);
+    int updateByPrimaryKeySelective(SpaceParam record);//修改空间
 
+    int Movespace(Integer id,Integer pid);
+
+
+//    boolean selectIdandParentId(Integer parentid);
 
   /*  SpaceParam selectByPrimaryKey(@Param("id") Integer id);
 

@@ -31,5 +31,13 @@ public interface BookMapper {
 
     List<Book> filtrateSelect(BookParam bookParam);
 
+    List<Book> filtrateSelectAllId(BookParam bookParam);
+
     int changeBookStatus(@Param("id") Integer id,@Param("statusId") Integer statusId);
+
+    int bacthUpdateAll(BookParam param);
+
+    int bacthUpdateWhere(BookParam param);
+
+    List<Book> getBookByCode(List<String> list);
 }

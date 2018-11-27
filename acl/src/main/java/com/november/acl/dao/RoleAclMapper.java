@@ -23,5 +23,7 @@ public interface RoleAclMapper {
 
     List<Integer> getAclIdByRoleId(@Param("rid") int rid);
 
+    List<Integer> getRoleIdByAclId(@Param("aclId") int aclId);
+
     void batchInsert(@Param("ids") List<Integer> ids,@Param("rid") int rid,@Param("operator") String operator);
 }

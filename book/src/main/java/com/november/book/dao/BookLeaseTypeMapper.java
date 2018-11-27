@@ -24,4 +24,6 @@ public interface BookLeaseTypeMapper {
     List<BookLeaseType> pageList(@Param("page") Integer page, @Param("limit")Integer limit);
 
     int selectByTypeName(BookLeaseTypeParam param);
+
+    List<BookLeaseType> listAll();
 }

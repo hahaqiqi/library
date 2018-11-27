@@ -20,7 +20,7 @@ public class SpaceParam {
     @Length(min = 2, max = 20, message = "空间名称长度需要在2-20个字之间")
     private String spaceName;
 
-    private Integer parentId=-1;
+    private Integer parentId=0;
 
     @Min(value = 0, message = "层级不合法")
     @Max(value = 2, message = "层级不合法")

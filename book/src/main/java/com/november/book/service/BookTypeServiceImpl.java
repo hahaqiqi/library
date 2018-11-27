@@ -1,11 +1,17 @@
 package com.november.book.service;
 
 import com.google.common.base.Preconditions;
+import com.november.book.dao.BookRedisDao;
 import com.november.book.dao.BookTypeMapper;
+import com.november.book.model.BookLeaseType;
 import com.november.book.model.BookType;
 import com.november.book.param.BookTypeParam;
 import com.november.exception.ParamException;
+import com.november.model.CacheType;
 import com.november.util.BeanValidator;
+import com.november.util.JsonMapper;
+import org.codehaus.jackson.type.TypeReference;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +24,8 @@ public class BookTypeServiceImpl implements BookTypeService {
 
     @Resource
     private BookTypeMapper bookTypeMapper;
+    @Resource
+    private BookRedisDao bookRedisDao;
     @Override
     public int saveBookType(BookTypeParam param) {
         //检查用户输入的字段
@@ -49,14 +57,17 @@ public class BookTypeServiceImpl implements BookTypeService {
         BookType after =BookType.builder().typeName(param.getTypeName()).remark(param.getRemark()).id(param.getId()).build();
         after.setOperator("admin");
         after.setOperateTime(new Date());
-        bookTypeMapper.updateByPrimaryKeySelective(after);
-        return 0;
+        int count= bookTypeMapper.updateByPrimaryKeySelective(after);
+        //删除redis对应数据
+        bookRedisDao.delKey(CacheType.OBJECT_PREFIX+"bookType"+param.getId());
+        return count;
     }
 
     @Override
     public int deleteBookType(Integer id) {
         BookType before =bookTypeMapper.selectByPrimaryKey(id);
         Preconditions.checkNotNull(before, "删除的内容不存在");
+        bookRedisDao.delKey(CacheType.OBJECT_PREFIX+"bookType"+id);
         return bookTypeMapper.deleteByPrimaryKey(id);
     }
 
@@ -82,7 +93,23 @@ public class BookTypeServiceImpl implements BookTypeService {
 
     @Override
     public BookType byIdBookType(Integer id) {
-        return  bookTypeMapper.selectByPrimaryKey(id);
+        BookType bookType=null;
+        // 先从redis加载
+        String bookTypeValue = bookRedisDao.getValue(CacheType.OBJECT_PREFIX+"bookType"+id);
+        if(StringUtils.isBlank(bookTypeValue)){
+            //如果为空,从数据库加载并存入redis
+            bookType= bookTypeMapper.selectByPrimaryKey(id);
+            //  转化为字符串
+            String sValue = JsonMapper.obj2String(bookType);
+            // 存
+            bookRedisDao.setKey(CacheType.OBJECT_PREFIX+"bookType"+id,sValue);
+        }else{
+            //返回redis中的数据
+            bookType=JsonMapper.string2Obj(bookTypeValue, new TypeReference<BookType>() {
+            });
+        }
+        return bookType;
+
     }
 
     //检查BookTypeName是否同名

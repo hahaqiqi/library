@@ -3,11 +3,13 @@ package com.november.book.service;/*
  **/
 
 import com.google.common.base.Preconditions;
+import com.november.book.dao.BookLeaseMapper;
 import com.november.book.dao.BookMapper;
 import com.november.book.model.Book;
 import com.november.book.param.BookParam;
 import com.november.book.util.BookCodeUtil;
 import com.november.common.RequestHolder;
+import com.november.exception.ParamException;
 import com.november.util.BeanValidator;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ public class BookServiceImpl implements BookService {
 
     @Resource
     private BookMapper bookMapper;
+    @Resource
+    private BookLeaseMapper bookLeaseMapper;
 
     @Override
     public int saveBook(BookParam param) {
@@ -38,7 +42,8 @@ public class BookServiceImpl implements BookService {
             }else{
                 book.setOperator("admin");
             }
-
+            //默认未上架
+            book.setStatus(0);
             book.setOperateTime(new Date());
             book.setBookCode(BookCodeUtil.getBookCode());
             listBook.add(book);
@@ -71,12 +76,37 @@ public class BookServiceImpl implements BookService {
     public int deleteBook(Integer id) {
         Book before=bookMapper.selectByPrimaryKey(id);
         Preconditions.checkNotNull(before, "删除的内容不存在");
-        return bookMapper.deleteByPrimaryKey(id);
+
+        if(before.getBookLeaseId()!=null && before.getBookLeaseId()!=0){
+            //如果书籍正在被借阅，不允许删除和更改状态
+            throw new ParamException("书籍借阅中,不允许删除");
+        }
+        if(bookLeaseMapper.selectBookLeaseCountByBookId(id)>0){
+            //有过订单不能从数据库删除
+            //则将book status 改为 2(永久下架)
+            return bookMapper.changeBookStatus(id,2);
+        }
+        return bookMapper.deleteByPrimaryKey(id);//直接从数据库删除
     }
 
     @Override
     public int batchDeleteBook(List<Integer> list) {
-        return bookMapper.bacthDelete(list);
+        List<Integer> scList=new ArrayList<>();
+        int count=0;
+        for(Integer i:list ){
+            Book before=bookMapper.selectByPrimaryKey(i);
+            if(before.getBookLeaseId()!=null && before.getBookLeaseId()!=0){
+                //如果书籍正在被借阅，不允许删除和更改状态
+                continue;
+            }
+            if(bookLeaseMapper.selectBookLeaseCountByBookId(i)>0){
+                count=count+bookMapper.changeBookStatus(i,2);
+            }else{
+                scList.add(i);
+            }
+        }
+        count=count+bookMapper.bacthDelete(scList);
+        return count;
     }
 
     @Override
@@ -99,6 +129,8 @@ public class BookServiceImpl implements BookService {
         if(bookParam==null){    //无条件查询所有
             return bookMapper.pageList((page-1)*limit,limit);
         }else{
+            bookParam.setPage((page-1)*limit);
+            bookParam.setLimit(limit);
             return bookMapper.filtrateSelect(bookParam);
         }
     }
@@ -111,5 +143,43 @@ public class BookServiceImpl implements BookService {
     @Override
     public int changeBookStatus(Integer id, Integer statusId) {
         return bookMapper.changeBookStatus(id,statusId);
+    }
+
+    @Override
+    public List<Book> whereListBook(BookParam param) {
+        if(param==null){
+            return null;
+        }else {
+            return bookMapper.filtrateSelectAllId(param);
+        }
+    }
+
+    @Override
+    public int batchUpdate(BookParam param) {
+        if(param.getWhereList()==null){
+            return bookMapper.bacthUpdateAll(param);
+        }else {
+            return bookMapper.bacthUpdateWhere(param);
+        }
+    }
+
+    @Override
+    public List<Book> getBookByCode(List<String> list) {
+        if(list.size()<=0){
+            return null;
+        }
+        return bookMapper.getBookByCode(list);
+    }
+
+    @Override
+    public String bookState(Integer id) {
+        Book book=bookMapper.selectByPrimaryKey(id);
+        if(book.getStatus()==0){
+            return "未上架";
+        }
+        if(book.getBookLeaseId()!=null){
+            return "被借阅";
+        }
+        return "可借阅";
     }
 }
