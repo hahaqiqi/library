@@ -3,7 +3,6 @@ package com.november.acl.controller;
 import com.google.common.collect.Lists;
 import com.november.acl.dto.AdminDto;
 import com.november.acl.model.Role;
-import com.november.acl.model.TestTree;
 import com.november.acl.param.RoleParam;
 import com.november.acl.service.RoleAdminService;
 import com.november.acl.service.RoleService;
@@ -119,12 +118,6 @@ public class RoleController {
     public JsonData list() {
         List<Role> roleList = roleService.getAll();
         return JsonData.success(roleList);
-    }
-
-    @RequestMapping("/roleTree.json")
-    @ResponseBody
-    public JsonData roleTree(@RequestParam("roleId") int roleId) {
-        return JsonData.success();
     }
 
     @ResponseBody
