@@ -42,7 +42,7 @@
   </select>
 
     <select id="pageList" resultMap="BaseResultMap">
-    SELECT * FROM book LIMIT #{page},#{limit}
+    SELECT * FROM book WHERE status!=2 LIMIT #{page},#{limit}
   </select>
 
     <select id="getBookByCode" resultMap="BaseResultMap" parameterType="java.util.List">
@@ -401,6 +401,9 @@
             <if test="status != null">
                 AND status= #{status,jdbcType=INTEGER}
             </if>
+            <if test="status == null">
+                AND status!=2
+            </if>
             <if test="bookChcoType != null ">
                 AND book_chco_type =#{bookChcoType,jdbcType=INTEGER}
             </if>
@@ -453,6 +456,9 @@
             </if>
             <if test="status != null">
                 AND status= #{status,jdbcType=INTEGER}
+            </if>
+            <if test="status == null">
+                AND status!=2
             </if>
             <if test="bookChcoType != null ">
                 AND book_chco_type =#{bookChcoType,jdbcType=INTEGER}

@@ -37,7 +37,7 @@
         <th lay-data="{field:'bookTypeId',sort: true,templet:function(bookTypeId){return getBookType(bookTypeId)} }">
             书籍类型
         </th>
-        <th lay-data="{field:'bookLeaseId',hide:true,sort: true}">书籍租借id</th>
+        <th lay-data="{field:'bookLeaseId',hide:true,templet:function(obj){if(obj.bookLeaseId==0 || obj.bookLeaseId==null){return '未被租借'}else{ return '租借中' } }}">书籍租借状态</th>
         <th lay-data="{field:'bookLeaseType',hide:true,sort: true }">书籍租借类型</th>
         <th lay-data="{field:'bookChcoType',sort: true,templet:function(obj){if(obj.bookChcoType==0){return '免费'}else{ return '收费' } }}">
             收费方式
@@ -233,11 +233,13 @@
 </div>
 
 <script type="text/html" id="bookstatus">
-    {{# if(d.status>0){ }}
+    {{# if(d.status==1){ }}
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="changeStatus">正常(点击下架)</a>
-    {{# }else{ }}
-    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="changeStatus">下架(点击上架)</a>
-    {{# } }}
+    {{# }else if(d.status==0){ }}
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="changeStatus">未上架(点击上架)</a>
+    {{# }else if(d.status==2){ }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="">永久下架</a>
+    {{# }  }}
 </script>
 
 <script type="text/html" id="barDemo">

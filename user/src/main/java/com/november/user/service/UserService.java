@@ -10,7 +10,7 @@ public interface UserService {
 
     public int insert(User record);
 
-    public int insertSelective(User record);
+    public int insertSelective(UserParam record);
 
     public User selectByPrimaryKey(Integer id);
 
@@ -21,4 +21,6 @@ public interface UserService {
     public int updateByPrimaryKey(User record);
 
     public int userCount();
+
+    public User selectUserByEmail(String userEmail);
 }

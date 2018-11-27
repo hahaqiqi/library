@@ -1,4 +1,4 @@
-package com.november.book.dao;
+package com.november.space.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -18,16 +18,33 @@ public class RedisDao {
     @Autowired
     private StringRedisTemplate template;
 
+    /**
+     * 储存值
+     * */
     public  void setKey(String key,String value){
         ValueOperations<String, String> ops = template.opsForValue();
         ops.set(key,value);
     }
 
+    /**
+     *  获得值
+     * */
     public String getValue(String key){
         ValueOperations<String, String> ops = this.template.opsForValue();
         return ops.get(key);
     }
 
+    /**
+     *  储存限时的值
+     * */
+    public void setExKey(String key,String value,long time,TimeUnit timeUnit){
+        ValueOperations<String, String> ops = template.opsForValue();
+        ops.set(key,value,time, timeUnit);
+    }
+
+    /**
+     *  删除值
+     * */
     public void delKey(String key){
         template.delete(key);
     }

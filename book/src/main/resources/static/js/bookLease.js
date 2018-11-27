@@ -51,9 +51,9 @@ layui.config({
     version: '1541881042991' //为了更新 js 缓存，可忽略
 });
 
-layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], function(){
+layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], function(){
     var form = layui.form //表单
-        ,laydate = layui.laydate //
+        ,laypage = layui.laypage //分页
         ,layer = layui.layer //弹层
         ,table = layui.table //表格
         ,laytpl = layui.laytpl //模板
@@ -85,16 +85,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         switch(obj.event){
             case 'add':
                 var viewdata = { //数据
-                    "userName":""
-                    ,"userScore":""
-                    ,"userPhone":""
-                    ,"userEmail":""
-                    ,"userBalance":""
-                    ,"idCard":""
-                    ,"userBirthday":""
-                    ,"status":""
-                    ,"operator":""
-                    ,"operateTime":""
+                    "bookTypeName":""
                     ,"remark":""
                     ,"submitType":1
                 }
@@ -109,16 +100,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                     //layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
                     editObj=checkStatus.data[0];
                     var viewdata = { //数据
-                        "userName":data[0].userName
-                        ,"userScore":data.userScore
-                        ,"userPhone":data.userPhone
-                        ,"userEmail":data.userEmail
-                        ,"userBalance":data.userBalance
-                        ,"idCard":data.idCard
-                        ,"userBirthday":data.userBirthday
-                        ,"status":data.status
-                        ,"operator":data.operator
-                        ,"operateTime":data.operateTime
+                        "bookTypeName":data[0].typeName
                         ,"remark":data[0].remark
                         ,"submitType":2
                         ,"id":data[0].id
@@ -155,6 +137,9 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
                 }
                 break;
+            case 'refresh': //刷新
+                $(".layui-laypage-btn")[0].click();
+                break;
         };
     });
 
@@ -164,16 +149,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             ,layEvent = obj.event; //获得 lay-event 对应的值
         if(layEvent === 'detail'){
             var viewdata = { //数据
-                "userName":data.userName
-                ,"userScore":data.userScore
-                ,"userPhone":data.userPhone
-                ,"userEmail":data.userEmail
-                ,"userBalance":data.userBalance
-                ,"idCard":data.idCard
-                ,"userBirthday":data.userBirthday
-                ,"status":data.status
-                ,"operator":data.operator
-                ,"operateTime":data.operateTime
+                "bookTypeName":data.typeName
                 ,"remark":data.remark
                 ,"submitType":0
             }
@@ -184,7 +160,8 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 //layer.msg("删除"+data.id);
                 //向服务端发送删除指令
                 if(deleteBookType(data.id)){
-                    obj.del(); //删除对应行（tr）的DOM结构
+                    $(".layui-laypage-btn")[0].click();
+                    //obj.del(); //删除对应行（tr）的DOM结构
                     spopSucess("删除成功");
                 }else{
                     spopFail("删除失败","该项可能已经不存在");
@@ -193,16 +170,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         } else if(layEvent === 'edit'){
             editObj=data;
             var viewdata = { //数据
-                "userName":data.userName
-                ,"userScore":data.userScore
-                ,"userPhone":data.userPhone
-                ,"userEmail":data.userEmail
-                ,"userBalance":data.userBalance
-                ,"idCard":data.idCard
-                ,"userBirthday":data.userBirthday
-                ,"status":data.status
-                ,"operator":data.operator
-                ,"operateTime":data.operateTime
+                "bookTypeName":data.typeName
                 ,"remark":data.remark
                 ,"submitType":2
                 ,"id":data.id
@@ -223,31 +191,29 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             view.innerHTML = html;
         });
         layer.open({
-            title: showTitleType+'类型',
+            title: showTitleType+'图书类型',
             type: 1,
             content: $("#view"),
             shade: 0,
-            area: '600px',
+            area: '350px',
             success:function(){
                 //监听提交数据
                 //submitType 0为查看，=1为新增，2为编辑
                 $('#submitBookType').on("click",function(){
+                    var submitType=$(this).attr("submitType");
                     $.ajax({
-                        url: '/user/update.json',
-                        data: $("#userForm").serializeArray(),
+                        url: submitType==1 ? '/bookType/save.json' : '/bookType/update.json',
+                        data: $("#bookTypeForm").serializeArray(),
                         type: 'POST',
                         success: function (result) {
                             if (result.ret) {
-                                spopSucess("修改成功");
+                                spopSucess(submitType==1?"添加成功":"修改成功");
                                 layer.close(layer.index);
                                 $(".layui-laypage-btn")[0].click();
                                 $("#view").html("");
                             } else {
-                                spopFail("修改失败",result.msg);
+                                spopFail(submitType==1?"添加失败":"修改失败",result.msg);
                             }
-                        },
-                        error:function () {
-                            alert("请检查参数");
                         }
                     });
                 });
@@ -256,10 +222,6 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 $("#view").html("");
             }
         });
-        laydate.render({
-            elem: '#date' //指定元素
-        });
-        form.render();
     }
 
 
@@ -267,7 +229,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     function deleteBookType(delid) {
         var delSuccess=false;
         $.ajax({
-            url: '/user/delete.json',
+            url: '/bookType/delete.json',
             data: {"id":delid},
             async:false,
             type: 'GET',
@@ -282,7 +244,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     function batchDeleteBookType(batchStrId) {
         var delSuccessCount=0;
         $.ajax({
-            url: '/user/batchDelete.json',
+            url: '/bookType/batchDelete.json',
             data: {"batchStrId":batchStrId},
             async:false,
             type: 'GET',

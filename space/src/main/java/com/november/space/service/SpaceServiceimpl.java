@@ -77,20 +77,18 @@ public class SpaceServiceimpl implements SpaceService {
             return listSpace;
     }
 
-    /*public List<Space> forListdelete(int start,int end,List<Space> ListSpace){
-        List<Space> parentList=spacemapper.selectIdandParentId(start);
-        for (int i=start;i<end;i++){
-            //List<Space> idList=spacemapper.selectList(ListSpace.get(i).getId());
+    public List<Space> getListSpaceId(int start,int end,List<Space> listSpace){
+        for(int i=start;i<end;i++){
 
         }
-        return ListSpace;
-    }*/
+        return listSpace;
+    }
 
     /*
         修改
      */
     public int updateByPrimaryKeySelective(SpaceParam param){
-        ////检查param类BeanValidator.check
+        //检查param类BeanValidator.check
         BeanValidator.check(param);
         //使用parentIdJudge判断父空间下的子空间名称
         if(parentIdJudge(param.getParentId(),param.getSpaceName())){
@@ -112,7 +110,7 @@ public class SpaceServiceimpl implements SpaceService {
     /*
         删除
      */
-    public List<Integer> deleteByPrimaryKey(Integer id){
+    public int deleteByPrimaryKey(Integer id){
         List<Space> listSpace=spacemapper.selectList(id);
         listSpace=forListSpace(0,listSpace.size(),listSpace);
         List<Integer> listId=new ArrayList<>();
@@ -125,6 +123,16 @@ public class SpaceServiceimpl implements SpaceService {
     /*
         20 23 24 25 32 33 34 35 36 37
      */
+
+    public int Movespace(Integer id,Integer pid){
+        //使用parentIdJudge判断父空间下的子空间名称
+        Space param=spacemapper.selectByPrimaryKey(id);
+        if(parentIdJudge(pid,param.getSpaceName())){
+            throw new ParamException("同一个父空间不能有两个相同的子空间名称");
+        }
+        return spacemapper.Movespace(id,pid);
+    }
+
     /*@Override
     public int updateByPrimaryKey(SpaceParam record) {
         return spacemapper.updateByPrimaryKey(record);

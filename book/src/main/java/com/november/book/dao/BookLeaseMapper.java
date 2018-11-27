@@ -1,6 +1,7 @@
-package com.bq.dao;
+package com.november.book.dao;
 
-import com.bq.model.BookLease;
+import com.november.book.model.BookLease;
+import org.apache.ibatis.annotations.Param;
 
 public interface BookLeaseMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +15,6 @@ public interface BookLeaseMapper {
     int updateByPrimaryKeySelective(BookLease record);
 
     int updateByPrimaryKey(BookLease record);
+
+    int selectBookLeaseCountByBookId(@Param("bookId") Integer bookId);
 }

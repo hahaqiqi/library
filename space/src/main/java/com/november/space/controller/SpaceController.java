@@ -58,5 +58,12 @@ public class SpaceController {
         return JsonData.success();
     }
 
+    @ResponseBody
+    @RequestMapping("/move.json")
+    public JsonData move(Integer id,Integer pid){
+        log.info("开始移动空间");
+        spaceser.Movespace(id,pid);
+        return JsonData.success();
+    }
 
 }

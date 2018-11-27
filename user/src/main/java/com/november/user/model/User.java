@@ -1,22 +1,39 @@
 package com.november.user.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class User implements Serializable{
     private Integer id;
 
+    @NotBlank(message = "用户名称不能为空")
+    @Length(max = 40,message = "用户名称长度不能超过40")
     private String userName;
 
     private String userPhone;
 
     private String userEmail;
 
+    @NotNull(message = "积分不能为空")
     private Integer userScore;
 
     private Double userBalance;
 
     private String idCard;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "生日不能为空")
     private Date userBirthday;
 
     private Integer status;

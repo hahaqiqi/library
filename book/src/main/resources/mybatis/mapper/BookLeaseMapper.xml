@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bq.dao.BookLeaseMapper" >
-  <resultMap id="BaseResultMap" type="com.bq.model.BookLease" >
+<mapper namespace="com.november.book.dao.BookLeaseMapper" >
+  <resultMap id="BaseResultMap" type="com.november.book.model.BookLease" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="book_id" property="bookId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
@@ -9,10 +9,14 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="operator" property="operator" jdbcType="VARCHAR" />
     <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="final_operator" property="finalOperator" jdbcType="VARCHAR" />
+    <result column="final_operate_time" property="finalOperateTime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, book_id, user_id, book_price, status, operator, operate_time, remark
+    id, book_id, user_id, book_price, status, operator, operate_time, price, final_operator, 
+    final_operate_time, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -20,19 +24,29 @@
     from book_lease
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectBookLeaseCountByBookId" resultType="java.lang.Integer">
+    select
+    COUNT(1)
+    from book_lease
+    where book_id = #{bookId}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from book_lease
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bq.model.BookLease" >
+  <insert id="insert" parameterType="com.november.book.model.BookLease" >
     insert into book_lease (id, book_id, user_id, 
       book_price, status, operator, 
-      operate_time, remark)
+      operate_time, price, final_operator, 
+      final_operate_time, remark)
     values (#{id,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
       #{bookPrice,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, #{operator,jdbcType=VARCHAR}, 
-      #{operateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+      #{operateTime,jdbcType=TIMESTAMP}, #{price,jdbcType=DOUBLE}, #{finalOperator,jdbcType=VARCHAR}, 
+      #{finalOperateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.bq.model.BookLease" >
+  <insert id="insertSelective" parameterType="com.november.book.model.BookLease" >
     insert into book_lease
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -55,6 +69,15 @@
       </if>
       <if test="operateTime != null" >
         operate_time,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="finalOperator != null" >
+        final_operator,
+      </if>
+      <if test="finalOperateTime != null" >
+        final_operate_time,
       </if>
       <if test="remark != null" >
         remark,
@@ -82,12 +105,21 @@
       <if test="operateTime != null" >
         #{operateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="finalOperator != null" >
+        #{finalOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="finalOperateTime != null" >
+        #{finalOperateTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bq.model.BookLease" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.november.book.model.BookLease" >
     update book_lease
     <set >
       <if test="bookId != null" >
@@ -108,13 +140,22 @@
       <if test="operateTime != null" >
         operate_time = #{operateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="finalOperator != null" >
+        final_operator = #{finalOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="finalOperateTime != null" >
+        final_operate_time = #{finalOperateTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bq.model.BookLease" >
+  <update id="updateByPrimaryKey" parameterType="com.november.book.model.BookLease" >
     update book_lease
     set book_id = #{bookId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
@@ -122,6 +163,9 @@
       status = #{status,jdbcType=INTEGER},
       operator = #{operator,jdbcType=VARCHAR},
       operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=DOUBLE},
+      final_operator = #{finalOperator,jdbcType=VARCHAR},
+      final_operate_time = #{finalOperateTime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
