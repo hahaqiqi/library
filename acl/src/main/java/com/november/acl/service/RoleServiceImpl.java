@@ -35,7 +35,7 @@ public class RoleServiceImpl implements RoleService {
     @Resource
     private RoleAclMapper roleAclMapper;
 
-    @Resource
+    @Resource(name = "aclRedisDao")
     private RedisDao redisDao;
 
     public void save(RoleParam param) {
@@ -79,6 +79,15 @@ public class RoleServiceImpl implements RoleService {
         roleMapper.deleteByPrimaryKey(id);
         roleAclMapper.deleteByRoleId(id);
         redisDao.setExKey(CacheType.NEEDUPDATE_PREFIX+"role","true",10,TimeUnit.MINUTES);
+    }
+
+    @Override
+    public List<Role> getByIds(List<Integer> ids) {
+        if(CollectionUtils.isEmpty(ids)){
+            return Lists.newArrayList();
+        }
+        List<Role> roles = roleMapper.getByIdList(ids);
+        return roles;
     }
 
     public List<Role> getAll() {

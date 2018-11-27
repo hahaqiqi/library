@@ -14,32 +14,7 @@ var pageOldMax;
 var sliderPage;
 var pageMax;
 function pageCh(res, curr, count) {
-    layui.use(['slider','jquery'], function() {
-        var slider = layui.slider //滑块
-        ,$=layui.$                  //jquery
-        pageMax=Math.ceil(count/res.limit);
-        if(pageOldMax!=pageMax) {
-            pageOldMax=pageMax;
-            sliderPage=slider.render({
-                elem: '#slidePage'  //绑定元素
-                , min: 0
-                , max: pageMax
-                , value: curr
-                ,showstep: true
-                , change: function (value) {
-                    if(value==0){
-                        return;
-                    }
-                    if(value!=$('.layui-input').val()) {
-                        $('.layui-input').val(value)
-                        $('.layui-laypage-btn').click();
-                    }
-                }
-            });
-        }else{
-            sliderPage.setValue(curr);
-        }
-    });
+
 }
 
 layui.config({
@@ -95,7 +70,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery','lay
                     editObj=checkStatus.data[0];
                     var viewdata = { //数据
                         "adminCode":data.adminCode
-                        "id":data[0].id
+                        ,"id":data[0].id
                         ,"adminPwd":data[0].adminPwd
                         ,"adminName":data[0].adminName
                         ,"idCard":data[0].idCard
@@ -133,7 +108,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery','lay
             editObj=data;
             var viewdata = { //数据
                 "adminCode":data.adminCode
-                "id":data.id
+                ,"id":data.id
                 ,"adminPwd":data.adminPwd
                 ,"adminName":data.adminName
                 ,"idCard":data.idCard

@@ -1,6 +1,7 @@
 package com.november.acl.dao;
 
 import com.november.acl.model.Acl;
+import com.november.acl.model.OperType;
 import com.november.util.PageQuery;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +31,10 @@ public interface AclMapper {
     List<Acl> getByIdList(@Param("idList") List<Integer> idList);
 
     List<Acl> getByUrl(@Param("url") String url);
+
+    List<OperType> getOperType();
+
+    List<Acl> getRootAll();
+
+    List<Acl> getAclsByOperType(@Param("operTypeId") List<Integer> operTypeId,@Param("parentId") int parentId);
 }

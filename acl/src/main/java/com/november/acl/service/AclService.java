@@ -26,4 +26,6 @@ public interface AclService {
     //  改变权限点赋予
     void changeAcl(String idStr,int rid);
 
+    //  根据ids集合获得权限集合
+    List<Acl> getByIds(List<Integer> ids);
 }

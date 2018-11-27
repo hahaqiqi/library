@@ -23,10 +23,13 @@ public class Acl {
 
     private String url;
 
+    private int isCata;
+
+    private int operTypeId;
+
     private String operator;
 
     private Date operateTime;
 
     private String remark;
-
 }

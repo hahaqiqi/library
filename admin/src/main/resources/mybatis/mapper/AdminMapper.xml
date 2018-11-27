@@ -157,7 +157,7 @@
         limit #{page},#{limit}
     </select>
 
-    <select id="getAdminByAdminCode" resultType="com.november.model.Admin">
+    <select id="getAdminByAdminCode" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from admin
