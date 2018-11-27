@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
@@ -11,6 +10,3 @@
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
-=======
-<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" version="4" />
->>>>>>> b65fd7db66c7ddc7c5a2f9683c76d97355e3a35a

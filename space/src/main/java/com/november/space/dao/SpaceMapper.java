@@ -25,6 +25,6 @@ public interface SpaceMapper {
 
     int Movespace(@Param("id") Integer id,@Param("parentId") Integer pid);//移动节点
 
-
+    List<Space> selectSpaceBook(List<Integer> Spaceid);
 
 }

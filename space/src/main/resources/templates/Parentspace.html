@@ -82,6 +82,43 @@
             </div>
         </form>
     </script>
+
+    <div id="view3"></div>
+    <script  id="demo3" type="text/html">
+
+        <table id="SelSpaceBook" class="layui-table"
+            lay-data="{ url:'/book/list.json', page:true, id:'test',toolbar: '#headTemplate',done:function(res, curr, count){ pageCh(res, curr, count) }}"
+            lay-filter="test">
+            <thead>
+            <tr>
+            <th lay-data="{type:'checkbox', width:40}"></th>
+            <th lay-data="{field:'id', width:60, hide:true, sort: true}">ID</th>
+            <th lay-data="{field:'bookName',sort: true}">书籍名称</th>
+            <th lay-data="{field:'bookCode',hide:true,sort: true}">书籍编号</th>
+            <th lay-data="{field:'authorName',sort: true}">作者</th>
+            <th lay-data="{field:'price',sort: true}">价格</th>
+            <th lay-data="{field:'pressName',sort: true}">出版社</th>
+            <th lay-data="{field:'bookTypeId',sort: true,templet:function(bookTypeId){return getBookType(bookTypeId)} }">
+            书籍类型
+            </th>
+            <th lay-data="{field:'bookLeaseId',hide:true,templet:function(obj){if(obj.bookLeaseId==0 || obj.bookLeaseId==null){return '未被租借'}else{ return '租借中' } }}">书籍租借状态</th>
+            <th lay-data="{field:'bookLeaseType',hide:true,sort: true }">书籍租借类型</th>
+            <th lay-data="{field:'bookChcoType',sort: true,templet:function(obj){if(obj.bookChcoType==0){return '免费'}else{ return '收费' } }}">
+            收费方式
+            </th>
+            <th lay-data="{field:'status',toolbar:'#bookstatus',align:'center'}">状态</th>
+            <th lay-data="{field:'bookSpaceId',sort: true,toolbar:'#bookSpace',hide:true,align:'center'}">存放地点</th>
+            <th lay-data="{field:'operator',hide:true,  sort: true}">创建人</th>
+            <th lay-data="{field:'operateTime',sort: true,hide:true,align:'center',templet:function(operateTime){return createTime(operateTime)} }">
+            创建时间
+            </th>
+            <th lay-data="{field:'remark'}">备注</th>
+            <span isis="tt"></span>
+            <th lay-data="{fixed: 'right',toolbar:'#barDemo', width:175,align:'center'}"></th>
+            </tr>
+            </thead>
+            </table>
+    </script>
 </body>
 
 </html>

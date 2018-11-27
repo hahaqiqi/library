@@ -51,11 +51,17 @@ layui.use(['treetable','form','jquery','layer', 'laytpl'],function(){
                 width: '30%',
                 template: function(item){
                     var tem = [];
-                    tem.push('<a lay-filter="edit">编辑</a>');
-                    tem.push('<a class="add-child" lay-filter="add">添加子级</a>');
-                    tem.push('<a class="add-child" lay-filter="del">删除</a>');
-                    tem.push('<a class="add-child" lay-filter="move">移动至</a>');
-                    return tem.join(' <font>|</font> ')
+                    //tem.push('<a lay-filter="edit">编辑</a>');
+                    tem.push('<button class="layui-btn layui-btn-xs" lay-filter="edit"><i class="layui-icon">&#xe642;</i></button>');
+                    //tem.push('<a class="add-child" lay-filter="add">添加子级</a>');
+                    tem.push('<button class="layui-btn layui-btn-xs" lay-filter="add"><i class="layui-icon">&#xe654;</i></button>');
+                    //tem.push('<a class="add-child" lay-filter="del">删除</a>');
+                    tem.push('<button class="layui-btn layui-btn-xs" lay-filter="del"><i class="layui-icon">&#xe640;</i></button>');
+                    //tem.push('<a class="add-child" lay-filter="move">移动至</a>');
+                    tem.push('<button class="layui-btn layui-btn-xs" lay-filter="move"><i class="layui-icon">&#xe609;</i></button>');
+                    //查看书籍
+                    tem.push('<button class="layui-btn layui-btn-xs" lay-filter="sel"><i class="layui-icon">&#xe656;</i></button>');
+                    return tem.join('')
                 },
             },
         ]
@@ -85,7 +91,7 @@ layui.use(['treetable','form','jquery','layer', 'laytpl'],function(){
         }
         showBookTypeInfo("编辑空间",viewdata);
     })
-
+    //移动
     treetable.on('treetable(move)',function(data){
         console.dir(data);
         var viewdata = {//数据
@@ -94,7 +100,7 @@ layui.use(['treetable','form','jquery','layer', 'laytpl'],function(){
         }
         moveSpace("移动空间",viewdata);
     })
-
+    //删除
     treetable.on('treetable(del)',function (data) {
         layer.confirm('你确认删除这一项吗?',function (index) {
             layer.close(index);
@@ -102,8 +108,32 @@ layui.use(['treetable','form','jquery','layer', 'laytpl'],function(){
         })
 
     })
+    //查询书籍
+    treetable.on('treetable(sel)',function(data){
+        console.dir(data);
 
+            $.ajax({
+                url: '/space/',
+                data: {"":data.item.id},
+                type: 'GET',
+                async:false,
+                success: function (result) {
+                    if (result.ret) {
+                        showBookTypeInfo(showTitleType,viewdata);
+                    } else {
 
+                    }
+                },
+                error:function () {
+                    spopFail("未知错误","")
+                }
+            });
+
+        var viewdata = { //数据
+            "id":data.item.id
+        }
+        selectBookinSpace(data.item.spaceName+"存放的书籍",viewdata);
+    })
 
     o('.up-all').click(function(){
         treetable.all('up');
@@ -229,7 +259,30 @@ layui.use(['treetable','form','jquery','layer', 'laytpl'],function(){
                     });
                 });
             },
+            cancel: function(){
+                $("#view2").html("");
+            }
         });
     };
 
+    function selectBookinSpace(showTitleType,viewdata) {
+        var getTpl = demo3.innerHTML
+            ,view = document.getElementById('view3');
+        laytpl(getTpl).render(viewdata, function(html){
+            view.innerHTML = html;
+        });
+        layer.open({
+            title: showTitleType,
+            type: 1,
+            content: $("#view3"),
+            shade: 0,
+            area: '600px',
+            success:function () {
+
+            },
+            cancel: function(){
+                $("#view3").html("");
+            }
+        });
+    }
 })
