@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-<table class="layui-table" lay-data="{ url:'/user/list.json', page:true, id:'test',toolbar: 'default',done:function(res, curr, count){ pageCh(res, curr, count) }}" lay-filter="test">
+<table class="layui-table" lay-data="{ url:'/user/list.json', page:true, id:'test',toolbar: '#headTemplate',done:function(res, curr, count){ pageCh(res, curr, count) }}" lay-filter="test">
     <thead>
     <tr>
         <th lay-data="{type:'checkbox', width:40}"></th>
@@ -29,7 +29,7 @@
         <th lay-data="{field:'userBalance', width:80, sort: true}">余额</th>
         <th lay-data="{field:'idCard', width:80, sort: true}">身份证</th>
         <th lay-data="{field:'userBirthday', width:80, sort: true}">生日</th>
-        <th lay-data="{field:'status', width:80, sort: true}">用户状态</th>
+        <th lay-data="{field:'status', width:80, sort: true,templet:function(obj){if(obj.status==1){return '正常';}else{return '封禁';}}} " >用户状态</th>
         <th lay-data="{field:'operator', width:80, sort: true}">创建者</th>
         <th lay-data="{field:'operateTime',width:100,sort: true,align:'center',templet:function(operateTime){return createTime(operateTime)} }">创建时间</th>
         <th lay-data="{field:'remark'}">备注</th><span isis="tt"></span>
@@ -40,45 +40,125 @@
 <div id="slidePage" class="layui-elem-field layui-field-title" style="margin-top: 30px;width: 480px;margin-left: 40px"></div>
 <div id="view"></div>
 
+
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+<!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
     <div style="width: 10px;display: inline-block"></div>
 </script>
 <script id="demo" type="text/html">
     <form class="layui-form" action="" id="userForm">
-        <label class="layui-form-label"></label>
+
         {{#  if(d.id){ }}
+            <label class="layui-form-label"></label>
             <input name="id" type="hidden" value="{{d.id}}"/>
         {{#  } }}
+
         <div class="layui-form-item">
             <label class="layui-form-label">用户名</label>
             <div class="layui-input-inline" style="width: 179px;">
-                <input id="userName" type="text" name="userName" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.userName }}">
+                <input id="userName" type="text" name="userName" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.userName }}" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机</label>
+            <div class="layui-input-inline" style="width: 179px;">
+                <input id="userPhone" type="text" name="userPhone" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.userPhone }}" >
+            </div>
+        </div>
+
+        <div class="layui-form-item" >
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline" style="width: 179px;">
+                <input id="userEmail" type="text" name="userEmail" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.userEmail }}" >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">积分</label>
+            <div class="layui-input-inline" style="width: 179px;">
+                <input id="userScore" type="text" name="userScore" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.userScore }}" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">余额</label>
+            <div class="layui-input-inline" style="width: 179px;">
+                <input id="userBalance" type="text" name="userBalance" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.userBalance }}" >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">身份证</label>
+            <div class="layui-input-inline" style="width: 179px;">
+                <input id="idCard" type="text" name="idCard" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.idCard }}" >
+            </div>
+        </div>
+        <br/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">生日</label>
+            <div class="layui-input-inline">
+                <input name="userBirthday" class="layui-input" id="date" type="text" placeholder="yyyy-MM-dd" autocomplete="off" lay-verify="date" value="{{ d.userBirthday }}">
+            </div>
+        </div>
+        <br/>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户状态</label>
+            <div class="layui-input-inline" style="width: 179px;">
+                <select  id="status" name="status" lay-filter="aihao">
+                    {{#  if(d.status==1){ }}
+                    <option value="1" selected="">正常</option>
+                    <option value="0">封禁</option>
+                    {{#  }else{ }}
+                    <option value="1" >正常</option>
+                    <option value="0" selected="">封禁</option>
+                    {{#  } }}
+                </select>
             </div>
         </div>
 
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-inline"  style="width: 300px;">
                 {{#  if(d.remark === null){ }}
                     {{d.remark=""}}
                 {{#  } }}
-                <textarea id="bookTypeRemark" name="remark" placeholder="请输入备注" class="layui-textarea">{{d.remark}}</textarea>
+                <textarea id="bookTypeRemark" name="remark" placeholder="请输入备注" class="layui-textarea"
+                >{{d.remark}}</textarea>
             </div>
         </div>
+
+
         {{#  if(d.submitType > 0 ){ }}
         <div class="layui-form-item">
-            <label class="layui-form-label"></label>
-            <div class="layui-input-block">
-                <button id="submitBookType" type="button" class="layui-btn" lay-submit lay-filter="save" submitType="{{d.submitType}}">立即提交</button>
-            </div>
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <button id="submitBookType" type="button" class="layui-btn" lay-submit lay-filter="save" submitType="{{d.submitType}}">立即提交</button>
         </div>
+    </div>
         {{#  } }}
     </form>
 
 
+
+</script>
+
+<script id="headTemplate" type="text/html">
+    <div class="layui-table-tool-temp">
+        <!--<div class="layui-inline" lay-event="add">
+            <i class="layui-icon layui-icon-add-1"></i>
+        </div>-->
+        <div class="layui-inline" lay-event="update">
+            <i class="layui-icon layui-icon-edit"></i>
+        </div>
+        <div class="layui-inline" lay-event="delete">
+            <i class="layui-icon layui-icon-delete"></i>
+        </div>
+<!--        <div class="layui-inline" lay-event="refresh">
+            <i class="layui-icon layui-icon-refresh"></i>
+        </div>-->
+    </div>
 </script>
 
 </body>

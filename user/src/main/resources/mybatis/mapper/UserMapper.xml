@@ -179,8 +179,33 @@
     SELECT * FROM user LIMIT #{page},#{limit}
   </select>
 
+  <select id="selectUserName" resultType="int">
+    SELECT COUNT(*) FROM user where user_name=#{userName}
+    <if test="id!=null">
+      AND id!=#{id}
+    </if>
+  </select>
+
+  <select id="selectIdCard" resultType="int">
+    SELECT COUNT(*) FROM user where id_card=#{idCard}
+    <if test="id!=null">
+      AND id!=#{id}
+    </if>
+  </select>
+
   <select id="userCount" resultType="int">
     select COUNT(1)
     from user
+  </select>
+
+  <select id="selectUserByEmail" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where user_email = #{email,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectEmail" resultType="int">
+    SELECT COUNT (*) from user where user_email = #{email,jdbcType=INTEGER}
   </select>
 </mapper>

@@ -1,8 +1,16 @@
 package com.november.user.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class UserType {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserType implements Serializable{
     private Integer id;
 
     private String typeName;

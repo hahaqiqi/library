@@ -51,9 +51,9 @@ layui.config({
     version: '1541881042991' //为了更新 js 缓存，可忽略
 });
 
-layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], function(){
+layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], function(){
     var form = layui.form //表单
-        ,laypage = layui.laypage //分页
+        ,laydate = layui.laydate //
         ,layer = layui.layer //弹层
         ,table = layui.table //表格
         ,laytpl = layui.laytpl //模板
@@ -86,6 +86,15 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             case 'add':
                 var viewdata = { //数据
                     "userName":""
+                    ,"userScore":""
+                    ,"userPhone":""
+                    ,"userEmail":""
+                    ,"userBalance":""
+                    ,"idCard":""
+                    ,"userBirthday":""
+                    ,"status":""
+                    ,"operator":""
+                    ,"operateTime":""
                     ,"remark":""
                     ,"submitType":1
                 }
@@ -101,6 +110,15 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                     editObj=checkStatus.data[0];
                     var viewdata = { //数据
                         "userName":data[0].userName
+                        ,"userScore":data.userScore
+                        ,"userPhone":data.userPhone
+                        ,"userEmail":data.userEmail
+                        ,"userBalance":data.userBalance
+                        ,"idCard":data.idCard
+                        ,"userBirthday":data.userBirthday
+                        ,"status":data.status
+                        ,"operator":data.operator
+                        ,"operateTime":data.operateTime
                         ,"remark":data[0].remark
                         ,"submitType":2
                         ,"id":data[0].id
@@ -147,6 +165,15 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         if(layEvent === 'detail'){
             var viewdata = { //数据
                 "userName":data.userName
+                ,"userScore":data.userScore
+                ,"userPhone":data.userPhone
+                ,"userEmail":data.userEmail
+                ,"userBalance":data.userBalance
+                ,"idCard":data.idCard
+                ,"userBirthday":data.userBirthday
+                ,"status":data.status
+                ,"operator":data.operator
+                ,"operateTime":data.operateTime
                 ,"remark":data.remark
                 ,"submitType":0
             }
@@ -167,6 +194,15 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             editObj=data;
             var viewdata = { //数据
                 "userName":data.userName
+                ,"userScore":data.userScore
+                ,"userPhone":data.userPhone
+                ,"userEmail":data.userEmail
+                ,"userBalance":data.userBalance
+                ,"idCard":data.idCard
+                ,"userBirthday":data.userBirthday
+                ,"status":data.status
+                ,"operator":data.operator
+                ,"operateTime":data.operateTime
                 ,"remark":data.remark
                 ,"submitType":2
                 ,"id":data.id
@@ -187,29 +223,31 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             view.innerHTML = html;
         });
         layer.open({
-            title: showTitleType+'图书类型',
+            title: showTitleType+'类型',
             type: 1,
             content: $("#view"),
             shade: 0,
-            area: '350px',
+            area: '600px',
             success:function(){
                 //监听提交数据
                 //submitType 0为查看，=1为新增，2为编辑
                 $('#submitBookType').on("click",function(){
-                    var submitType=$(this).attr("submitType");
                     $.ajax({
-                        url: submitType==1 ? '/user/save.json' : '/user/update.json',
+                        url: '/user/update.json',
                         data: $("#userForm").serializeArray(),
                         type: 'POST',
                         success: function (result) {
                             if (result.ret) {
-                                spopSucess(submitType==1?"添加成功":"修改成功");
+                                spopSucess("修改成功");
                                 layer.close(layer.index);
                                 $(".layui-laypage-btn")[0].click();
                                 $("#view").html("");
                             } else {
-                                spopFail(submitType==1?"添加失败":"修改失败",result.msg);
+                                spopFail("修改失败",result.msg);
                             }
+                        },
+                        error:function () {
+                            alert("请检查参数");
                         }
                     });
                 });
@@ -218,6 +256,10 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 $("#view").html("");
             }
         });
+        laydate.render({
+            elem: '#date' //指定元素
+        });
+        form.render();
     }
 
 

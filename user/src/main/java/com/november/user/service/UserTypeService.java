@@ -1,17 +1,14 @@
-package com.november.user.dao;
+package com.november.user.service;
 
 import com.november.user.model.UserType;
-import org.springframework.stereotype.Repository;
+import com.november.user.param.UserTypeParam;
 
-import java.util.List;
-
-@Repository
-public interface UserTypeMapper {
+public interface UserTypeService {
     int deleteByPrimaryKey(Integer id);
 
     int insert(UserType record);
 
-    int insertSelective(UserType record);
+    int insertSelective(UserTypeParam record);
 
     UserType selectByPrimaryKey(Integer id);
 
@@ -19,7 +16,5 @@ public interface UserTypeMapper {
 
     int updateByPrimaryKey(UserType record);
 
-    List<UserType> selectUsertypeByScore();
-
-
+    UserType selectUsertypeByScore(Integer score);
 }

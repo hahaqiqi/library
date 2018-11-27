@@ -125,4 +125,11 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectUsertypeByScore" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_type
+     ORDER BY min_score DESC
+  </select>
 </mapper>
