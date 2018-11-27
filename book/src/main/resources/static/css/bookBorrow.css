@@ -4,7 +4,7 @@
     margin-top: 15px;
 }
 
-#searchBox input {
+#searchInput{
     width: 280px;
     height: 33px;
     font-size: 11px;
@@ -27,17 +27,12 @@
 }
 
 #searchEmailBox {
-    width: 290px;
     margin-left: 0px;
     margin-top: 15px;
 }
 
-#searchEmailBox input {
+#userEmailInput{
     width: 280px;
-    height: 33px;
-    font-size: 11px;
-    border: 2px solid #17dea6;
-    border-radius: 20px;
     background: transparent;
     top: 0;
     right: 0;
@@ -51,5 +46,4 @@
     margin-top: -3px;
     width: 17px;
     height: 17px;
-
 }

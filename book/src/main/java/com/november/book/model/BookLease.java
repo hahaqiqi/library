@@ -1,7 +1,14 @@
-package com.bq.model;
+package com.november.book.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookLease {
     private Integer id;
 
@@ -16,6 +23,12 @@ public class BookLease {
     private String operator;
 
     private Date operateTime;
+
+    private Double price;
+
+    private String finalOperator;
+
+    private Date finalOperateTime;
 
     private String remark;
 
@@ -73,6 +86,30 @@ public class BookLease {
 
     public void setOperateTime(Date operateTime) {
         this.operateTime = operateTime;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getFinalOperator() {
+        return finalOperator;
+    }
+
+    public void setFinalOperator(String finalOperator) {
+        this.finalOperator = finalOperator == null ? null : finalOperator.trim();
+    }
+
+    public Date getFinalOperateTime() {
+        return finalOperateTime;
+    }
+
+    public void setFinalOperateTime(Date finalOperateTime) {
+        this.finalOperateTime = finalOperateTime;
     }
 
     public String getRemark() {
