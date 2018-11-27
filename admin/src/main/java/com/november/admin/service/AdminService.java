@@ -23,4 +23,6 @@ public interface AdminService {
     int countAll();
 
     void delete(int adminId);
+
+    Admin getAdminByAdminCode(String adminCode);
 }

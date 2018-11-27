@@ -60,6 +60,11 @@ public class RoleAdminServiceImpl implements RoleAdminService {
         return adminDtoList;
     }
 
+    @Override
+    public List<Integer> getRoleIdListByAdminId(int adminId) {
+        return roleAdminMapper.getRoleIdsByAdminId(adminId);
+    }
+
     /*public List<SysUser> getListByRoleId(int roleId) {
         List<Integer> userIdList = sysRoleUserMapper.getUserIdListByRoleId(roleId);
         if (CollectionUtils.isEmpty(userIdList)) {

@@ -35,6 +35,10 @@
     SELECT * FROM book_lease_type LIMIT #{page},#{limit}
   </select>
 
+  <select id="listAll" resultMap="BaseResultMap">
+    SELECT * FROM book_lease_type
+  </select>
+
   <select id="count" resultType="java.lang.Integer" >
     select
     COUNT(1)

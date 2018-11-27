@@ -6,6 +6,9 @@ import com.november.exception.ParamException;
 import com.november.main.param.LoginParam;
 import com.november.admin.model.Admin;
 import com.november.util.BeanValidator;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,6 +26,11 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public Admin login(LoginParam param) {
         BeanValidator.check(param);
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
+                param.getAdminCode(), param.getAdminPwd());
+        //进行验证，这里可以捕获异常，然后返回对应信息
+        subject.login(usernamePasswordToken);
         Admin admin = adminMapper.getAdminByAdminCode(param.getAdminCode());
         if(null == admin){
             throw new ParamException("不存在该管理员!");

@@ -20,4 +20,6 @@ public interface RoleService {
 
     void delete(int id);
 
+    List<Role> getByIds(List<Integer> ids);
+
 }

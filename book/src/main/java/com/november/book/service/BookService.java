@@ -67,6 +67,29 @@ public interface BookService {
      */
     public Book byIdBook(Integer id);
 
+    /**
+     * 改变单个的状态
+     * @param id
+     * @param statusId
+     * @return
+     */
     public int changeBookStatus(Integer id,Integer statusId);
 
+    public List<Book> whereListBook(BookParam param);
+
+    /**
+     * 批量更改
+     * @param param
+     * @return
+     */
+    public int batchUpdate(BookParam param);
+
+    /**
+     * 根据多个bookcode 返回book
+     * @param list
+     * @return
+     */
+    public List<Book> getBookByCode(List<String> list);
+
+    public String bookState(Integer id);
 }

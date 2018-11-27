@@ -87,29 +87,13 @@
 		operate_time				date			:创建时间
 		remark						varchar(200)	:备注
 
-	book_loss_type	//书籍损坏类型表
-		id							int					:主键id
-		type_name					varchar(20)			:类型名称
-		score						int					:扣多少分
-		price						int					:扣多少钱
-		operator					varchar(20)			:创建管理员
-		operate_time				date				:创建时间
-		remark						varchar(200)		:备注
-
-	book_loss		//书籍损坏表
-		id							int					:主键id
-		book_id						int					:图书id
-		user_id						int					:用户id
-		status						int					:损坏程度
-		operator					varchar(20)			:创建管理员
-		operate_time				date				:创建时间
-		remark						varchar(200)		:备注
 
 	book_lease		//书籍租借表
 		id							int					:主键id
 		book_id						int					:图书id
 		user_id						int					:用户id
 		book_price					double				:价格，元/天
+		//加折扣
 		status						int					:租借状态
 		operator					varchar(20)			:创建管理员
 		operate_time				date				:创建时间

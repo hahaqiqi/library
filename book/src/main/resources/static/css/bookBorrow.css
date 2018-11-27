@@ -1,0 +1,49 @@
+#searchBox {
+    width: 290px;
+    margin-left: 0px;
+    margin-top: 15px;
+}
+
+#searchInput{
+    width: 280px;
+    height: 33px;
+    font-size: 11px;
+    border: 2px solid #17dea6;
+    border-radius: 20px;
+    background: transparent;
+    top: 0;
+    right: 0;
+    padding-left: 10px;
+    padding-right: 28px;
+    display: inline-block;
+}
+
+#searchBut {
+    margin-left: -28px;
+    margin-top: -3px;
+    width: 17px;
+    height: 17px;
+
+}
+
+#searchEmailBox {
+    margin-left: 0px;
+    margin-top: 15px;
+}
+
+#userEmailInput{
+    width: 280px;
+    background: transparent;
+    top: 0;
+    right: 0;
+    padding-left: 10px;
+    padding-right: 28px;
+    display: inline-block;
+}
+
+#searchEmailBut {
+    margin-left: -28px;
+    margin-top: -3px;
+    width: 17px;
+    height: 17px;
+}

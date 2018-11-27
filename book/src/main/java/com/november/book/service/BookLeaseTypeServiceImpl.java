@@ -58,7 +58,8 @@ public class BookLeaseTypeServiceImpl implements BookLeaseTypeService {
 
     @Override
     public List<BookLeaseType> listBookLeaseType() {
-        return null;
+
+        return bookLeaseTypeMapper.listAll();
     }
 
     @Override
