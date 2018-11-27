@@ -62,7 +62,6 @@ layui.use(['treetable','form','jquery','layer', 'laytpl'],function(){
     });
     //编辑子空间
     treetable.on('treetable(add)',function(data){
-        layer.msg('添加操作');
         console.dir(data.item.id);
         var viewdata = { //数据
             "spaceName":""
@@ -76,7 +75,6 @@ layui.use(['treetable','form','jquery','layer', 'laytpl'],function(){
 
     //编辑空间
     treetable.on('treetable(edit)',function(data){
-        layer.msg('编辑操作');
         console.dir(data);
         var viewdata = { //数据
             "spaceName":data.item.spaceName
@@ -89,14 +87,20 @@ layui.use(['treetable','form','jquery','layer', 'laytpl'],function(){
     })
 
     treetable.on('treetable(move)',function(data){
-        layer.msg('移动操作');
         console.dir(data);
+        var viewdata = {//数据
+            "pid":""
+            ,"id":data.item.id
+        }
+        moveSpace("移动空间",viewdata);
     })
 
     treetable.on('treetable(del)',function (data) {
-        layer.msg('删除')
-        console.dir(data);
-        deleteSpace("删除",data.item.id);
+        layer.confirm('你确认删除这一项吗?',function (index) {
+            layer.close(index);
+            deleteSpace("删除",data.item.id);
+        })
+
     })
 
 
@@ -190,5 +194,42 @@ layui.use(['treetable','form','jquery','layer', 'laytpl'],function(){
         });
 
     }
+
+    function moveSpace(showTitleType,viewdata) {
+        var getTpl = demo2.innerHTML
+            ,view = document.getElementById('view2');
+        laytpl(getTpl).render(viewdata, function(html){
+            view.innerHTML = html;
+        });
+        layer.open({
+            title: showTitleType,
+            type: 1,
+            content: $("#view2"),
+            shade: 0,
+            area: '350px',
+            success:function () {
+                $('#submitSpace2').on("click",function(){
+                    $.ajax({
+                        url: '/space/move.json',
+                        data: $("#SpaceForm2").serializeArray(),
+                        type: 'POST',
+                        success: function (result) {
+                            if (result.ret) {
+                                spopSucess("移动成功");
+                                layer.close(layer.index);
+                                window.location.reload();
+                                $("#view2").html("");
+                            } else {
+                                spopFail("移动失败",result.msg);
+                            }
+                        },
+                        error:function () {
+                            spopFail("未知错误","")
+                        }
+                    });
+                });
+            },
+        });
+    };
 
 })
