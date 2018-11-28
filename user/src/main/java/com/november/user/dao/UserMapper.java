@@ -31,5 +31,5 @@ public interface UserMapper {
 
     User selectUserByEmail(String email);
 
-    int selectEmail(String email);
+    int selectEmail(@Param("email")String email,@Param("id") Integer id);
 }

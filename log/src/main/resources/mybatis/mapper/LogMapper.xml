@@ -146,4 +146,16 @@
       select id,type_name as typeName,type_id as typeId
       from log_type
   </select>
+
+  <select id="getLogDateList" resultType="string">
+      select distinct date_format(operate_time, '%Y-%m') from log order by operate_time desc
+  </select>
+
+  <select id="getLogListByOperTime" resultMap="ResultMapWithBLOBs">
+      select * from log where operate_time like concat(#{date},'%') limit #{page},#{limit}
+  </select>
+
+  <select id="getCountByOperTime" resultType="int">
+      select count(1) from log where operate_time like concat(#{date},'%')
+  </select>
 </mapper>

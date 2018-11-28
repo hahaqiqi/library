@@ -14,6 +14,9 @@ import com.november.acl.param.AclParam;
 import com.november.common.ApplicationContextHelper;
 import com.november.common.RequestHolder;
 import com.november.exception.ParamException;
+import com.november.log.Param.LogParam;
+import com.november.log.commons.LogTypeInt;
+import com.november.log.service.LogService;
 import com.november.model.CacheType;
 import com.november.util.BeanValidator;
 import com.november.util.JsonMapper;
@@ -46,135 +49,24 @@ public class AclServiceImpl implements AclService {
     @Resource
     private ShiroService shiroService;
 
+    @Resource
+    private LogService logService;
 
     public boolean checkExist(int parentId, String aclName, Integer id) {
         return aclMapper.countByNameAndParentId(parentId, aclName, id) > 0;
     }
 
-    /*@Override
-    public List<AclDto> getAll(int rid) {
-        //  先创建一个集合
-        List<Acl> all = Lists.newArrayList();
-        //  获取redis中的值
-        String value = redisDao.getValue(CacheType.LIST_PREFIX+"acl");
-        //  判断是否为空
-        if(StringUtils.isNotBlank(value)){
-            //  转化为值
-            all = JsonMapper.string2Obj(value, new TypeReference<List<Acl>>() {
-            });
-        }else{
-            //  得到所有权限点
-            all = aclMapper.getAll();
-        }
-        //  处理成树
-        List<AclDto> aclTree = getAclTree(all,rid);
-        //  返回值
-        return aclTree;
-    }
-
-    //  进行排序得到树
-    private List<AclDto> getAclTree(List<Acl> acls,int rid) {
-        //  判空
-        if (CollectionUtils.isEmpty(acls)) {
-            return Lists.newArrayList();
-        }
-        //  获得根权限
-        List<AclDto> rootAclDtoList = Lists.newArrayList();
-        //  创建所有权限树
-        List<AclDto> aclDtoList = Lists.newArrayList();
-        //  转化
-        for (Acl acl : acls) {
-            aclDtoList.add(AclDto.adapt(acl));
-        }
-        //  得到角色对应的所有权限id
-        List<Integer> aclIdByRoleId = roleAclMapper.getAclIdByRoleId(rid);
-        //  储存用完的Dto
-        Set<AclDto> removeAcls = Sets.newHashSet();
-        for (AclDto dto : aclDtoList) {
-            //  判断是否是根节点
-            if (null == dto.getParentId() || 0 == dto.getParentId()) {
-                //  设置页面显示的名称
-                dto.setName(dto.getAclName());
-                //  设置页面的值
-                dto.setValue(dto.getId().toString());
-                //  加入根节点中
-                rootAclDtoList.add(AclDto.adapt(dto));
-                //  从总权限集合中删除
-                removeAcls.add(dto);
-            }
-        }
-        //  删除所有处理过的权限
-        aclDtoList.removeAll(removeAcls);
-        //  排序
-        rootAclDtoList.sort((x, y) -> x.getSeq() - y.getSeq());
-        for (AclDto dto : rootAclDtoList) {
-            //  是否拥有该权限
-            if(aclIdByRoleId.contains(dto.getId())){
-                //  设置默认选中
-                dto.setChecked(true);
-                //  全z选点集合删除该权限点
-                aclIdByRoleId.remove(dto.getId());
-                //  如果父节点有则子节点也有
-                dto.setList(sortAclDtoList(dto.getId(),aclDtoList,true,aclIdByRoleId));
-            }else{
-                dto.setList(sortAclDtoList(dto.getId(),aclDtoList,false,aclIdByRoleId));
-            }
-        }
-        return rootAclDtoList;
-    }
-
-    //  循环处理所有子集合
-    private List<AclDto> sortAclDtoList(int parentId, List<AclDto> aclDtoList,boolean isAllChecked,List<Integer> aclIdsByRid) {
-        //  判空
-        if (CollectionUtils.isEmpty(aclDtoList)) {
-            return Lists.newArrayList();
-        }
-        //  该parentId子权限树集合
-        List<AclDto> childAclDto = Lists.newArrayList();
-        //  需要删除的权限树集合
-        Set<AclDto> removeAclDto = Sets.newHashSet();
-        for (AclDto dto : aclDtoList) {
-            //  是否是这个父亲的儿子
-            if (parentId == dto.getParentId()) {
-                if(isAllChecked){
-                    dto.setChecked(true);
-                    aclIdsByRid.remove(dto.getId());
-                }else{
-                    if(aclIdsByRid.contains(dto.getId())){
-                        dto.setChecked(true);
-                        aclIdsByRid.remove(dto.getId());
-                    }
-                }
-                dto.setName(dto.getAclName());
-                dto.setValue(dto.getId().toString());
-                childAclDto.add(dto);
-                removeAclDto.add(dto);
-            }
-        }
-        //  删除处理过的权限树
-        aclDtoList.removeAll(removeAclDto);
-        if (CollectionUtils.isNotEmpty(aclDtoList)) {
-            for (AclDto dto : childAclDto) {
-                if(aclIdsByRid.contains(dto.getId())){
-                    dto.setChecked(true);
-                    aclIdsByRid.remove(dto.getId());
-                    dto.setList(sortAclDtoList(dto.getId(),aclDtoList,true,aclIdsByRid));
-                }else{
-                    dto.setList(sortAclDtoList(dto.getId(),aclDtoList,false,aclIdsByRid));
-                }
-            }
-        }
-        //  排序
-        childAclDto.sort((x, y) -> x.getSeq() - y.getSeq());
-        return childAclDto;
-    }*/
-
     @Transactional
     public void changeAcl(String idStr, int rid) {
         //  判断传入的id字符串是否是空
-        if(StringUtils.isBlank(idStr)){
+        if (StringUtils.isBlank(idStr)) {
+            //  查出要记录的数据
+            List<Integer> aclIdByRoleId = roleAclMapper.getAclIdByRoleId(rid);
             //  删除rid对应拥有的所有权限点
             roleAclMapper.deleteByRoleId(rid);
+            //  插入日志
+            logService.saveLog(LogParam.builder().type(LogTypeInt.ROLEACL_TYPE).remark("删除角色分配的权限")
+                    .oldValue(JsonMapper.obj2String(aclIdByRoleId)).targetId(rid).build());
             //  终止
             return;
         }
@@ -188,20 +80,25 @@ public class AclServiceImpl implements AclService {
         for (int i = 0; i < ids.length; i++) {
             //  取出
             if (ids[i].contains("g") || ids[i].contains("f")) {
-                if(ids[i].contains("g")){
-                    ids[i] = ids[i].replace("g","");
-                }else{
-                    ids[i] = ids[i].replace("f","");
+                if (ids[i].contains("g")) {
+                    ids[i] = ids[i].replace("g", "");
+                } else {
+                    ids[i] = ids[i].replace("f", "");
                 }
                 pids.add(Integer.valueOf(ids[i]));
             }
-            if(ids[i].contains("z")){
-                ids[i] = ids[i].replace("z","");
+            if (ids[i].contains("z")) {
+                ids[i] = ids[i].replace("z", "");
                 zids.add(ids[i]);
             }
         }
+        //  查出要记录的数据
+        List<Integer> aclIdByRoleId = roleAclMapper.getAclIdByRoleId(rid);
         //  进行权限点赋予前删除当前拥有权限
         roleAclMapper.deleteByRoleId(rid);
+        //  插入日志
+        logService.saveLog(LogParam.builder().type(LogTypeInt.ROLEACL_TYPE).remark("删除角色分配的权限")
+                .oldValue(JsonMapper.obj2String(aclIdByRoleId)).targetId(rid).build());
         //  创建权限点集合
         List<Acl> aclsByOperType = Lists.newArrayList();
         //  循环所有子节点id
@@ -211,43 +108,25 @@ public class AclServiceImpl implements AclService {
             //  获得父id
             Integer parId = Integer.parseInt(strs[0]);
             //  根据父id和当前操作得到所有对应的权限点
-            aclsByOperType.addAll(aclMapper.getAclsByOperType(Lists.newArrayList(Integer.parseInt(strs[1])),parId));
+            aclsByOperType.addAll(aclMapper.getAclsByOperType(Lists.newArrayList(Integer.parseInt(strs[1])), parId));
         }
         //  将权限点集合转化为权限点id集合
         List<Integer> aclIds = aclsByOperType.stream().map(acl -> acl.getId()).collect(Collectors.toList());
         //  判断当前session中的管理员是否为空
-        if(RequestHolder.getCurrentAdmin() == null){
+        if (RequestHolder.getCurrentAdmin() == null) {
             //  默认admin
-            roleAclMapper.batchInsert(aclIds,rid,"admin");
-        }else{
+            roleAclMapper.batchInsert(aclIds, rid, "admin");
+        } else {
             //  有值则当前
-            roleAclMapper.batchInsert(aclIds,rid,RequestHolder.getCurrentAdmin().getAdminCode());
+            roleAclMapper.batchInsert(aclIds, rid, RequestHolder.getCurrentAdmin().getAdminCode());
         }
+        //  插入日志
+        logService.saveLog(LogParam.builder().type(LogTypeInt.ROLEACL_TYPE).remark("分配角色新的权限")
+                .targetId(rid).build());
         //  shiro进行权限赋予更新
-        if (ApplicationContextHelper.propBean("shiroFilter",ShiroFilterFactoryBean.class)!=null){
-            shiroService.updatePermission( (ShiroFilterFactoryBean) ApplicationContextHelper.propBean("shiroFilter",ShiroFilterFactoryBean.class));
+        if (ApplicationContextHelper.propBean("shiroFilter", ShiroFilterFactoryBean.class) != null) {
+            shiroService.updatePermission((ShiroFilterFactoryBean) ApplicationContextHelper.propBean("shiroFilter", ShiroFilterFactoryBean.class));
         }
-        /*if(StringUtils.isBlank(idStr)){
-            roleAclMapper.deleteByRoleId(rid);
-            if(ApplicationContextHelper.propBean(ShiroFilterFactoryBean.class)!=null){
-                shiroService.updatePermission(ApplicationContextHelper.propBean(ShiroFilterFactoryBean.class));
-            }
-            return;
-        }
-        String[] strs = StringUtils.split(idStr, ",");
-        List<Integer> aclIds = Lists.newArrayList(Arrays.stream(strs).map(s -> Integer.valueOf(s)).collect(Collectors.toList()));
-        //  获得rid的所有权限
-        List<Integer> aclIdByRoleId = roleAclMapper.getAclIdByRoleId(rid);
-        if(aclIds.size() == aclIdByRoleId.size()){
-            if(aclIdByRoleId.containsAll(aclIds)){
-                return;
-            }
-        }
-        roleAclMapper.deleteByRoleId(rid);
-        batchRoleAcl(aclIds,rid);
-        if(ApplicationContextHelper.propBean(ShiroFilterFactoryBean.class)!=null){
-            shiroService.updatePermission(ApplicationContextHelper.propBean(ShiroFilterFactoryBean.class));
-        }*/
     }
 
     @Override
@@ -256,10 +135,6 @@ public class AclServiceImpl implements AclService {
             return Lists.newArrayList();
         }
         return aclMapper.getByIdList(ids);
-    }
-
-    private void batchRoleAcl(List<Integer> ids, int rid) {
-        roleAclMapper.batchInsert(ids, rid, "admin");     //  TODO
     }
 
     @Override
@@ -298,7 +173,7 @@ public class AclServiceImpl implements AclService {
             //  设置根节点中每个节点真正的值
             rootAclDto.get(i).setValue("g" + rootAclDto.get(i).getId());
             //  给每个根节点补充子节点
-            rootAclDto.get(i).setList(sortTree(rootAclDto.get(i).getId(), aclDtoList, operTypeList,rid,1));
+            rootAclDto.get(i).setList(sortTree(rootAclDto.get(i).getId(), aclDtoList, operTypeList, rid, 1));
         }
         //  设置是否默认选中
         setCheckedVal(rootAclDto);
@@ -306,7 +181,7 @@ public class AclServiceImpl implements AclService {
         return rootAclDto;
     }
 
-    public List<AclDto> sortTree(int parentId, List<AclDto> aclDtoList, List<OperType> operTypeList,int rid,Integer level) {
+    public List<AclDto> sortTree(int parentId, List<AclDto> aclDtoList, List<OperType> operTypeList, int rid, Integer level) {
         //  本层level
         int i = level;
         //  要返回的总权限点集合结果
@@ -336,40 +211,47 @@ public class AclServiceImpl implements AclService {
                     //  层级+1
                     level += 1;
                     //  继续处理剩下的权限点
-                    dto.setList(sortTree(dto.getId(), aclDtoList, operTypeList,rid,level));
+                    dto.setList(sortTree(dto.getId(), aclDtoList, operTypeList, rid, level));
                 }
             }
         }
         //  添加操作节点
-        dtoList.addAll(addOperType(operTypeList,rid,i,parentId));
+        dtoList.addAll(addOperType(operTypeList, rid, i, parentId));
         //  返回结果
         return dtoList;
     }
 
     //  添加操作类型节点
-    public List<AclDto> addOperType(List<OperType> operTypeList,int rid,int level,int parentId) {
+    public List<AclDto> addOperType(List<OperType> operTypeList, int rid, int level, int parentId) {
         //  最后返回的集合
         List<AclDto> dtoList = Lists.newArrayList();
         //  循环操作类型
         for (OperType operType : operTypeList) {
+            //  根据父id获得操作集合
+            List<Acl> aclOperList = aclMapper.getAclsByOperType(Lists.newArrayList(operType.getId()), parentId);
+            //  判断是否为空
+            if(CollectionUtils.isEmpty(aclOperList)){
+                //  是空的话跳过
+                continue;
+            }
             //  创建一个权限节点
             AclDto dto = new AclDto();
             //  设置节点显示的值
             dto.setName(operType.getName());
             //  设置节点真正的值
-            dto.setValue("z"+ parentId +"-"+ operType.getId());
+            dto.setValue("z" + parentId + "-" + operType.getId());
             //  根据角色id获得所有拥有的权限点id集合
             List<Integer> aclIdByRoleId = roleAclMapper.getAclIdByRoleId(rid);
             //  判断权限点id集合是否不为空
-            if(CollectionUtils.isNotEmpty(aclIdByRoleId)){
+            if (CollectionUtils.isNotEmpty(aclIdByRoleId)) {
                 //  用权限点id集合获取权限点集合
                 List<Acl> byIdList = aclMapper.getByIdList(aclIdByRoleId);
                 //  循环权限点集合
                 for (Acl acl : byIdList) {
                     //  如果是这个的子节点
-                    if(parentId == acl.getParentId()){
+                    if (parentId == acl.getParentId()) {
                         //  如果操作类型一致
-                        if(acl.getOperTypeId() == operType.getId()){
+                        if (acl.getOperTypeId() == operType.getId()) {
                             //  设置为默认选中
                             dto.setChecked(true);
                         }
@@ -384,26 +266,26 @@ public class AclServiceImpl implements AclService {
     }
 
     //  设置是否默认选中
-    public boolean setCheckedVal(List<AclDto> aclDtos){
+    public boolean setCheckedVal(List<AclDto> aclDtos) {
         //  全局默认值
         boolean flag = false;
         //  判空
-        if(CollectionUtils.isNotEmpty(aclDtos)){
+        if (CollectionUtils.isNotEmpty(aclDtos)) {
             //  循环权限节点集合
             for (AclDto aclDto : aclDtos) {
                 //  假如不默认选中
                 boolean b = false;
                 //  如果当前节点选中
-                if(aclDto.isChecked()){
+                if (aclDto.isChecked()) {
                     b = true;
                 }
                 //  判断是否还有子集合
-                if(CollectionUtils.isNotEmpty(aclDto.getList())){
+                if (CollectionUtils.isNotEmpty(aclDto.getList())) {
                     //  如果还有子集合继续递归
                     b = setCheckedVal(aclDto.getList());
                 }
                 //  如果是true
-                if(b){
+                if (b) {
                     //  设置当前为true
                     aclDto.setChecked(true);
                     //  全局为true

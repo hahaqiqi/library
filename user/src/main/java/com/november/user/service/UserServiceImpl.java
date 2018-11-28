@@ -46,6 +46,10 @@ public class UserServiceImpl implements UserService{
         if(userMapper.selectIdCard(param.getIdCard(),null)>0){
             throw new ParamException("已经有相同的身份证号码");
         }
+        //查询邮箱是否被注册
+        if(userMapper.selectEmail(param.getUserEmail(),null)>0){
+            throw new ParamException("该邮箱已注册");
+        }
 
         if(RequestHolder.getCurrentAdmin()!=null){
             user.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
@@ -90,7 +94,7 @@ public class UserServiceImpl implements UserService{
             throw new ParamException("已经有相同的身份证号码");
         }
 
-        if(userMapper.selectEmail(param.getUserEmail())>0){
+        if(userMapper.selectEmail(param.getUserEmail(),param.getId())>0){
             throw new ParamException("该邮箱已注册");
         }
         return userMapper.updateByPrimaryKeySelective(user);
