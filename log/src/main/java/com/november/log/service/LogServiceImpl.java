@@ -1,13 +1,18 @@
 package com.november.log.service;
 
 import com.november.common.RequestHolder;
+import com.november.exception.ParamException;
 import com.november.log.Param.LogParam;
 import com.november.log.dao.LogMapper;
+import com.november.log.model.LogType;
 import com.november.log.model.LogWithBLOBs;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author skrT
@@ -42,6 +47,45 @@ public class LogServiceImpl implements LogService {
         logMapper.insertSelective(log);
     }
 
+    @Override
+    public List<String> getDateList() {
+        List<String> logDateList = logMapper.getLogDateList();
+        return logDateList;
+    }
+
+    @Override
+    public List<LogWithBLOBs> getAllByOperTime(String date,int page,int limit) {
+        page = (page-1) * limit;
+        if(StringUtils.isBlank(date)){
+            throw new ParamException("日期不能为空");
+        }
+        List<LogWithBLOBs> logList = logMapper.getLogListByOperTime(date, page, limit);
+        setLogType(logList);
+        return logList;
+    }
+
+    @Override
+    public int getCountByOperTime(String date) {
+        if(StringUtils.isBlank(date)){
+            throw new ParamException("日期不能为空");
+        }
+        return logMapper.getCountByOperTime(date);
+    }
+
+    private void setLogType(List<LogWithBLOBs> logs){
+        if(CollectionUtils.isEmpty(logs)){
+            return;
+        }
+        List<LogType> logTypeList = logMapper.getLogTypeList();
+        for (LogWithBLOBs log : logs) {
+            for (LogType logType : logTypeList) {
+                if(logType.getTypeId().equals(log.getType().toString())){
+                    log.setLogTypeName(logType.getTypeName());
+                    break;
+                }
+            }
+        }
+    }
 
 }
 
