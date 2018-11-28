@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.november.log.dao.LogMapper" >
+  <resultMap id="BaseResultMap" type="com.november.log.model.Log" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="targetId" property="targetid" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.november.log.model.LogWithBLOBs" extends="BaseResultMap" >
+    <result column="old_value" property="oldValue" jdbcType="LONGVARCHAR" />
+    <result column="new_value" property="newValue" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, targetId, operator, operate_time, remark
+  </sql>
+  <sql id="Blob_Column_List" >
+    old_value, new_value
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.november.log.model.LogWithBLOBs" >
+    insert into log (id, type, targetId, 
+      operator, operate_time, remark, 
+      old_value, new_value)
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{targetid,jdbcType=INTEGER}, 
+      #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{oldValue,jdbcType=LONGVARCHAR}, #{newValue,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.november.log.model.LogWithBLOBs" >
+    insert into log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="targetid != null" >
+        targetId,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="oldValue != null" >
+        old_value,
+      </if>
+      <if test="newValue != null" >
+        new_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="targetid != null" >
+        #{targetid,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="oldValue != null" >
+        #{oldValue,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="newValue != null" >
+        #{newValue,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.november.log.model.LogWithBLOBs" >
+    update log
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="targetid != null" >
+        targetId = #{targetid,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="oldValue != null" >
+        old_value = #{oldValue,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="newValue != null" >
+        new_value = #{newValue,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.november.log.model.LogWithBLOBs" >
+    update log
+    set type = #{type,jdbcType=INTEGER},
+      targetId = #{targetid,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      old_value = #{oldValue,jdbcType=LONGVARCHAR},
+      new_value = #{newValue,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.november.log.model.Log" >
+    update log
+    set type = #{type,jdbcType=INTEGER},
+      targetId = #{targetid,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getLogTypeList" resultType="com.november.log.model.LogType">
+      select id,type_name as typeName,type_id as typeId
+      from log_type
+  </select>
+</mapper>

@@ -5,6 +5,7 @@ import com.november.book.param.BookParam;
 import com.november.book.service.BookService;
 import com.november.book.util.IsEmpty;
 import com.november.common.JsonData;
+import com.november.util.Email;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,8 @@ import java.util.List;
 public class BookController {
     @Resource(name = "bookService")
     private BookService bookService;
+
+    private BookParam filtrateBookParam=null; //筛选条件
 
     @RequestMapping(value = "/book.html")
     public String toBook() {
@@ -83,16 +86,14 @@ public class BookController {
 
     @RequestMapping(value = "/reFiltrate.json", method = RequestMethod.GET)
     @ResponseBody
-    public JsonData reFiltrate(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        session.setAttribute("bookParam", null);
+    public JsonData reFiltrate() {
+        filtrateBookParam=null;
         return JsonData.success();
     }
 
     @RequestMapping(value = "/setFiltrate.json", method = RequestMethod.GET)
     @ResponseBody
     public JsonData setFiltrate(HttpServletRequest request, BookParam bookParam) {
-        HttpSession session = request.getSession();
         try {
             if (!IsEmpty.isAllFieldNull(bookParam)) {
                 List<Book> list= bookService.whereListBook(bookParam);
@@ -101,9 +102,7 @@ public class BookController {
                     listInt.add(book.getId());
                 }
                 bookParam.setWhereList(listInt);
-                session.setAttribute("bookParam", bookParam);
-            } else {
-                session.setAttribute("bookParam", null);
+                filtrateBookParam=bookParam;
             }
         } catch (Exception e) {
 
@@ -114,22 +113,15 @@ public class BookController {
     @RequestMapping(value = "/list.json", method = RequestMethod.GET)//查 包括高级查询
     @ResponseBody
     public JsonData listBookType(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        BookParam bookParam=null;
-        try {
-            bookParam = (BookParam) session.getAttribute("bookParam");
-        }catch (Exception ex){
-
-        }
         int count;
-        if(bookParam==null){
+        if(filtrateBookParam==null){
             count=bookService.bookCount();
         }else {
-            count = bookParam.getWhereList().size();
+            count = filtrateBookParam.getWhereList().size();
         }
         int page = Integer.parseInt(request.getParameter("page"));//第几页
         int limit = Integer.parseInt(request.getParameter("limit"));//每页显示条数
-        List<Book> listBook = bookService.pageListBook(page, limit, bookParam);
+        List<Book> listBook = bookService.pageListBook(page, limit, filtrateBookParam);
         return JsonData.pageSuccess(listBook, count, limit);
     }
 
@@ -177,6 +169,13 @@ public class BookController {
     public JsonData bookState(Integer id) {//根据书籍id判断 未上架,可借阅,被借阅
 
         return JsonData.success();
+    }
+
+    @RequestMapping(value = "/getCode.json", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonData getCode(String email) {
+        String code= Email.GetCode(email);
+        return JsonData.success(code);
     }
 
 }

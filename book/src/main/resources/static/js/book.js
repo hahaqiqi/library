@@ -175,6 +175,9 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                         var delSuccessCount=batchDeleteBookType(batchStrId);
                         if(delSuccessCount>0) {
                             var fk = "删除数据" + delSuccessCount + "/" + data.length + "成功</br>删除数据" + (data.length - delSuccessCount) + "/" + data.length + "失败";
+                            if(data.length - delSuccessCount>0){
+                                fk=fk+"</br>书籍可能在被租借中,无法删除";
+                            }
                             spopBatchHint(fk);
                         }else{
                             spopFail("操作错误","");
@@ -296,13 +299,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 layer.close(index);
                 //layer.msg("删除"+data.id);
                 //向服务端发送删除指令
-                if(deleteBookType(data.id)){
-                    //obj.del(); //删除对应行（tr）的DOM结构
-                    $(".layui-laypage-btn")[0].click();
-                    spopSucess("删除成功");
-                }else{
-                    spopFail("删除失败","该项可能已经不存在");
-                };
+                deleteBookType(data.id);
             });
         } else if(layEvent === 'edit'){
             editObj=data;
@@ -413,17 +410,19 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
     //删除单条数据
     function deleteBookType(delid) {
-        var delSuccess=false;
         $.ajax({
             url: '/book/delete.json',
             data: {"id":delid},
             async:false,
             type: 'GET',
             success: function (result) {
-                delSuccess=result.ret;
+                if(result.ret){
+                    spopSucess("删除成功");
+                }else{
+                    spopFail("删除失败",result.msg);
+                }
             }
         });
-        return delSuccess;
     }
 
     //批量删除数据

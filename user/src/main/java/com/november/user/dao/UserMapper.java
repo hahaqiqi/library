@@ -1,7 +1,6 @@
 package com.november.user.dao;
 
 import com.november.user.model.User;
-import com.november.user.param.UserParam;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -18,11 +17,19 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Integer id);
 
+    int selectUserName(@Param("userName") String userName,@Param("id") Integer id);
+
+    int selectIdCard(@Param("idCard")String idCard,@Param("id")Integer id);
+
     List<User> select(@Param("page") int page, @Param("limit")int limit);
 
-    int updateByPrimaryKeySelective(UserParam record);
+    int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
 
     int userCount();
+
+    User selectUserByEmail(String email);
+
+    int selectEmail(String email);
 }

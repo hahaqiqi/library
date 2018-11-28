@@ -2,6 +2,7 @@ package com.november.user.controller;
 
 import com.november.common.JsonData;
 import com.november.user.model.User;
+import com.november.user.param.UserParam;
 import com.november.user.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -24,7 +24,10 @@ public class UserController {
         return "users";
     }
 
-    @ResponseBody
+    @RequestMapping(value = "/tosave.html")
+    public String toSave(){ return "save";}
+
+   /* @ResponseBody
     @RequestMapping(value="/x.json")
     public JsonData save(User record){
         record.setId(1);
@@ -43,15 +46,17 @@ public class UserController {
         Integer i=userService.insert(record);
         System.out.println(i);
         return JsonData.success();
-    }
+    }*/
+    //保存
     @ResponseBody
     @RequestMapping(value="/save.json")
-    public JsonData saveByParam(User record){
+    public JsonData saveByParam(UserParam record){
 
         Integer i=userService.insertSelective(record);
         System.out.println(i);
         return JsonData.success();
     }
+    //分页
     @ResponseBody
     @RequestMapping(value="/list.json",method = RequestMethod.GET)
     public JsonData select(HttpServletRequest request){
@@ -61,13 +66,13 @@ public class UserController {
         List<User> users= userService.select(page,limit);
         return JsonData.pageSuccess(users,count,limit);
     }
-
+    //修改
     @ResponseBody
-    @RequestMapping(value="/update.json")
-    public JsonData update(User record){
-        record.setId(1);
-        record.setUserName("admin");
-        Integer i=userService.updateByPrimaryKey(record);
+    @RequestMapping(value="/update.json",method = RequestMethod.POST)
+    public JsonData update(UserParam record){
+
+        Integer i=userService.updateByPrimaryKeySelective(record);
+
         return JsonData.success();
     }
 
@@ -85,4 +90,12 @@ public class UserController {
 
 
 
+    @ResponseBody
+    @RequestMapping(value="/selectUserByEmail.json")
+    public JsonData SelectUserByEmail(String email){
+        email="2778034124@qq.com";
+        User user=userService.selectUserByEmail(email);
+        System.out.print(user.toString());
+        return JsonData.success();
+    }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface SpaceMapper {
 
-    List<Integer> deleteByPrimaryKey(List<Integer> listid);//根据ID删除
+    int deleteByPrimaryKey(List<Integer> listid);//根据ID删除
 
     int insert(Space record);//添加父空间
 
@@ -21,7 +21,10 @@ public interface SpaceMapper {
 
     int updateByPrimaryKeySelective(Space record);//修改空间
 
-    List<Space> selectIdandParentId(@Param("parentid") Integer parentid);
+//    List<Space> selectIdandParentId(@Param("parentid") Integer parentid);
 
+    int Movespace(@Param("id") Integer id,@Param("parentId") Integer pid);//移动节点
+
+    List<Space> selectSpaceBook(List<Integer> Spaceid);
 
 }

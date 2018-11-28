@@ -10,10 +10,7 @@ import com.november.admin.model.Admin;
 import com.november.admin.service.AdminService;
 import com.november.exception.ParamException;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -87,9 +84,10 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
         //获取用户信息
         String name = token.getPrincipal().toString();
+        String password = new String((char[]) token.getCredentials());
         Admin admin = adminService.getAdminByAdminCode(name);
-        if (admin == null) {
-            throw new ParamException("账户或密码错误");
+        if (admin == null || ! password.equals(admin.getAdminPwd())) {
+            throw new UnknownAccountException("账户或密码不正确");
         } else {
             //这里验证authenticationToken和simpleAuthenticationInfo的信息
             SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(name, admin.getAdminPwd().toString(), getName());
