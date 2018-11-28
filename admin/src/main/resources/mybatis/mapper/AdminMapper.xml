@@ -171,4 +171,14 @@
             AND id!=#{id}
         </if>
     </select>
+
+    <select id="getByIds" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from admin
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 </mapper>
