@@ -6,6 +6,7 @@
     <result column="book_id" property="bookId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="book_price" property="bookPrice" jdbcType="DOUBLE" />
+    <result column="discount" property="discount" jdbcType="DOUBLE" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="operator" property="operator" jdbcType="VARCHAR" />
     <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
@@ -15,7 +16,7 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, book_id, user_id, book_price, status, operator, operate_time, price, final_operator, 
+    id, book_id, user_id, book_price, status,discount, operator, operate_time, price, final_operator,
     final_operate_time, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -61,6 +62,9 @@
       <if test="bookPrice != null" >
         book_price,
       </if>
+      <if test="discount != null" >
+        discount,
+      </if>
       <if test="status != null" >
         status,
       </if>
@@ -96,6 +100,9 @@
       <if test="bookPrice != null" >
         #{bookPrice,jdbcType=DOUBLE},
       </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=DOUBLE},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
@@ -130,6 +137,9 @@
       </if>
       <if test="bookPrice != null" >
         book_price = #{bookPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=DOUBLE},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},

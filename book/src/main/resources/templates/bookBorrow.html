@@ -18,7 +18,7 @@
     <img id="searchBut" src="/img/sousuo.png"/>
 </div>
 <div style="margin-left:0px;margin-top:20px;border:1px solid #17dea6;">
-    <div id="searchTable"></div>
+    <table class="layui-hide" id="searchTable" lay-filter="test"></table>
 
     <div id="searchEmailBox">
         <input id="userEmailInput" type="text" name="title" placeholder="用户邮箱" class="layui-input">
@@ -28,6 +28,22 @@
         <button id="getCodeBut" class="layui-btn layui-btn-disabled" lay-filter="formDemo">获取验证码</button>
     </div>
 </div>
+
+<script type="text/html" id="bookstatus">
+    <!--
+    SYY-11182018172052197243,SYY-11182018172052160007,SYY-11182018172052186618,SYY-11182018172052175191
+    -->
+
+    {{# if(d.status==2){ }}
+    <font>永久下架</font>
+    {{# }else if(d.status==0){ }}
+    <font>未上架</font>
+    {{# }else if(d.bookLeaseId==null || d.bookLeaseId==0){ }}
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="borrow">可借阅</a>
+    {{# }else{ }}
+    <font>被借阅</font>
+    {{# } }}
+</script>
 
 </body>
 

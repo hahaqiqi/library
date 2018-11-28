@@ -93,9 +93,9 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value="/selectUserByEmail.json")
     public JsonData SelectUserByEmail(String email){
-        email="2778034124@qq.com";
+        //email="2778034124@qq.com";
         User user=userService.selectUserByEmail(email);
-        System.out.print(user.toString());
-        return JsonData.success();
+        //System.out.print(user.toString());
+        return JsonData.success(user);
     }
 }

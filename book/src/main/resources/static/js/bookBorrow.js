@@ -31,73 +31,73 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
     form.render();
 
+
     //点击搜索图书
     $('#searchBut').on("click",function(){
         var searchVal=$("#searchInput").val();
         table.render({
             elem: '#searchTable'
             ,url: '/book/searchBook.json?searchVal='+searchVal //数据接口
+            ,id:'test'
             ,response: {
                 statusCode: 0 //规定成功的状态码，默认：0
             }
             ,cols: [
                 [ //表头
-                 {type: 'checkbox', fixed: 'left'}
-                ,{field: 'bookName', title: '书籍名称'}
-                ,{field: 'authorName', title: '作者'}
-                ,{field: 'price', title: '价格'}
-                ,{field: 'pressName', title: '出版社'}
-                ,{field: 'bookTypeId', title: '书籍类型',templet:function(obj){
+                    {type: 'checkbox', fixed: 'left'}
+                    ,{field: 'bookName', title: '书籍名称'}
+                    ,{field: 'authorName', title: '作者'}
+                    ,{field: 'price', title: '价格'}
+                    ,{field: 'pressName', title: '出版社'}
+                    ,{field: 'bookTypeId', title: '书籍类型',templet:function(obj){
                         var typeName="没有此类型";
-                            $.ajax({
-                                url: '/bookType/select.json',
-                                data: {"id": obj.bookTypeId},
-                                async: false,
-                                type: 'GET',
-                                success: function (result) {
-                                    if(result.data!=null){
-                                        typeName= result.data.typeName;
-                                    }
+                        $.ajax({
+                            url: '/bookType/select.json',
+                            data: {"id": obj.bookTypeId},
+                            async: false,
+                            type: 'GET',
+                            success: function (result) {
+                                if(result.data!=null){
+                                    typeName= result.data.typeName;
                                 }
-                            });
+                            }
+                        });
                         return typeName;
                     }
-                  }
-                ,{field: 'bookLeaseType', title: '书籍租借类型',templet:function(obj){
-                        var typeName="无";
-                            $.ajax({
-                                url: '/bookLeaseType/select.json',
-                                data: {"id": obj.bookLeaseType},
-                                async: false,
-                                type: 'GET',
-                                success: function (result) {
-                                    if(result.data!=null){
-                                        typeName= result.data.typeName;
-                                    }
-                                }
-                            });
-                        return typeName;
-                    }
-                  }
-                ,{field: 'bookChcoType', title: '收费方式',templet:function(obj){if(obj.bookChcoType==0){return '免费'}else{ return '收费' } }}
-                ,{field: '', title: '书籍状态',templet:function(obj){
-                        if(obj.status==2){
-                            return "永久下架";
-                        }
-                        if(obj.status==0){
-                            return "未上架";
-                        }
-                        if(obj.bookLeaseId==null || obj.bookLeaseId==0){
-                            return "可借阅";
-                        }
-                        return "被借阅";
-                    }
-
                 }
-            ]
+                    ,{field: 'bookLeaseType', title: '书籍租借类型',templet:function(obj){
+                        var typeName="无";
+                        $.ajax({
+                            url: '/bookLeaseType/select.json',
+                            data: {"id": obj.bookLeaseType},
+                            async: false,
+                            type: 'GET',
+                            success: function (result) {
+                                if(result.data!=null){
+                                    typeName= result.data.typeName;
+                                }
+                            }
+                        });
+                        return typeName;
+                    }
+                }
+                    ,{field: 'bookChcoType', title: '收费方式',templet:function(obj){if(obj.bookChcoType==0){return '免费'}else{ return '收费' } }}
+                    ,{field: '', title: '书籍状态',toolbar:'#bookstatus'}
+                ]
             ]
         });
+
+
+        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent === 'borrow'){
+
+            }
+        });
+
     });
+
 
     form.render();
 
@@ -126,10 +126,22 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 $("#getCodeBut").text(djs+"秒后重新获取");
                 djs--;
                 if(djs<0){
-                    reset();
+                    $("#getCodeBut").text("重新获取");
+                    $('#getCodeBut').attr("class","layui-btn");
                 }
             },1000);
         }
+    });
+
+    //输入图书编码的事件 需重新验证读者身份
+    $('#searchInput').on("input propertychange",function(){
+        reset();
+        $("#userEmailInput").val("");
+        $("#codeInput").val("");
+        var searchInputLength=$('#searchInput').val().length;
+        var searchInputwidth=$('#searchInput').css("width");
+        var iaaaaa=0;
+        //searchInput
     });
 
     //输入验证码的事件
@@ -139,27 +151,30 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             if(inputCode==verificationCode){
                 done();
             }else{
-                spopFail("验证码错误","");
+                spopTs("验证码错误","");
             }
         }
     });
 
-    $('#userEmailInput').on("input propertychange",function(){
+    //输入邮箱事件
+    $('#searchInput').on("input propertychange",function(){
         reset();
-        if($('#userEmailInput').val()==""){
-            $('#getCodeBut').attr("class","layui-btn layui-btn-disabled");
-        }
     });
-    
+
     //重置按钮
     function reset() {
         $("#getCodeBut").text("获取验证码");
-        $('#getCodeBut').attr("class","layui-btn");
+        $('#getCodeBut').attr("class","layui-btn layui-btn-disabled");
         djs=30;
         isCode=false;
         verificationCode="";
         $('#codeInput').val("");
         clearInterval(djsdsq);
+    }
+    //可验证
+    function userYz() {
+        $("#getCodeBut").text("获取验证码");
+        $('#getCodeBut').attr("class","layui-btn");
     }
     //验证完成
     function done() {
@@ -170,11 +185,11 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     }
 
     //点击搜索用户
-    $('#getCodeBut').on("click",function(){
+    $('#searchEmailBut').on("click",function(){
         //需要得到该用户信息
-        var inputCode=$("#codeInput").val();
+        var inputCode=$("#userEmailInput").val();
         $.ajax({
-            url: '',
+            url: '/user/selectUserByEmail.json',
             data: {"email":inputCode},
             async:false,
             type: 'GET',
@@ -182,7 +197,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 if(result.ret){
                     if(result.data!=null && result.data!=""){
                         spopSucess("用户存在");
-                        reset();
+                        userYz();
                     }else{
                         spopFail("用户不存在","");
                     }
@@ -201,12 +216,13 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     function getCode(inputCode) {
         var code="";
         $.ajax({
-            url: 'book/getCode.json',
+            url: '/book/getCode.json',
             data: {"email":inputCode},
             async:false,
             type: 'GET',
             success: function (result) {
                 if(result.ret){
+                    spopSucess("验证码已发送");
                     code=result.data;
                 }else{
                     spopFail("获取失败","");
@@ -220,5 +236,3 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     }
 
 });
-
-
