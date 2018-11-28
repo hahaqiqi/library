@@ -27,4 +27,6 @@ public interface AdminMapper {
     Admin getAdminByAdminCode(@Param("adminCode") String adminCode);
 
     int countByIdCard(@Param("id") Integer id,@Param("idCard") String idCard);
+
+    List<Admin> getByIds(@Param("ids") List<Integer> ids);
 }
