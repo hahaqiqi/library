@@ -132,4 +132,20 @@
     from user_type
      ORDER BY min_score DESC
   </select>
+
+  <select id="selectTypeName" resultType="int">
+    SELECT COUNT(*) FROM user_type where type_name=#{TypeName}
+    <if test="id!=null">
+      AND id!=#{id}
+    </if>
+  </select>
+
+  <select id="selectScore" resultType="int">
+    SELECT COUNT(*) FROM user_type where min_score=#{score}
+    <if test="id!=null">
+      AND id!=#{id}
+    </if>
+  </select>
+
+
 </mapper>

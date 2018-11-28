@@ -22,7 +22,6 @@ public class UserParam implements Serializable{
     @Length(max = 40,message = "用户名称长度不能超过40")
     private String userName;
 
-
     private String userPhone;
 
     @Email(message="邮箱格式不正确")
