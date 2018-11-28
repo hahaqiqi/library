@@ -207,5 +207,8 @@
 
   <select id="selectEmail" resultType="int">
     SELECT COUNT (*) from user where user_email = #{email,jdbcType=INTEGER}
+    <if test="id!=null">
+      AND id!=#{id}
+    </if>
   </select>
 </mapper>
