@@ -38,7 +38,7 @@ public class AdminParam {
     private Date birthday;
 
     @NotBlank(message = "管理员身份证号不能为空")
-    @Length(min = 18,message = "管理员身份证号长度至少18位")
+    @Length(min = 18,max= 18,message = "管理员身份证号长度应为18")
     private String idCard;
 
     @Length(max = 200,message = "管理员备注长度不能超过200")
