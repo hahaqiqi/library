@@ -17,17 +17,21 @@
     display: inline;
 }
 
+.sousuoImg{
+    cursor:pointer;
+}
+
 #searchBut {
     margin-left: -28px;
     margin-top: -3px;
     width: 17px;
     height: 17px;
-
 }
 
 #searchEmailBox {
     margin-left: 0px;
     margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 #userEmailInput{

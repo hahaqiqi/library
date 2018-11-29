@@ -92,4 +92,6 @@ public interface BookService {
     public List<Book> getBookByCode(List<String> list);
 
     public String bookState(Integer id);
+
+    public int updateBookLeaseIdByBookId(Integer bookId,Integer leaseId);
 }

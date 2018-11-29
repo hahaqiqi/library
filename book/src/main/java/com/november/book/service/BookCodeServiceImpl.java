@@ -79,4 +79,17 @@ public class BookCodeServiceImpl implements  BookCodeService {
         return bookCodeMapper.selectByPrimaryKey(id);
     }
 
+    @Override
+    public BookCode byPriceBookCode(Double price) {
+        List<BookCode> listBookCode=bookCodeMapper.getAll();
+        BookCode bookCode=null;
+        for(int i=listBookCode.size()-1;i>=0;i--){
+            if(price>=listBookCode.get(i).getBookPriceMin()){
+                bookCode=listBookCode.get(i);
+                break;
+            }
+        }
+        return bookCode;
+    }
+
 }
