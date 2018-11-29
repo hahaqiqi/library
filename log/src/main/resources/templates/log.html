@@ -10,7 +10,42 @@
     <script src="/static/js/spopUtil.js" th:src="@{/js/spopUtil.js}"/>
     <script src="/static/spop-0.1.3/dist/spop.js" th:src="@{/spop-0.1.3/dist/spop.js}"></script>
 </head>
+<style>
+    #date {
+        border-radius: 100px;
+    }
+
+    #seach {
+        position: absolute;
+        top: 31px;
+        left: 30px;
+    }
+
+    #seachLable {
+        color: #999;
+        position: absolute;
+        top: 30px;
+        left: 50px;
+    }
+    #submitBtn{
+        position: absolute;
+        top: 28px;
+        left: 270px;
+        display: none;
+    }
+</style>
 <body>
+
+<div id="dg" style="z-index: 9999; position: fixed ! important; right: 0px; top: 0px;width: 110px;">
+    <table width="" 100% style="position: absolute; width:260px; right: 0px; top: 0px;">
+        <div id="timeInput" style="margin: 20px;">
+            <i class="layui-icon" id="seach">&#xe615;</i>
+            <input type="text" class="layui-input" readonly name="" id="date" value="" placeholder="">
+            <label id="seachLable">搜索</label>
+            <button type="button" id="submitBtn" class="layui-btn layui-btn-xs">搜索</button>
+        </div>
+    </table>
+</div>
 
 <ul id="view" class="layui-timeline" style="margin: 35px 35px;"></ul>
 
