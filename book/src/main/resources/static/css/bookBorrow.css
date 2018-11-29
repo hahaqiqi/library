@@ -1,5 +1,4 @@
 #searchBox {
-    width: 290px;
     margin-left: 0px;
     margin-top: 15px;
 }
@@ -15,7 +14,11 @@
     right: 0;
     padding-left: 10px;
     padding-right: 28px;
-    display: inline-block;
+    display: inline;
+}
+
+.sousuoImg{
+    cursor:pointer;
 }
 
 #searchBut {
@@ -23,12 +26,12 @@
     margin-top: -3px;
     width: 17px;
     height: 17px;
-
 }
 
 #searchEmailBox {
     margin-left: 0px;
     margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 #userEmailInput{

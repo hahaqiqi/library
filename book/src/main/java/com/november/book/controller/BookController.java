@@ -55,6 +55,13 @@ public class BookController {
         return JsonData.success();
     }
 
+    @RequestMapping(value = "/updateLeaseId.json", method = RequestMethod.POST)//修改单本书籍的租借id
+    @ResponseBody
+    public JsonData updateBookTypeLeaseIdByBookId(Integer bookId,Integer leaseId) {
+        bookService.updateBookLeaseIdByBookId(bookId,leaseId);
+        return JsonData.success();
+    }
+
     @RequestMapping(value = "/batchUpdate.json", method = RequestMethod.POST)  //修改
     @ResponseBody
     public JsonData batchUpdateBookType(HttpServletRequest request,BookParam param) {
@@ -161,7 +168,7 @@ public class BookController {
             listStr.add(str);
         }
         List<Book> list=bookService.getBookByCode(listStr);
-        return JsonData.pageSuccess(list,0,0);
+        return JsonData.success(list);
     }
 
     @RequestMapping(value = "/bookState.json", method = RequestMethod.GET)

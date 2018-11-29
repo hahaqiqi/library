@@ -31,4 +31,5 @@ public interface BookCodeMapper {
     int minIsEnabled(BookCodeParam bookCodeParam);
 
     int maxIsEnabled(BookCodeParam bookCodeParam);
+
 }

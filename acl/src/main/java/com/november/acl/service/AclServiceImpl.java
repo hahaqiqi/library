@@ -227,6 +227,13 @@ public class AclServiceImpl implements AclService {
         List<AclDto> dtoList = Lists.newArrayList();
         //  循环操作类型
         for (OperType operType : operTypeList) {
+            //  根据父id获得操作集合
+            List<Acl> aclOperList = aclMapper.getAclsByOperType(Lists.newArrayList(operType.getId()), parentId);
+            //  判断是否为空
+            if(CollectionUtils.isEmpty(aclOperList)){
+                //  是空的话跳过
+                continue;
+            }
             //  创建一个权限节点
             AclDto dto = new AclDto();
             //  设置节点显示的值

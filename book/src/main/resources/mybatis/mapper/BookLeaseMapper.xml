@@ -2,10 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.november.book.dao.BookLeaseMapper" >
   <resultMap id="BaseResultMap" type="com.november.book.model.BookLease" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
     <result column="book_id" property="bookId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="book_price" property="bookPrice" jdbcType="DOUBLE" />
+    <result column="discount" property="discount" jdbcType="DOUBLE" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="operator" property="operator" jdbcType="VARCHAR" />
     <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
@@ -15,7 +17,7 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, book_id, user_id, book_price, status, operator, operate_time, price, final_operator, 
+    id,serial_number, book_id, user_id, book_price, status,discount, operator, operate_time, price, final_operator,
     final_operate_time, remark
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -46,11 +48,14 @@
       #{operateTime,jdbcType=TIMESTAMP}, #{price,jdbcType=DOUBLE}, #{finalOperator,jdbcType=VARCHAR}, 
       #{finalOperateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.november.book.model.BookLease" >
+  <insert id="insertSelective" parameterType="com.november.book.model.BookLease"  useGeneratedKeys="true" keyProperty="id" keyColumn="id">
     insert into book_lease
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="serialNumber != null">
+        serial_number,
       </if>
       <if test="bookId != null" >
         book_id,
@@ -60,6 +65,9 @@
       </if>
       <if test="bookPrice != null" >
         book_price,
+      </if>
+      <if test="discount != null" >
+        discount,
       </if>
       <if test="status != null" >
         status,
@@ -87,6 +95,9 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="serialNumber != null">
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
       <if test="bookId != null" >
         #{bookId,jdbcType=INTEGER},
       </if>
@@ -95,6 +106,9 @@
       </if>
       <if test="bookPrice != null" >
         #{bookPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=DOUBLE},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -125,11 +139,17 @@
       <if test="bookId != null" >
         book_id = #{bookId,jdbcType=INTEGER},
       </if>
+      <if test="serialNumber != null">
+        #{serial_number,jdbcType=VARCHAR},
+      </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="bookPrice != null" >
         book_price = #{bookPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=DOUBLE},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},

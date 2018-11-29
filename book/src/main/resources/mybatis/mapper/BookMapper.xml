@@ -269,6 +269,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+    <update id="updateBookLeaseIdByBookId">
+    update book
+    set book_lease_id=#{leaseId}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
     <update id="changeBookStatus">
     update book
     set status=#{statusId}

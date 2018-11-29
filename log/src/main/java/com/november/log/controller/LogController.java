@@ -4,6 +4,7 @@ import com.november.common.JsonData;
 import com.november.log.model.LogWithBLOBs;
 import com.november.log.service.LogService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,8 +34,8 @@ public class LogController {
 
     @ResponseBody
     @RequestMapping("/selectDate.json")
-    public JsonData date(){
-        return JsonData.success(logService.getDateList());
+    public JsonData date(String date){
+        return JsonData.success(logService.getDateList(date));
     }
 
     @ResponseBody

@@ -12,11 +12,15 @@ import java.util.Date;
 public class BookLease {
     private Integer id;
 
+    private String serialNumber;
+
     private Integer bookId;
 
     private Integer userId;
 
     private Double bookPrice;
+
+    private Double discount;
 
     private Integer status;
 
@@ -38,6 +42,14 @@ public class BookLease {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public Integer getBookId() {
@@ -62,6 +74,14 @@ public class BookLease {
 
     public void setBookPrice(Double bookPrice) {
         this.bookPrice = bookPrice;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 
     public Integer getStatus() {

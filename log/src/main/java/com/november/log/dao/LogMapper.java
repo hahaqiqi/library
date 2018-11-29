@@ -26,9 +26,9 @@ public interface LogMapper {
 
     List<LogType> getLogTypeList();
 
-    List<String> getLogDateList();
+    List<String> getLogDateList(@Param("startDate") String startDate,@Param("endDate") String endDate);
 
-    List<LogWithBLOBs> getLogListByOperTime(@Param("date") String date,@Param("page") int page,@Param("limit") int limit);
+    List<LogWithBLOBs> getLogListByOperTime(@Param("date") String startDate,@Param("page") int page,@Param("limit") int limit);
 
     int getCountByOperTime(@Param("date") String date);
 }

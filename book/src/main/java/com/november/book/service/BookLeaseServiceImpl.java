@@ -5,6 +5,8 @@ package com.november.book.service;/*
 import com.november.book.dao.BookLeaseMapper;
 import com.november.book.model.BookLease;
 import com.november.book.param.BookLeaseParam;
+import com.november.book.util.SerialNumberUtil;
+import com.november.common.RequestHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,7 +19,21 @@ public class BookLeaseServiceImpl implements BookLeaseService {
 
     @Override
     public int saveBookLease(BookLeaseParam param) {
-        return 0;
+        BookLease bookLease=BookLease.builder()
+                .bookPrice(param.getBookPrice())
+                .discount(param.getDiscount())
+                .bookId(param.getBookId())
+                .userId(param.getUserId())
+                .remark(param.getRemark())
+                .status(1)
+                .serialNumber(SerialNumberUtil.getCerialNumber()).build();
+        if(RequestHolder.getCurrentAdmin()!=null){
+            bookLease.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
+        }else{
+            bookLease.setOperator("admin");
+        }
+        bookLeaseMapper.insertSelective(bookLease);
+        return bookLease.getId();
     }
 
     @Override

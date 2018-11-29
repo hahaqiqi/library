@@ -1,11 +1,13 @@
 package com.november.log.service;
 
+import com.google.common.collect.Lists;
 import com.november.common.RequestHolder;
 import com.november.exception.ParamException;
 import com.november.log.Param.LogParam;
 import com.november.log.dao.LogMapper;
 import com.november.log.model.LogType;
 import com.november.log.model.LogWithBLOBs;
+import com.november.util.TimeUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -48,9 +50,21 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public List<String> getDateList() {
-        List<String> logDateList = logMapper.getLogDateList();
-        return logDateList;
+    public List<String> getDateList(String date) {
+        if(StringUtils.isBlank(date)){
+            List<String> logDateList = logMapper.getLogDateList(null,null);
+            return logDateList;
+        }
+        if(date.indexOf(' ') > 0){
+            String[] dates = StringUtils.split(date," ");
+            if(dates[0].equals(dates[1])){
+                List<String> logDateList = logMapper.getLogDateList(dates[0],null);
+                return logDateList;
+            }
+            List<String> logDateList = logMapper.getLogDateList(dates[0],dates[1]);
+            return logDateList;
+        }
+        return null;
     }
 
     @Override
