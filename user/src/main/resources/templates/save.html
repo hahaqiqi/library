@@ -26,20 +26,31 @@
         </div>
     </div>
 
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机</label>
+        <div class="layui-input-inline">
+            <input name="userPhone" class="layui-input" type="text" autocomplete="off" placeholder="请输入">
+        </div>
+    </div>
 
     <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">验证手机</label>
-            <div class="layui-input-inline">
-                <input name="userPhone" class="layui-input" type="tel" autocomplete="off" id="userPhone">
-            </div>
-        </div>
-        <div class="layui-inline">
             <label class="layui-form-label">验证邮箱</label>
             <div class="layui-input-inline">
-                <input name="userEmail" class="layui-input" type="text" autocomplete="off">
-                <input type="text" id="yzPhone"><input type="button" value="验证" id="yzmButton">
+                <input name="userEmail" class="layui-input" type="text" autocomplete="off" id="userEmail">
             </div>
+            <div class="layui-input-inline">
+                <button type="button" class="layui-btn" id="getYzm">获取验证码</button>
+            </div>
+    </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label"></label>
+        <div class="layui-input-inline">
+            <input type="text" id="yzEmail">
+        </div>
+        <div class="layui-input-inline">
+            <button type="button" class="layui-btn layui-btn-xs" id="yzmButton">验证</button>
+
         </div>
     </div>
 
