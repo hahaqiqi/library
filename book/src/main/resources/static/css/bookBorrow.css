@@ -1,5 +1,4 @@
 #searchBox {
-    width: 290px;
     margin-left: 0px;
     margin-top: 15px;
 }
@@ -15,7 +14,7 @@
     right: 0;
     padding-left: 10px;
     padding-right: 28px;
-    display: inline-block;
+    display: inline;
 }
 
 #searchBut {

@@ -19,12 +19,12 @@ public class UserController {
     @Resource(name="userService")
     private UserService userService;
 
-    @RequestMapping(value = "/user.html")//前往分页查询
+    @RequestMapping(value = "/user.html")
     public String toUsers(){
         return "users";
     }
 
-    @RequestMapping(value = "/tosave.html")//去添加页面
+    @RequestMapping(value = "/tosave.html")
     public String toSave(){ return "save";}
 
    /* @ResponseBody
@@ -76,19 +76,26 @@ public class UserController {
         return JsonData.success();
     }
 
+    @ResponseBody
+    @RequestMapping(value="/delete.json")
+    public JsonData delete(Integer id){
+        return JsonData.success();
+    }
+
+
+    @RequestMapping(value="/login.html")
+    public String login(){
+        return "save";
+    }
 
 
 
-
-
-
-    //根据邮箱查用户
     @ResponseBody
     @RequestMapping(value="/selectUserByEmail.json")
     public JsonData SelectUserByEmail(String email){
-
+        //email="2778034124@qq.com";
         User user=userService.selectUserByEmail(email);
-        System.out.print(user.toString());
+        //System.out.print(user.toString());
         return JsonData.success(user);
     }
 }

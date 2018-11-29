@@ -18,6 +18,8 @@ public class BookLease {
 
     private Double bookPrice;
 
+    private Double discount;
+
     private Integer status;
 
     private String operator;
@@ -62,6 +64,14 @@ public class BookLease {
 
     public void setBookPrice(Double bookPrice) {
         this.bookPrice = bookPrice;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 
     public Integer getStatus() {

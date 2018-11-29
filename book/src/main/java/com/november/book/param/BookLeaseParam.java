@@ -18,6 +18,8 @@ public class BookLeaseParam {
 
     private Double bookPrice;
 
+    private Double discount;
+
     private Integer status;
 
     private String operator;
