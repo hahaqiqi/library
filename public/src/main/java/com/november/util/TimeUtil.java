@@ -18,6 +18,10 @@ public class TimeUtil {
         return "2018";
     }
 
+    public static String dateFormatToStr(Date date) {
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+        return sd.format(date);
+    }
 
     public static Date dateFormat(Date date) {
         TimeZone timeZoneSH = TimeZone.getTimeZone("Asia/Shanghai");
@@ -33,4 +37,19 @@ public class TimeUtil {
         return date;
     }
 
+    public static int compareDate(String str1,String str2){
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date1 = sd.parse(str1);
+            Date date2 = sd.parse(str2);
+            if(date1.getTime()>date2.getTime()){
+                return 1;
+            }else if(date1.getTime()<date2.getTime()){
+                return -1;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

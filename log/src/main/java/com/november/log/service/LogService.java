@@ -14,7 +14,7 @@ public interface LogService {
 
     public void saveLog(LogParam param);
 
-    public List<String> getDateList();
+    public List<String> getDateList(String date);
 
     public List<LogWithBLOBs> getAllByOperTime(String date,int page,int limit);
 
