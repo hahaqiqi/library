@@ -97,7 +97,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.november.admin.model.Admin">
+    <update id="updateByPrimaryKeySelective" parameterType="com.november.admin.model.Admin" useGeneratedKeys="true" keyProperty="id">
         update admin
         <set>
             <if test="adminCode != null">

@@ -31,7 +31,7 @@
         <ul class="layui-nav layui-layout-right kit-nav">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img th:src="@{/images/user.png}" class="layui-nav-img">&nbsp;&nbsp; user
+                    <img th:src="@{/images/user.png}" class="layui-nav-img">&nbsp;&nbsp; <span th:text="${session.admin.adminCode}"></span>
                 </a>
                 <!--<dl class="layui-nav-child">
                     <dd><a href="javascript:;">基本资料</a></dd>

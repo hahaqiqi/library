@@ -8,6 +8,8 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
 import org.codehaus.jackson.type.TypeReference;
 
+import java.text.SimpleDateFormat;
+
 /**
  * @author skrT
  * @create 2018/10/29 17:24
@@ -24,6 +26,8 @@ public class JsonMapper {
         objectMapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS,false);
         objectMapper.setFilters(new SimpleFilterProvider().setFailOnUnknownId(false));
         objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_EMPTY);
+        objectMapper.setSerializationConfig(objectMapper.getSerializationConfig().withDateFormat(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")));
+        objectMapper.setDeserializationConfig(objectMapper.getDeserializationConfig().withDateFormat(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")));
     }
 
     public static <T> String obj2String(T src){
