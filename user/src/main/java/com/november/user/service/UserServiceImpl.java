@@ -119,4 +119,7 @@ public class UserServiceImpl implements UserService{
        return  userMapper.selectUserByEmail(userEmail);
     }
 
+    public int selectEmail(String userEmail,Integer id){
+       return userMapper.selectEmail(userEmail,id);
+    }
 }

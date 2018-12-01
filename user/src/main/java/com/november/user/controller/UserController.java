@@ -1,9 +1,12 @@
 package com.november.user.controller;
 
 import com.november.common.JsonData;
+import com.november.exception.ParamException;
 import com.november.user.model.User;
 import com.november.user.param.UserParam;
 import com.november.user.service.UserService;
+import com.november.util.Email;
+import com.november.util.IsEmail;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -75,13 +78,6 @@ public class UserController {
 
         return JsonData.success();
     }
-
-
-
-
-
-
-
     //根据邮箱查用户
     @ResponseBody
     @RequestMapping(value="/selectUserByEmail.json")
@@ -90,5 +86,19 @@ public class UserController {
         User user=userService.selectUserByEmail(email);
         System.out.print(user.toString());
         return JsonData.success(user);
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/yzEmail.json")
+    public JsonData sendEmail(String userEmail){//发送邮件
+        if(!IsEmail.isEmail(userEmail)){
+            throw new ParamException("邮箱格式不正确或者为空");
+        }
+        if(userService.selectEmail(userEmail,null)>0){
+            throw new ParamException("该邮箱已被注册");
+        }
+        String yzm=Email.GetCode(userEmail);
+        System.out.println(yzm);
+        return JsonData.success(yzm);
     }
 }

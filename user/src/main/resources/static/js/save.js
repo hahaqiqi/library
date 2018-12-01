@@ -24,6 +24,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             url: '/user/yzEmail.json',
             data: {"userEmail":userEmail},
             type: 'POST',
+            async:false,
             success: function (result) {
                 if (result.ret) {
                     yzm=result.data
@@ -36,7 +37,6 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 spopFail("验证码获取失败");
             }
         });
-        if(yzm!=null){//获取成功
             djsdsq=setInterval(function() {
                 $("#getYzm").text(djs+"秒后重新获取");
                 djs--;
@@ -44,7 +44,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                     reset();
                 }
             },1000);
-        }
+
     });
 
 
@@ -53,6 +53,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         if(yzEmail==yzm && yzm!=null){
             yzSubmit=true
             spopSucess("验证成功")
+            $('#userEmail').attr("disabled","true");//验证成功后邮箱不可更改
         }else{
             spopFail("验证失败");
         }
