@@ -55,4 +55,11 @@ public interface BookCodeService {
      */
     public BookCode byIdBookCode(Integer id);
 
+    /**
+     * 根据书籍价格得到一个BookCode
+     * @param id
+     * @return
+     */
+    public BookCode byPriceBookCode(Double id);
+
 }

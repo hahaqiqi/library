@@ -31,6 +31,12 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
     form.render();
 
+    //回车事件
+    $('#searchInput').keyup(function(event){
+        if(event.keyCode ==13){
+            $('#searchBut').click();
+        }
+    });
 
     //点击搜索图书
     $('#searchBut').on("click",function(){
@@ -44,8 +50,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             }
             ,cols: [
                 [ //表头
-                    {type: 'checkbox', fixed: 'left'}
-                    ,{field: 'bookName', title: '书籍名称'}
+                    {field: 'bookName', title: '书籍名称' ,fixed: 'left'}
                     ,{field: 'authorName', title: '作者'}
                     ,{field: 'price', title: '价格'}
                     ,{field: 'pressName', title: '出版社'}
@@ -87,16 +92,189 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             ]
         });
 
-
+        var leasePrice=0;
+        var discount=1; //租借折扣
         table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'borrow'){
+                if(isCode==false){
+                    spopTs("请先验证身份");
+                    return;
+                }
+                if(user.userScore<60){//友情提示用户积分低于60分
+                    spopTs("该用户积分低于60");
+                }
 
+                //根据用户积分，判断是否可以租借
+                $.ajax({
+                    url: '/bookLeaseType/select.json',
+                    data: {"id":data.bookLeaseType},
+                    async:false,
+                    type: 'GET',
+                    success: function (result) {
+                        if(result.ret){
+                            if(result!=null && result!=""){
+                                if(user.userScore < result.data.score){
+                                    spopFail("借阅该图书需要"+result.data.score+"积分</br>用户积分:"+user.userScore,"");
+                                    return;
+                                }else{
+                                    discount=result.data.discount;
+                                }
+                            }
+                        }else{
+                            spopFail("获取数据失败","");
+                            return;
+                        }
+                    },
+                    error:function () {
+                        spopFail("获取数据失败","");
+                        return;
+                    }
+                });
+
+                //是否收费
+                if(data.bookChcoType==1){
+                    //收费
+                    //根据收费id得到收费价格
+                    $.ajax({
+                        url: '/bookCode/selectByPrice.json',
+                        data: {"price":data.price},
+                        async:false,
+                        type: 'GET',
+                        success: function (result) {
+                            if(result.ret){
+                                if(result!=null && result!=""){
+                                    leasePrice=result.data.bookPrice;
+                                }
+                            }else{
+                                spopFail("获取数据失败","");
+                                return;
+                            }
+                        },
+                        error:function () {
+                            spopFail("获取数据失败","");
+                            return;
+                        }
+                    });
+
+
+                    //根据用户积分得到是否有折扣
+                    $.ajax({
+                        url: '/userType/selectUsertypeByScore.json',
+                        data: {"score":user.userScore},
+                        async:false,
+                        type: 'GET',
+                        success: function (result) {
+                            if(result.ret){
+                                if(result!=null && result!=""){
+                                    if(result.data.discount< discount){
+                                        discount=result.data.discount;
+                                    }
+                                }
+                            }else{
+                                spopFail("获取数据失败","");
+                                return;
+                            }
+                        },
+                        error:function () {
+                            spopFail("获取数据失败","");
+                            return;
+                        }
+                    });
+                }else{
+                    leasePrice=0;
+                    discount=1;
+                }
+
+
+
+                //满足借阅条件
+                //加载数据
+                var viewdata = { //数据
+                    "bookId":data.id
+                    ,"userId":user.id
+                    ,"eamil":user.userEmail
+                    ,"bookName":data.bookName
+                    ,"bookCode":data.bookCode
+                    ,"bookAuthor":data.authorName
+                    ,"price":leasePrice
+                    ,"discount":discount
+                }
+                loadLease(viewdata);
             }
         });
 
     });
+
+    //生成订单表
+    loadLease= function (viewdata){
+        var getTpl = bookLease.innerHTML
+            ,view = document.getElementById('view');
+        laytpl(getTpl).render(viewdata, function(html){
+            view.innerHTML = html;
+        });
+
+        layer.open({
+            title: '确认订单',
+            type: 1,
+            content: $("#view"),
+            shade: 0.5,
+            area: '400px',
+            success:function(){
+                $('#submitBookLease').on("click",function(){
+                    var leaseId=0;//返回的订单id
+                    $.ajax({
+                        url: '/bookLease/save.json',
+                        data:$("#bookLeaseFrom").serializeArray(),
+                        async:false,
+                        type: 'POST',
+                        success: function (result) {
+                            if(result.ret){
+                                layer.close(layer.index);
+                                leaseId=result.data;
+                                //$('#searchBut').click();
+                            }else{
+                                spopFail("请求失败","");
+                            }
+                        },
+                        error:function () {
+                            spopFail("请求失败","");
+                        }
+                    });
+                    if(leaseId!=0){
+                        //新增记录成功
+                        //改变书籍状态
+                        $.ajax({
+                            url: '/book/updateLeaseId.json',
+                            data:{"bookId":viewdata.bookId,"leaseId":leaseId},
+                            async:false,
+                            type: 'POST',
+                            success: function (result) {
+                                if(result.ret){
+                                    layer.close(layer.index);
+                                    $("#view").html("");
+                                    $('#searchBut').click();
+                                }else{
+                                    spopFail("请求失败","");
+                                }
+                            },
+                            error:function () {
+                                spopFail("请求失败","");
+                            }
+                        });
+
+                    }
+
+
+                });
+
+            },
+            cancel: function(){
+                $("#view").html("");
+            }
+        });
+    }
 
 
     form.render();
@@ -107,6 +285,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     var isCode=false;
     var djs=30;
     var djsdsq;
+    var user=null;
     $('#getCodeBut').on("click",function(){
         if($('#getCodeBut').attr("class")!="layui-btn"){
             return;
@@ -115,22 +294,20 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         if(userEmailInput==""){
             return;
         }
-        //通过ajax得到验证码
-        verificationCode=getCode(userEmailInput);
-
-
         $('#getCodeBut').attr("class","layui-btn layui-btn-disabled");
+        //通过ajax得到验证码
+        getCode(userEmailInput);
 
-        if(verificationCode!=""){//获取成功
-            djsdsq=setInterval(function() {
-                $("#getCodeBut").text(djs+"秒后重新获取");
-                djs--;
-                if(djs<0){
-                    $("#getCodeBut").text("重新获取");
-                    $('#getCodeBut').attr("class","layui-btn");
-                }
-            },1000);
-        }
+
+        djsdsq=setInterval(function() {
+            $("#getCodeBut").text(djs+"秒后重新获取");
+            djs--;
+            if(djs<0){
+                $("#getCodeBut").text("重新获取");
+                $('#getCodeBut').attr("class","layui-btn");
+            }
+        },1000);
+
     });
 
     //输入图书编码的事件 需重新验证读者身份
@@ -184,10 +361,20 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         clearInterval(djsdsq);
     }
 
+    //回车事件
+    $('#userEmailInput').keyup(function(event){
+        if(event.keyCode ==13){
+            $('#searchEmailBut').click();
+        }
+    });
+
     //点击搜索用户
     $('#searchEmailBut').on("click",function(){
         //需要得到该用户信息
         var inputCode=$("#userEmailInput").val();
+        if(inputCode==""){
+            return;
+        }
         $.ajax({
             url: '/user/selectUserByEmail.json',
             data: {"email":inputCode},
@@ -196,7 +383,8 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             success: function (result) {
                 if(result.ret){
                     if(result.data!=null && result.data!=""){
-                        spopSucess("用户存在");
+                        user=result.data;
+                        spopSucess("用户已登记");
                         userYz();
                     }else{
                         spopFail("用户不存在","");
@@ -214,16 +402,14 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
     //获得验证码
     function getCode(inputCode) {
-        var code="";
         $.ajax({
             url: '/book/getCode.json',
             data: {"email":inputCode},
-            async:false,
             type: 'GET',
             success: function (result) {
                 if(result.ret){
                     spopSucess("验证码已发送");
-                    code=result.data;
+                    verificationCode=result.data;
                 }else{
                     spopFail("获取失败","");
                 }
@@ -232,7 +418,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 spopFail("获取失败","");
             }
         });
-        return code;
     }
+
 
 });

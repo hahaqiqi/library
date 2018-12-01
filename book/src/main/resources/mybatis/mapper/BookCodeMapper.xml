@@ -24,7 +24,7 @@
   <select id="getAll" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
-    from book_code
+    from book_code ORDER BY book_price_min
   </select>
 
   <select id="isRepeat" resultType="java.lang.Integer" parameterType="com.november.book.param.BookCodeParam">

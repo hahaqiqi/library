@@ -40,4 +40,6 @@ public interface BookMapper {
     int bacthUpdateWhere(BookParam param);
 
     List<Book> getBookByCode(List<String> list);
+
+    int updateBookLeaseIdByBookId(@Param("id") Integer id,@Param("leaseId") Integer leaseId);
 }

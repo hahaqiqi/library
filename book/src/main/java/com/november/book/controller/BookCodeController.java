@@ -64,7 +64,12 @@ public class BookCodeController {
         return JsonData.success(bookCode);
     }
 
-
+    @RequestMapping(value = "/selectByPrice.json",method =RequestMethod.GET)
+    @ResponseBody
+    public JsonData selectBookCodeByPrice(Double price){
+        BookCode bookCode= bookCodeService.byPriceBookCode(price);
+        return JsonData.success(bookCode);
+    }
 
 
 }

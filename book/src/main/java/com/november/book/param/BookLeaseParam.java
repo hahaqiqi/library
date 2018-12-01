@@ -14,6 +14,8 @@ public class BookLeaseParam {
 
     private Integer bookId;
 
+    private String serialNumber;
+
     private Integer userId;
 
     private Double bookPrice;

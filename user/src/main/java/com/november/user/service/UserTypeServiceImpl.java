@@ -87,6 +87,7 @@ public class UserTypeServiceImpl implements UserTypeService {
         for(UserType li:list){
             if(score>=li.getMinScore()) {
                 userType = li;
+                break;
             }
         }
         return userType;

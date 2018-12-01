@@ -182,4 +182,9 @@ public class BookServiceImpl implements BookService {
         }
         return "可借阅";
     }
+
+    @Override
+    public int updateBookLeaseIdByBookId(Integer bookId, Integer leaseId) {
+        return bookMapper.updateBookLeaseIdByBookId(bookId,leaseId);
+    }
 }

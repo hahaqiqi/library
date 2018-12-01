@@ -33,8 +33,8 @@ public class BookLeaseController {
     @RequestMapping(value = "/save.json",method =RequestMethod.POST)
     @ResponseBody
     public JsonData saveBookLease(BookLeaseParam param){
-        bookLeaseService.saveBookLease(param);
-        return JsonData.success();
+        int newNumber= bookLeaseService.saveBookLease(param);
+        return JsonData.success(newNumber);
     }
 
     @RequestMapping(value = "/update.json",method =RequestMethod.POST)
