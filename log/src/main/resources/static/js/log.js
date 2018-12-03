@@ -82,9 +82,9 @@ layui.use(['form', 'layer', 'laytpl', 'jquery', 'table', "laypage","timePicker"]
         //  绑定每个日期点击事件
         $(document).on('click', '.start', function (e) {
             if ($(this).next().children(".myTable").html() == "") {
-                $(".start").html("&#xe602;");
+                $(".start").html("&#xe63f;");
                 $(".start").next().children(".myTable").html("");
-                $(this).html("&#xe61a;");
+                $(this).html("&#xe643;");
                 var date = $(this).next().children(".layui-timeline-title").text();
                 var data = {};
                 var getTpl = $("#tableTemp").html()
@@ -118,9 +118,11 @@ layui.use(['form', 'layer', 'laytpl', 'jquery', 'table', "laypage","timePicker"]
                         console.log(count);
                     }
                 });
-                form.render();
+                // form.render();
+                $(".myTable").show("slow");
             } else {
-                $(this).html("&#xe602;");
+                $(".myTable").hide("slow");
+                $(this).html("&#xe63f;");
                 $(this).next().children(".myTable").html("");
             }
         });
@@ -129,6 +131,17 @@ layui.use(['form', 'layer', 'laytpl', 'jquery', 'table', "laypage","timePicker"]
         $("#submitBtn").click(function() {
             var value = $("#date").val();
             loadLog(value);
+            if(value.length > 3) {
+                return;
+            }
+            $("#dg").css({
+                "width": "110px",
+                "transition": "width 0.5s"
+            });
+            $('#seach').show();
+            $('#seachLable').show();
+            $('#submitBtn').hide();
+            $(".timePicker").remove();
         });
 
         function renderTime() {

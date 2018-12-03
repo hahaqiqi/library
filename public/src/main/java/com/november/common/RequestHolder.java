@@ -8,27 +8,20 @@ import javax.servlet.http.HttpServletRequest;
  * @author skrT
  * @create 2018/11/3 9:49
  */
-//  管理员模块完成后才用
-public class RequestHolder<T> {
+public class RequestHolder {
 
-    private static final ThreadLocal<Admin> adminHolder = new ThreadLocal<Admin>();
-
-    private static final ThreadLocal<HttpServletRequest> requestHolder = new ThreadLocal<HttpServletRequest>();
-
-    public static void add(Admin admin){
-        adminHolder.set(admin);
-    }
-
-    public static void add(HttpServletRequest request){
-        requestHolder.set(request);
-    }
+    private static Admin admin = null;
 
     public static Admin getCurrentAdmin(){
-        return adminHolder.get();
+        if(admin == null){
+            Admin ad = new Admin();
+            ad.setAdminCode("admin");
+            return ad;
+        }
+        return admin;
     }
 
-    public static HttpServletRequest getCurrentRequest(){
-        return requestHolder.get();
+    public static void add(Admin adm){
+        admin = adm;
     }
-
 }

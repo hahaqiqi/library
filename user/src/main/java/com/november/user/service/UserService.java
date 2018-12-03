@@ -23,4 +23,6 @@ public interface UserService {
     public int userCount();
 
     public User selectUserByEmail(String userEmail);
+
+    int selectEmail(String userEmail,Integer id);
 }

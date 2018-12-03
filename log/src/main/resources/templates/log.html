@@ -51,15 +51,15 @@
 
 <script id="logTemp" type="text/html">
     <li class="layui-timeline-item">
-        <i class="layui-icon layui-timeline-axis start" :hidden="hide">&#xe602;</i>
+        <i class="layui-icon layui-timeline-axis start" :hidden="hide">&#xe63f;</i>
         <div class="layui-timeline-content layui-text">
             <h3 class="layui-timeline-title">{{ d.date }}</h3>
-            <div class="myTable"></div>
+            <div class="myTable" style="display: none"></div>
         </div>
     </li>
     {{# if(d.isEnd){ }}
     <li class="layui-timeline-item">
-        <i class="layui-icon layui-timeline-axis">&#xe602;</i>
+        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
         <div class="layui-timeline-content layui-text">
             <div class="layui-timeline-title">开始</div>
         </div>

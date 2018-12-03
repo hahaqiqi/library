@@ -56,11 +56,7 @@ public class RoleServiceImpl implements RoleService {
         Role role = Role.builder().roleName(param.getRoleName())
                 .remark(param.getRemark()).build();
         //  设置操作的管理员
-        if(RequestHolder.getCurrentAdmin() != null){
-            role.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
-        }else{
-            role.setOperator("admin");
-        }
+        role.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
         //  设置为当前时间
         role.setOperateTime(new Date());
         //  插入数据库
@@ -88,11 +84,7 @@ public class RoleServiceImpl implements RoleService {
         Role after = Role.builder().id(param.getId()).roleName(param.getRoleName())
                 .remark(param.getRemark()).build();
         //  设置操作的管理员
-        if(RequestHolder.getCurrentAdmin() != null){
-            after.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
-        }else{
-            after.setOperator("admin");
-        }
+        after.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
         //  设置为当前时间
         after.setOperateTime(new Date());
         //  更新到数据库
