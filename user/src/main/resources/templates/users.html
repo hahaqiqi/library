@@ -26,13 +26,13 @@
         <th lay-data="{field:'userPhone', width:80, sort: true}">手机号</th>
         <th lay-data="{field:'userEmail', width:80, sort: true}">邮箱</th>
         <th lay-data="{field:'userScore', width:80, sort: true}">积分</th>
-        <th lay-data="{field:'userBalance', width:80, sort: true}">余额</th>
+        <th lay-data="{field:'userBalance', width:80, sort: true,hide:true}">余额</th>
         <th lay-data="{field:'idCard', width:80, sort: true}">身份证</th>
         <th lay-data="{field:'userBirthday', width:80, sort: true}">生日</th>
-        <th lay-data="{field:'status', width:80, sort: true,templet:function(obj){if(obj.status==1){return '正常';}else{return '封禁';}}} " >用户状态</th>
-        <th lay-data="{field:'operator', width:80, sort: true}">创建者</th>
-        <th lay-data="{field:'operateTime',width:100,sort: true,align:'center',templet:function(operateTime){return createTime(operateTime)} }">创建时间</th>
-        <th lay-data="{field:'remark'}">备注</th><span isis="tt"></span>
+        <th lay-data="{field:'status', width:80, sort: true,hide:true,templet:function(obj){if(obj.status==1){return '正常';}else{return '封禁';}}} " >用户状态</th>
+        <th lay-data="{field:'operator', width:80, sort: true,hide:true}">创建者</th>
+        <th lay-data="{field:'operateTime',width:100,sort: true,hide:true,align:'center',templet:function(operateTime){return createTime(operateTime)} }">创建时间</th>
+        <th lay-data="{field:'remark'}">备注</th>
         <th lay-data="{fixed: 'right',toolbar:'#barDemo', width:175,align:'center'}"></th>
     </tr>
     </thead>

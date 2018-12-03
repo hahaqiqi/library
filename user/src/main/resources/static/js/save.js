@@ -12,7 +12,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
     var yzm=null;
     var yzSubmit=false;
-    var djs=30;
+    var djs=10;
     var djsdsq;
     $('#getYzm').on("click",function () {
         if($('#getYzm').attr("class")!="layui-btn"){//点击按钮后不执行后续代码
@@ -85,7 +85,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     function reset() {
         $("#getYzm").text("获取验证码");
         $('#getYzm').attr("class","layui-btn");
-        djs=30;
+        djs=10;
         clearInterval(djsdsq);
     }
 
