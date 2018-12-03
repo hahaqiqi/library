@@ -92,4 +92,9 @@ public class BookLeaseServiceImpl implements BookLeaseService {
     public BookLease getBookLeaseOne(Integer bookId) {
         return bookLeaseMapper.selectBookLeaseByBookidOne(bookId);
     }
+
+    @Override
+    public List<BookLease> getAll() {
+        return bookLeaseMapper.getAll();
+    }
 }

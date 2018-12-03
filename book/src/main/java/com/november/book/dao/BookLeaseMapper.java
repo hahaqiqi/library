@@ -3,6 +3,8 @@ package com.november.book.dao;
 import com.november.book.model.BookLease;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface BookLeaseMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -19,4 +21,6 @@ public interface BookLeaseMapper {
     int selectBookLeaseCountByBookId(@Param("bookId") Integer bookId);
 
     BookLease selectBookLeaseByBookidOne(Integer bookId);
+
+    List<BookLease> getAll();
 }

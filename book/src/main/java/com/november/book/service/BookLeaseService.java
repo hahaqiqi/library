@@ -80,4 +80,10 @@ public interface BookLeaseService {
      */
     public BookLease getBookLeaseOne(Integer bookId);
 
+    /**
+     * 得到所有
+     * @return
+     */
+    List<BookLease> getAll();
+
 }
