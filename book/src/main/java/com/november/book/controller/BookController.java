@@ -6,7 +6,9 @@ import com.november.book.service.BookService;
 import com.november.book.service.BookTypeService;
 import com.november.book.util.IsEmpty;
 import com.november.common.JsonData;
+import com.november.exception.ParamException;
 import com.november.model.BookExcel;
+import com.november.model.ExcelHead;
 import com.november.util.Email;
 import com.november.util.ExcelUtil;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -256,53 +258,30 @@ public class BookController {
     @ResponseBody
     public JsonData getExcelTest(HttpServletResponse response
             , @RequestParam(value = "backImageFile", required = false) MultipartFile file) {
-        if (file.isEmpty()) {
-            return JsonData.fail("file不能为空");
-        }
-        List<BookExcel> bookExcels = new ArrayList<>();
-        try {
-            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(file.getInputStream())); //有多少个sheet
-            int sheets = workbook.getNumberOfSheets();
-            for (int i = 0; i < sheets; i++) {
-                HSSFSheet sheet = workbook.getSheetAt(i); //获取多少行
-                int rows = sheet.getPhysicalNumberOfRows();
-                BookExcel bookExcel = null; //遍历每一行，注意：第 0 行为标题
-                for (int j = 0; j < rows; j++) {
-                    bookExcel = new BookExcel(); //获得第 j 行
-                    HSSFRow row = sheet.getRow(j);
-                    row.setRowNum(7);
-                    bookExcel.setBookName(row.getCell(0).getStringCellValue());
-                    bookExcel.setBookCode(row.getCell(1).getStringCellValue());
-                    bookExcel.setAuthorName(row.getCell(2).getStringCellValue());
-                    bookExcel.setPrice(row.getCell(3).getStringCellValue());
-                    bookExcel.setPressName(row.getCell(4).getStringCellValue());
-                    bookExcel.setBookTypeId(row.getCell(5).getStringCellValue());
-                    bookExcel.setBookChcoType(row.getCell(6).getStringCellValue());
-                    bookExcel.setRemark(row.getCell(7).getStringCellValue());
-                    bookExcels.add(bookExcel);
-                }
-            }
-        } catch (IOException e) {
-            return JsonData.fail(e.getMessage());
-        } catch (Exception e) {
-            return JsonData.fail("读取失败");
-        }
+        List<BookExcel> bookExcels=ExcelUtil.loadBookExcel(file);
         //BookExcel 转 Book
         List<Book> books = new ArrayList<>(bookExcels.size() - 1);  //-1 排除标题
         for (int i = 1; i < bookExcels.size(); i++) {
-            Book book = new Book();
-            book.setBookName(bookExcels.get(i).getBookName());
-            book.setBookCode(bookExcels.get(i).getBookCode());
-            book.setAuthorName(bookExcels.get(i).getAuthorName());
-            book.setPrice(Double.parseDouble(bookExcels.get(i).getPrice()));
-            book.setPressName(bookExcels.get(i).getPressName());
-            book.setBookChcoType(0);
-            if ("收费".equals(bookExcels.get(i).getBookChcoType())) {
-                book.setBookChcoType(1);
+            try {
+                Book book = new Book();
+                book.setBookName(bookExcels.get(i).getBookName());
+                book.setBookCode(bookExcels.get(i).getBookCode());
+                book.setAuthorName(bookExcels.get(i).getAuthorName());
+                book.setPrice(Double.parseDouble(bookExcels.get(i).getPrice()));
+                book.setPressName(bookExcels.get(i).getPressName());
+                book.setBookChcoType(0);
+                if ("收费".equals(bookExcels.get(i).getBookChcoType())) {
+                    book.setBookChcoType(1);
+                }
+                book.setRemark(bookExcels.get(i).getRemark());
+                books.add(book);
+            } catch (NumberFormatException e) {
+                throw new ParamException("错误，请检查Excel的第" + (i + 1) + "行数据");
+            } catch (Exception e) {
+                throw new ParamException("加载数据失败");
             }
-            book.setRemark(bookExcels.get(i).getRemark());
-            books.add(book);
         }
+
         return JsonData.success(books);
     }
 

@@ -1,7 +1,7 @@
 package com.november.model;
 
 public interface ExcelHead {
-    String[] bookHead={
+    final String[] bookHead={
             "书籍名称",
             "书籍编号",
             "作者",

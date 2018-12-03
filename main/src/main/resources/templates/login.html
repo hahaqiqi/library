@@ -40,7 +40,12 @@
 <script type="text/javascript">
     layui.use(['form' ,'element','jquery'],function(){
         var form = layui.form;
-
+        //回车事件
+        $('#adminPwd').keyup(function(event){
+            if(event.keyCode ==13){
+                $('#adminLogin').click();
+            }
+        });
         $(function(){
             $("#adminLogin").click(function(){
                 $.ajax({

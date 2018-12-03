@@ -2,6 +2,8 @@ package com.november.util;/*
  *
  **/
 
+import com.november.common.JsonData;
+import com.november.exception.ParamException;
 import com.november.model.BookExcel;
 import com.november.model.ExcelHead;
 
@@ -72,5 +74,72 @@ public class ExcelUtil {
             cell.setCellValue(head[i]);
         }
 
+    }
+
+
+    public static List<BookExcel> loadBookExcel(MultipartFile file){
+        if (file.isEmpty()) {
+            throw new ParamException("文件为空");
+        }
+        List<BookExcel> bookExcels = new ArrayList<>();
+        try {
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(file.getInputStream())); //有多少个sheet
+
+            int sheets = workbook.getNumberOfSheets();
+
+            for (int i = 0; i < sheets; i++) {
+
+                HSSFSheet sheet = workbook.getSheetAt(i); //获取多少行
+                int rows = sheet.getPhysicalNumberOfRows();
+                BookExcel bookExcel = null; //遍历每一行，注意：第 0 行为标题
+                for (int j = 0; j < rows; j++) {
+                    try {
+                        bookExcel = new BookExcel();
+                        HSSFRow row = sheet.getRow(j);//获得第 j 行
+                        int lie = sheet.getRow(0).getPhysicalNumberOfCells();
+                        for (int k = 0; k < lie; k++) {
+                            if (row.getCell(k) == null) {
+                                continue;
+                            }
+                            switch (sheet.getRow(0).getCell(k).getStringCellValue()) {
+                                case "书籍名称":
+                                    bookExcel.setBookName(row.getCell(k).getStringCellValue());
+                                    break;
+                                case "书籍编号":
+                                    bookExcel.setBookCode(row.getCell(k).getStringCellValue());
+                                    break;
+                                case "作者":
+                                    bookExcel.setAuthorName(row.getCell(k).getStringCellValue());
+                                    break;
+                                case "价格":
+                                    bookExcel.setPrice(row.getCell(k).getStringCellValue());
+                                    break;
+                                case "出版社":
+                                    bookExcel.setPressName(row.getCell(k).getStringCellValue());
+                                    break;
+                                case "书籍类型":
+                                    bookExcel.setBookTypeId(row.getCell(k).getStringCellValue());
+                                    break;
+                                case "收费方式":
+                                    bookExcel.setBookChcoType(row.getCell(k).getStringCellValue());
+                                    break;
+                                case "备注":
+                                    bookExcel.setRemark(row.getCell(k).getStringCellValue());
+                                    break;
+                            }
+
+                        }
+                    } catch (Exception e) {
+                        throw new ParamException("错误，请检查Excel的第" + (j + 1) + "行数据");
+                    }
+                    bookExcels.add(bookExcel);
+                }
+
+            }
+
+        } catch (IOException e) {
+            throw new ParamException("读取Excel失败");
+        }
+        return bookExcels;
     }
 }

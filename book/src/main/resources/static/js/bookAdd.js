@@ -81,7 +81,11 @@ layui.use(['form', 'jquery'], function () {
                     return;
                 }
                 spopSucess("...");
+                $("#bookExcelFile").val("");
                 return;
+            },
+            error:function () {
+                $("#bookExcelFile").val("");
             }
         });
     });
