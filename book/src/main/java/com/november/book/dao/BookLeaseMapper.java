@@ -17,4 +17,6 @@ public interface BookLeaseMapper {
     int updateByPrimaryKey(BookLease record);
 
     int selectBookLeaseCountByBookId(@Param("bookId") Integer bookId);
+
+    BookLease selectBookLeaseByBookidOne(Integer bookId);
 }
