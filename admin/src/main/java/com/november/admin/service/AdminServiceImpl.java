@@ -12,6 +12,7 @@ import com.november.util.BeanValidator;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,15 +29,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void save(AdminParam param) {
         BeanValidator.check(param);
-        if (checkIdCard(param.getId(),param.getIdCard())) {
-            throw new ParamException("身份证号已经存在");
+        if(checkIdCard(param.getId(),param.getIdCard())){
+            throw new ParamException("身份证号已存在");
         }
-        Admin admin = Admin.builder().adminCode(param.getAdminCode()).adminPwd(param.getAdminPwd())
-                .adminName(param.getAdminName()).birthday(param.getBirthday())
-                .idCard(param.getIdCard()).remark(param.getRemark()).build();
-        if(null == RequestHolder.getCurrentAdmin()){
+        Admin admin=Admin.builder().adminCode(param.getAdminCode()).adminPwd(param.getAdminPwd())
+                .idCard(param.getIdCard()).adminName(param.getAdminName())
+                .birthday(param.getBirthday()).remark(param.getRemark()).build();
+        if(null==RequestHolder.getCurrentAdmin()){
             admin.setOperator("admin");
-        }else{
+        }else {
             admin.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
         }
         admin.setOperateTime(new Date());
@@ -46,17 +47,17 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void update(AdminParam param) {
         BeanValidator.check(param);
-        if (checkIdCard(param.getId(),param.getIdCard())) {
-            throw new ParamException("身份证号已经存在");
+        if(checkIdCard(param.getId(),param.getIdCard())){
+            throw new ParamException();
         }
         Admin before = adminMapper.selectByPrimaryKey(param.getId());
-        Preconditions.checkNotNull(before, "待更新的管理员不存在");
+        Preconditions.checkNotNull(before,"待跟新的管理员不存在");
         Admin after = Admin.builder().id(param.getId()).adminCode(param.getAdminCode()).adminPwd(param.getAdminPwd())
                 .adminName(param.getAdminName()).birthday(param.getBirthday())
-                .idCard(param.getIdCard()).remark(param.getRemark()).build();
-        if(null == RequestHolder.getCurrentAdmin()){
+                .remark(param.getRemark()).build();
+        if(null==RequestHolder.getCurrentAdmin()){
             after.setOperator("admin");
-        }else{
+        }else {
             after.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
         }
         after.setOperateTime(new Date());
@@ -71,10 +72,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<AdminDto> getPageList(int page, int limit) {
         //  TODO
-        page = (page - 1) * limit;
+        page= (page-1)*limit;
         List<Admin> all = adminMapper.getPageList(page,limit);
         List<AdminDto> adminDtoList = Lists.newArrayList();
-        for (Admin admin : all) {
+        for(Admin admin:all){
             AdminDto dto = AdminDto.adapt(admin);
             Date birthday = dto.getBirthday();
             int age = new Date().getYear() - birthday.getYear();
