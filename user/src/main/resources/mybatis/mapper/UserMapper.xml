@@ -211,4 +211,8 @@
       AND id!=#{id}
     </if>
   </select>
+
+  <update id="updateScore" >
+    update user set user_score =user_score+#{score,jdbcType=INTEGER} where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

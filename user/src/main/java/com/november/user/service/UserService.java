@@ -25,4 +25,6 @@ public interface UserService {
     public User selectUserByEmail(String userEmail);
 
     int selectEmail(String userEmail,Integer id);
+
+    int updateScore(Integer id,double price);
 }
