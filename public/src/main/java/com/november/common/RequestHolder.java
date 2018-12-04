@@ -13,6 +13,11 @@ public class RequestHolder {
     private static Admin admin = null;
 
     public static Admin getCurrentAdmin(){
+        if(admin == null){
+            Admin ad = new Admin();
+            ad.setAdminCode("admin");
+            return ad;
+        }
         return admin;
     }
 

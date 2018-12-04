@@ -13,11 +13,11 @@
     <script th:src="@{/spop-0.1.3/dist/spop.js}"></script>
 </head>
 <body>
-<div id="searchBox">
+<div id="searchBox" class="bigSearch">
     <input id="searchInput" type="text" name="title" placeholder="图书编号" class="layui-input">
     <img id="searchBut" class="sousuoImg" src="/img/sousuo.png"/>
 </div>
-<div style="margin-left:0px;margin-top:20px;border:1px solid #17dea6;">
+<div id="body">
     <div id="searchEmailBox">
         <input id="userEmailInput" type="text" name="title" placeholder="用户邮箱" class="layui-input">
         <img id="searchEmailBut" class="sousuoImg" src="/img/sousuo.png"/>
@@ -30,7 +30,8 @@
 
 </div>
 
-<div id="view"></div><!--确认订单容器-->
+<div id="view"></div><!--容器-->
+
 <script type="text/html" id="bookLease"><!--确认订单form模板-->
     <form class="layui-form" id="bookLeaseFrom">
         <input type="hidden" name="bookId" value="{{ d.bookId }}"/>
@@ -96,6 +97,62 @@
     </form>
 </script>
 
+<script type="text/html" id="bookLease2"><!--确认订单form模板(还书)-->
+<form class="layui-form" id="bookLeaseFrom2">
+    <input type="hidden" name="id" value="{{ d.leaseId }}"/>
+    <input type="hidden" name="status" value="0"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图书名称</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookName }}" readonly = "readonly" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">编号</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookCode }}" readonly = "readonly" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookAuthor }}" readonly = "readonly" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">应收费</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="price" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.price }}" readonly = "readonly"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux">元</div>
+    </div>
+    <label class="layui-form-label"></label>
+    <div class="layui-form-mid layui-word-aux" style="margin-top: -20px">{{ d.priceJs }}</div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-inline">
+                <textarea name="remark" placeholder="备注" class="layui-textarea">
+                    {{# if(d.remark!=null && d.remark!=""){  }}
+                        {{ d.remark }}
+                    {{# } }}
+                </textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <button id="submitBookLease2" type="button" class="layui-btn" lay-submit lay-filter="save">确认
+            </button>
+        </div>
+    </div>
+</form>
+</script>
+
 <script type="text/html" id="bookstatus">
     <!--
     SYY-11182018172052197243,SYY-11182018172052160007,SYY-11182018172052186618,SYY-11182018172052175191
@@ -106,9 +163,9 @@
     {{# }else if(d.status==0){ }}
     <font>未上架</font>
     {{# }else if(d.bookLeaseId==null || d.bookLeaseId==0){ }}
-    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="borrow">可借阅</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="borrow">借阅</a>
     {{# }else{ }}
-    <font>被借阅</font>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="giveBack">归还</a>
     {{# } }}
 </script>
 

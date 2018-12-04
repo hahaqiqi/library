@@ -10,6 +10,7 @@ import com.november.common.RequestHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service("bookLeaseService")
@@ -38,7 +39,13 @@ public class BookLeaseServiceImpl implements BookLeaseService {
 
     @Override
     public int updateBookLease(BookLeaseParam param) {
-        return 0;
+        BookLease bookLease=BookLease.builder()
+                .status(param.getStatus())
+                .id(param.getId())
+                .remark(param.getRemark()).build();
+        bookLease.setFinalOperator("admin");
+        bookLease.setFinalOperateTime(new Date());
+        return bookLeaseMapper.updateByPrimaryKeySelective(bookLease);
     }
 
     @Override
@@ -79,5 +86,15 @@ public class BookLeaseServiceImpl implements BookLeaseService {
     @Override
     public int selectBookLeaseCountByBookId(Integer id) {
         return bookLeaseMapper.selectBookLeaseCountByBookId(id);
+    }
+
+    @Override
+    public BookLease getBookLeaseOne(Integer bookId) {
+        return bookLeaseMapper.selectBookLeaseByBookidOne(bookId);
+    }
+
+    @Override
+    public List<BookLease> getAll() {
+        return bookLeaseMapper.getAll();
     }
 }

@@ -58,7 +58,7 @@ public interface BookService {
      * 多条件查询分页
      * @return
      */
-    public List<Book> pageListBook(int page, int limit,BookParam bookParam);
+    public List<Book> pageListBook(Integer page, Integer limit,BookParam bookParam);
 
     /**
      * 根据id得到一个Book

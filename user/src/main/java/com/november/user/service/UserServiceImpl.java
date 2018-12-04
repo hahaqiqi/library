@@ -51,6 +51,10 @@ public class UserServiceImpl implements UserService{
             throw new ParamException("该邮箱已注册");
         }
 
+        if(param.getUserBirthday().compareTo(new Date())>=0){
+            throw new ParamException("该日期在当前时间之后");
+        }
+
         if(RequestHolder.getCurrentAdmin()!=null){
             user.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
         }
@@ -97,6 +101,10 @@ public class UserServiceImpl implements UserService{
         if(userMapper.selectEmail(param.getUserEmail(),param.getId())>0){
             throw new ParamException("该邮箱已注册");
         }
+
+        if(param.getUserBirthday().compareTo(new Date())>=0){
+            throw new ParamException("该日期在当前时间之后");
+        }
         return userMapper.updateByPrimaryKeySelective(user);
     }
 
@@ -111,4 +119,7 @@ public class UserServiceImpl implements UserService{
        return  userMapper.selectUserByEmail(userEmail);
     }
 
+    public int selectEmail(String userEmail,Integer id){
+       return userMapper.selectEmail(userEmail,id);
+    }
 }

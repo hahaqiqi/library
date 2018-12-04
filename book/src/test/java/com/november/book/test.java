@@ -2,23 +2,12 @@ package com.november.book;/*
  *
  **/
 
-import com.november.book.model.Book;
-import com.november.book.util.BookCodeUtil;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
+import com.november.model.ExcelHead;
 import org.junit.Test;
-import sun.net.www.content.image.x_xpixmap;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class test {
-    @Test
-    public void testEx()throws IOException, InvalidFormatException {
-        File xlsFile = new File("C:\\Users\\len\\Desktop\\table_1.xls");
+    /*public void testEx()throws IOException, InvalidFormatException {
+        *//*File xlsFile = new File("C:\\Users\\len\\Desktop\\table_1.xls");
         // 获得工作簿
         Workbook workbook = WorkbookFactory.create(xlsFile);
         // 获得工作表个数
@@ -49,6 +38,16 @@ public class test {
                 }
             }
         }
-        System.out.println("");
+        System.out.println("");*//*
+    }*/
+
+    @Test
+    public void test(){
+        String[] a= ExcelHead.bookHead;
+        for(String str:a){
+            System.out.println(str);
+        }
+        System.out.println(a.length);
+
     }
 }
