@@ -40,7 +40,12 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
     //点击搜索图书
     $('#searchBut').on("click",function(){
-        var searchVal=$("#searchInput").val();
+        var searchVal=$("#searchInput").val().replace(/\s+/g, "");
+        if(searchVal==""){
+            return;
+        }
+        $("#searchBox").attr("class","smallSearch");//改变搜索框css
+        $("#body").css("display","block");
         table.render({
             elem: '#searchTable'
             ,url: '/book/searchBook.json?searchVal='+searchVal //数据接口
@@ -203,9 +208,107 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 }
                 loadLease(viewdata);
             }
+            if(layEvent === 'giveBack'){
+                var giveBackLease;
+                var pricrJs;
+                $.ajax({
+                    url: '/bookLease/selectByBookIdOne.json',
+                    data: {"bookId":data.id},
+                    async:false,
+                    type: 'GET',
+                    success: function (result) {
+                        if(result.ret){
+                            if(result!=null && result!=""){
+                                giveBackLease=result.data;
+                                pricrJs=result.msg;
+                            }else{
+                                spopFail("获取数据失败","");
+                                return;
+                            }
+                        }else{
+                            spopFail("获取数据失败","");
+                            return;
+                        }
+                    },
+                    error:function () {
+                        spopFail("获取数据失败","");
+                        return;
+                    }
+                });
+
+                //还书
+                var viewdata={
+                    "bookId":giveBackLease.bookId
+                    ,"leaseId":giveBackLease.id
+                    ,"bookName":data.bookName
+                    ,"bookCode":data.bookCode
+                    ,"bookAuthor":data.authorName
+                    ,"price":giveBackLease.price
+                    ,"priceJs":pricrJs
+                    ,"remark":giveBackLease.remark
+                };
+                loadgiveBackLease(viewdata);
+            }
         });
 
     });
+    //归还书籍订单
+    loadgiveBackLease= function (viewdata) {
+        var getTpl = bookLease2.innerHTML
+            , view = document.getElementById('view');
+        laytpl(getTpl).render(viewdata, function (html) {
+            view.innerHTML = html;
+        });
+        var leaseBookid=viewdata.bookId;
+        layer.open({
+            title: '确认订单',
+            type: 1,
+            content: $("#view"),
+            shade: 0.5,
+            area: '400px',
+            success:function () {
+                $('#submitBookLease2').on("click",function(){
+                    $.ajax({
+                        url: '/bookLease/update.json',
+                        data:$("#bookLeaseFrom2").serializeArray(),
+                        async:false,
+                        type: 'POST',
+                        success: function (result) {
+                            if(result.ret){
+                                //修改book表中的租借id
+                                $.ajax({
+                                    url: '/book/updateLeaseId.json',
+                                    data:{"bookId":leaseBookid},
+                                    async:false,
+                                    type: 'POST',
+                                    success: function (result) {
+                                        if(result.ret){
+                                            layer.close(layer.index);
+                                            $("#view").html("");
+                                            $('#searchBut').click();
+                                        }else{
+                                            spopFail("请求失败","");
+                                        }
+                                    },
+                                    error:function () {
+                                        spopFail("请求失败","");
+                                    }
+                                });
+                            }else{
+                                spopFail("请求失败","");
+                            }
+                        },
+                        error:function () {
+                            spopFail("请求失败","");
+                        }
+                    });
+                });
+            },
+            cancel: function(){
+                $("#view").html("");
+            }
+        });
+    };
 
     //生成订单表
     loadLease= function (viewdata){
@@ -384,7 +487,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 if(result.ret){
                     if(result.data!=null && result.data!=""){
                         user=result.data;
-                        spopSucess("用户已登记");
+                        spopSucess("用户已登记,正在发送验证码");
                         userYz();
                     }else{
                         spopFail("用户不存在","");
@@ -397,7 +500,8 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 spopFail("请求失败","");
             }
         });
-
+        $("#getCodeBut").click();
+        $("codeInput").focus();
     });
 
     //获得验证码

@@ -1,30 +1,30 @@
-var submit=true;
-layui.use(['form','jquery'], function(){
+var submit = true;
+layui.use(['form', 'jquery'], function () {
     var form = layui.form //表单
-        ,$=layui.$;//jquery
+        , $ = layui.$;//jquery
     //得到所有书籍类型
     $.ajax({
         url: '/bookType/listAll.json',
         async: false,
         type: 'GET',
         success: function (result) {
-            if(result.ret==true){
-                for(var i=0;i<result.data.length;i++){
-                    $("#bookType").append("<option value="+result.data[i].id+">"+result.data[i].typeName+"</option>");
+            if (result.ret == true) {
+                for (var i = 0; i < result.data.length; i++) {
+                    $("#bookType").append("<option value=" + result.data[i].id + ">" + result.data[i].typeName + "</option>");
                 }
-            }else{
+            } else {
                 $("#bookType").append("<option value='null'>加载失败</option>");
             }
         },
-        error:function () {
+        error: function () {
             $("#bookType").append("<option value='null'>接口异常</option>");
         }
     });
 
     form.render();
     $("#loading").addClass("static");
-    $('#submitBook').on("click",function(){
-        if(submit) {
+    $('#submitBook').on("click", function () {
+        if (submit) {
             disableButton();
             $.ajax({
                 url: '/book/save.json',
@@ -48,17 +48,46 @@ layui.use(['form','jquery'], function(){
             });
         }
     });
+
     function disableButton() {
-        submit=false;
-        $("#submitBook").attr("class","layui-btn layui-btn-disabled");
+        submit = false;
+        $("#submitBook").attr("class", "layui-btn layui-btn-disabled");
         $("#loading").removeClass("static");
         $("#loading").addClass("loading");
     }
+
     function enableButton() {
-        submit=true;
-        $("#submitBook").attr("class","layui-btn");
+        submit = true;
+        $("#submitBook").attr("class", "layui-btn");
         $("#loading").removeClass("loading");
         $("#loading").addClass("static");
     }
-    //ewpowjjjyuglechd
+
+    //选择文件
+    $('#submitBookExcel').on("click", function () {
+        $("#bookExcelFile").click();
+    });
+    $('input[name=backImageFile]').change(function() {
+        var formData = new FormData($("#bookExcelFrom")[0]);
+        $.ajax({
+            url: '/book/getBookExcel.json',
+            type: 'post',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                if (result.ret == false) {
+                    spopFail("加载失败",result.msg);
+                    return;
+                }
+                spopSucess("...");
+                $("#bookExcelFile").val("");
+                return;
+            },
+            error:function () {
+                $("#bookExcelFile").val("");
+            }
+        });
+    });
+
 });

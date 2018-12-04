@@ -1,11 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
+    <script th:src="@{/layui/layui.js}"></script>
+    <title></title>
+    <style>
+        #imgDiv img{
+            cursor:pointer;
+        }
+    </style>
 </head>
 <body>
-    <h2>欢迎你</h2>
-    <div class="layui-icon-rate-half">asd</div>
+<div class="layui-container" style="margin-top:150px">
+    <div id="imgDiv" style="margin: 0 auto;width:515px;">
+        <div style="width:180px;height:180px;display: inline-block;">
+            <font style="font-family:Georgia, serif;width:180px;text-align:center;display:inline-block;position: relative;top:30px">借书/还书</font>
+            <img th:src="@{/images/shu.png}" style="width:180px;float:left;"/>
+        </div>
+        <div style="width:180px;height:180px;display: inline-block;margin-left:50px">
+            <font style="font-family:Georgia, serif;width:180px;text-align:center;display:inline-block;position: relative;top:30px">登记用户</font>
+            <img th:src="@{/images/add.png}" style="width:180px;float:left;"/>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    layui.use('jquery', function(){
+        var $=layui.$;//jquery
+        $("#imgDiv font").css("opacity","0");
+        //overflow: hidden;
+        $("#imgDiv img").on("mouseover mouseout",function(event){
+            if(event.type == "mouseover"){
+                //鼠标悬浮
+                $(this).css("margin-top","35px");
+                $(this).prev("font").css("opacity","1");
+            }else if(event.type == "mouseout"){
+                //鼠标离开
+                $(this).css("margin-top","0px");
+                $(this).prev("font").css("opacity","0");
+            }
+        })
+    });
+</script>
 </body>
 </html>

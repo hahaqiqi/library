@@ -247,7 +247,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                             }
                         },
                         error:function () {
-                            alert("请检查参数");
+                            spopFail("日期格式不正确");
                         }
                     });
                 });

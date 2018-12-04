@@ -27,7 +27,7 @@ public interface BookMapper {
 
     List<Book> list();
 
-    List<Book> pageList(@Param("page") int page, @Param("limit")int limit);
+    List<Book> pageList(@Param("page") Integer page, @Param("limit")Integer limit);
 
     List<Book> filtrateSelect(BookParam bookParam);
 

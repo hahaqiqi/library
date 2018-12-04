@@ -198,7 +198,8 @@ new Vue({
 
                 $(document).on('click', '.layui-nav-item a', function() {
                     $(this).addClass('active');
-                    $(this).parents('.layui-nav-item').siblings().find('a').removeClass('active');
+                    $(this).parents().siblings().removeClass('active');
+                    $(this).parents().siblings().find('a').removeClass('active');
                     $(this).parents('.layui-nav-item').siblings().removeClass('layui-this');
                 });
                 //监听点击menu
@@ -206,6 +207,7 @@ new Vue({
                     $(elem).parent('.layui-nav-child').siblings('a').addClass('active');
                     $(elem).parents('.layui-nav-item').siblings().find('a').removeClass('active');
                     $(elem).siblings().find('a').removeClass('active');
+                    $(elem).parent().siblings().removeClass('layui-nav-itemed');
                 });
                 // 监听点击tab
                 $(document).on('dblclick', '.layui-tab li', function() {
