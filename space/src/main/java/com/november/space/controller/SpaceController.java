@@ -66,4 +66,22 @@ public class SpaceController {
         return JsonData.success();
     }
 
+    @ResponseBody
+    @RequestMapping("/spacelist.json")
+    public JsonData getSpacelist(@RequestParam(value = "spaceid") Integer spaceid){
+        log.info("开始获取空间");
+        List<Integer> list=spaceser.selectSpaceBook(spaceid);
+        StringBuffer listStr=new StringBuffer();
+        //1,2,3,4
+        for(int i=0;i<list.size();i++){
+            if(i==0){
+                listStr.append(list.get(i));
+                continue;
+            }
+            listStr.append(",");
+            listStr.append(list.get(i));
+        }
+        return JsonData.success(listStr);
+    }
+
 }

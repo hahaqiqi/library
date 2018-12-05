@@ -40,6 +40,10 @@ public class SpaceServiceimpl implements SpaceService {
        if(parentIdJudge(param.getParentId(),param.getSpaceName())){
            throw new ParamException("这个父空间已经有这个子空间了");
        }
+        //非空判断
+        if(param.getRemark()==""){
+            param.setRemark("暂时没有");
+        }
         //使用builder()方法把SpaceParam类存储的数据传递给Space类
         Space space =Space.builder().spaceName(param.getSpaceName()).level(param.getLevel())
                 .remark(param.getRemark()).parentId(param.getParentId()).build();
@@ -77,12 +81,12 @@ public class SpaceServiceimpl implements SpaceService {
             return listSpace;
     }
 
-    public List<Space> getListSpaceId(int start,int end,List<Space> listSpace){
+    /*public List<Space> getListSpaceId(int start,int end,List<Space> listSpace){
         for(int i=start;i<end;i++){
 
         }
         return listSpace;
-    }
+    }*/
 
     /*
         修改
@@ -94,9 +98,13 @@ public class SpaceServiceimpl implements SpaceService {
         if(parentIdJudge(param.getParentId(),param.getSpaceName())){
             throw new ParamException("同一个父空间不能有两个相同的子空间名称");
         }
+        //非空判断
+        if(param.getRemark()==""){
+            param.setRemark("暂时没有");
+        }
         //使用builder()方法把SpaceParam类存储的数据传递给Space类
         Space space=Space.builder().id(param.getId()).spaceName(param.getSpaceName()).level(param.getLevel()).
-                remark(param.getRemark()).parentId(param.getParentId()).build();
+                remark(param.getRemark()).build();
         if(RequestHolder.getCurrentAdmin()!=null){
             space.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
         }else{
@@ -133,6 +141,16 @@ public class SpaceServiceimpl implements SpaceService {
         return spacemapper.Movespace(id,pid);
     }
 
+    public List<Integer> selectSpaceBook(Integer id){
+        List<Space> listSpace=spacemapper.selectList(id);
+        listSpace=forListSpace(0,listSpace.size(),listSpace);
+        List<Integer> listId=new ArrayList<>();
+        listId.add(id);
+        for(Space sp :listSpace){
+            listId.add(sp.getId());
+        }
+        return listId;
+    }
     /*@Override
     public int updateByPrimaryKey(SpaceParam record) {
         return spacemapper.updateByPrimaryKey(record);
