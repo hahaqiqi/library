@@ -64,7 +64,7 @@ public class MainBookController {
         //得到目前为止的收费arr[0]
         String[] arr = CalculatePrice.getPrice(bookLease.getBookPrice(), bookLease.getDiscount(), bookLease.getOperateTime());
         bookLease.setPrice(Double.parseDouble(arr[0]));
-        //改变状态为租借完成
+        //设置状态为租借完成
         bookLease.setStatus(0);
         //执行修改
         BookLeaseParam bookLeaseParam=new BookLeaseParam();
@@ -80,6 +80,28 @@ public class MainBookController {
         //创建新的订单
         int leaseId = bookLeaseService.saveBookLease(bookLeaseParam); //新增订单表数据并返回新增的id
         bookService.updateBookLeaseIdByBookId(bookLeaseParam.getBookId(), leaseId);//修改借的书的租借id
+        return JsonData.success();
+    }
+
+    //损坏遗失操作
+    @RequestMapping(value = "/loseBook.json", method = RequestMethod.POST)
+    @ResponseBody
+    @Transactional
+    public JsonData loseBook(Integer bookId,Double compensatePrice) {
+        //根据bookid得到该订单
+        BookLease bookLease = bookLeaseService.getBookLeaseOne(bookId);
+        //设置状态为遗失、损坏
+        bookLease.setStatus(2);
+        //设置收费
+        bookLease.setPrice(compensatePrice);
+        //删除书籍（实际为修改状态）
+        bookService.deleteBook(bookId);
+        //创建对象并执行修改
+        BookLeaseParam bookLeaseParam=new BookLeaseParam();
+        bookLeaseParam.setId(bookLease.getId());
+        bookLeaseParam.setStatus(bookLease.getStatus());
+        bookLeaseParam.setPrice(bookLease.getPrice());
+        bookLeaseService.updateBookLease(bookLeaseParam);
         return JsonData.success();
     }
 }

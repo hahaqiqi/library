@@ -86,7 +86,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery'], f
                 success: function (result) {
                     if (result.ret) {
                         if (result.data != null && result.data != "") {
-                            searchVal=result.data;
+                            searchVal = result.data;
                         } else {
                             spopTs("无正在租借记录");
                             $("#searchBox").attr("class", "bigSearch");//改变搜索框css
@@ -107,7 +107,6 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery'], f
             });
 
         }
-
 
 
         $("#searchBox").attr("class", "smallSearch");//改变搜索框css
@@ -169,7 +168,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery'], f
                         }
                     }
                 }
-                    , {field: '', title: '书籍状态', toolbar: '#bookstatus'}
+                    , {field: '', fixed: 'right', width: '190', title: '书籍操作', toolbar: '#bookstatus'}
                 ]
             ]
         });
@@ -179,30 +178,32 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery'], f
         table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
                 , layEvent = obj.event; //获得 lay-event 对应的值
-            if(layEvent != 'borrow'){//除去租借以外需要拉去租借人信息
-                //根据bookCode得到userid
-                $.ajax({
-                    url: '/bookLease/selectByBookIdOne2.json',
-                    data: {"bookId": data.id},
-                    async: false,
-                    type: 'GET',
-                    success: function (result) {
-                        if (result.ret) {
-                            if (result.data != null && result.data != "") {
-                                user={
-                                    "id":result.data
+            if (layEvent != 'borrow') {//除去租借以外需要拉去租借人信息
+                if (user == null) {
+                    //根据bookCode得到userid
+                    $.ajax({
+                        url: '/bookLease/selectByBookIdOne2.json',
+                        data: {"bookId": data.id},
+                        async: false,
+                        type: 'GET',
+                        success: function (result) {
+                            if (result.ret) {
+                                if (result.data != null && result.data != "") {
+                                    user = {
+                                        "id": result.data
+                                    }
                                 }
+                            } else {
+                                spopFail("错误", result.msg);
+                                throw SyntaxError();
                             }
-                        } else {
-                            spopFail("错误",result.msg);
+                        },
+                        error: function () {
+                            spopFail("获取数据失败", "");
                             throw SyntaxError();
                         }
-                    },
-                    error: function () {
-                        spopFail("获取数据失败", "");
-                        throw SyntaxError();
-                    }
-                });
+                    });
+                }
             }
 
             if (layEvent === 'borrow') {
@@ -224,20 +225,20 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery'], f
                         if (result.ret) {
                             if (result.data != null && result.data != "") {
                                 if (user.userScore < result.data.score) {
-                                    spopFail("借阅该图书需要" + result.data.score + "积分</br>用户积分:" + user.userScore, "");
-                                    return;
+                                    spopTs("借阅该图书需要" + result.data.score + "积分</br>用户积分:" + user.userScore, "");
+                                    throw SyntaxError();
                                 } else {
                                     discount = result.data.discount;
                                 }
                             }
                         } else {
                             spopFail("获取数据失败", "");
-                            return;
+                            throw SyntaxError();
                         }
                     },
                     error: function () {
                         spopFail("获取数据失败", "");
-                        return;
+                        throw SyntaxError();
                     }
                 });
 
@@ -257,12 +258,12 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery'], f
                                 }
                             } else {
                                 spopFail("获取数据失败", "");
-                                return;
+                                throw SyntaxError();
                             }
                         },
                         error: function () {
                             spopFail("获取数据失败", "");
-                            return;
+                            throw SyntaxError();
                         }
                     });
 
@@ -282,12 +283,12 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery'], f
                                 }
                             } else {
                                 spopFail("获取数据失败", "");
-                                return;
+                                throw SyntaxError();
                             }
                         },
                         error: function () {
                             spopFail("获取数据失败", "");
-                            return;
+                            throw SyntaxError();
                         }
                     });
                 } else {
@@ -326,16 +327,16 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery'], f
                                 pricrJs = result.msg;
                             } else {
                                 spopFail("获取数据失败", "");
-                                return;
+                                throw SyntaxError();
                             }
                         } else {
                             spopFail("获取数据失败", "");
-                            return;
+                            throw SyntaxError();
                         }
                     },
                     error: function () {
                         spopFail("获取数据失败", "");
-                        return;
+                        throw SyntaxError();
                     }
                 });
 
@@ -353,7 +354,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery'], f
                 };
                 loadgiveBackLease(viewdata);
             }
-                //续租按钮点击事件
+            //续租按钮点击事件
             if (layEvent === 'relet') {
                 $.ajax({
                     url: '/mainBook/reletBook.json',
@@ -371,6 +372,73 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery'], f
                         spopFail("获取数据失败", "");
                     }
                 });
+            }
+            //损坏遗失点击事件
+            if (layEvent === 'lose') {
+                var viewdata = {
+                    "bookId": data.id
+                    , "userId": user.id
+                    , "bookName": data.bookName
+                    , "bookCode": data.bookCode
+                    , "bookAuthor": data.authorName
+                    , "price": data.price
+                };
+                var getTpl = bookLease3.innerHTML
+                    , view = document.getElementById('view');
+                laytpl(getTpl).render(viewdata, function (html) {
+                    view.innerHTML = html;
+                });
+                layer.open({
+                    title: '书籍损坏/遗失确认',
+                    type: 1,
+                    content: $("#view"),
+                    shade: 0.5,
+                    area: '400px',
+                    success: function () {
+                        //确认
+                        $('#submitBookLease3').on("click", function () {
+                            var unitPrice = $("#unitPrice").val();
+                            var compensatePrice = $("#compensatePrice").val();
+                            if (Number(compensatePrice) > Number(unitPrice)) {
+                                //完成操作
+                                $.ajax({
+                                    url: '/mainBook/loseBook.json',
+                                    data: {"bookId": data.id, "compensatePrice": compensatePrice},
+                                    //async: false,
+                                    type: 'POST',
+                                    success: function (result) {
+                                        if (result.ret) {
+                                            layer.close(layer.index);
+                                            $("#view").html("");
+                                            $('#searchBut').click();
+                                        } else {
+                                            spopFail("", result.msg);
+                                        }
+                                    },
+                                    error: function () {
+                                        spopFail("请求失败", "");
+                                    }
+                                });
+
+                            } else {
+                                alert("赔付价格必须大于书籍单价");
+                                return;
+                            }
+                        });
+
+                        //输入赔付价格事件
+                        $('#compensatePrice').on("input propertychange", function () {
+                            var unitPrice = $("#unitPrice").val();
+                            var compensatePrice = $("#compensatePrice").val();
+
+                        });
+
+                    },
+                    cancel: function () {
+                        $("#view").html("");
+                    }
+                });
+
             }
         });
 

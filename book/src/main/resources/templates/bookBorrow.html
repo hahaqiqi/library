@@ -177,7 +177,54 @@
     <div class="layui-form-item">
         <label class="layui-form-label"></label>
         <div class="layui-input-block">
-            <button id="submitBookLease2" type="button" class="layui-btn" lay-submit lay-filter="save">确认
+            <button id="submitBookLease2" type="button" class="layui-btn" lay-submit lay-filter="">确认
+            </button>
+        </div>
+    </div>
+</form>
+</script>
+
+<script type="text/html" id="bookLease3"><!--form模板(损毁/遗失)-->
+<form class="layui-form" id="bookLeaseFrom3">
+    <div class="layui-form-item">
+        <label class="layui-form-label">图书名称</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookName }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">编号</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookCode }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookAuthor }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">单价</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="unitPrice" type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.price }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">赔付</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="compensatePrice" type="text" name="compensatePrice" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.price }}"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <button id="submitBookLease3" type="button" class="layui-btn" lay-submit lay-filter="">确认
             </button>
         </div>
     </div>
@@ -198,7 +245,7 @@
     {{# }else{ }}
     <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="giveBack">归还</a>
     <a class="layui-btn layui-btn-xs" lay-event="relet">续租</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="lose">遗失</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="lose">遗失/损坏</a>
     {{# } }}
 </script>
 
