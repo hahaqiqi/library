@@ -8,7 +8,6 @@ import com.november.acl.service.RoleAdminService;
 import com.november.acl.service.RoleService;
 import com.november.admin.model.Admin;
 import com.november.admin.service.AdminService;
-import com.november.exception.ParamException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

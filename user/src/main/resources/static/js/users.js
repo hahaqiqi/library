@@ -51,14 +51,16 @@ layui.config({
     version: '1541881042991' //为了更新 js 缓存，可忽略
 });
 
-layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], function(){
+layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery','laypage'], function(){
     var form = layui.form //表单
         ,laydate = layui.laydate //
         ,layer = layui.layer //弹层
         ,table = layui.table //表格
         ,laytpl = layui.laytpl //模板
         ,slider = layui.slider
+        ,laypage=layui.laypage
         ,$=layui.$//jquery
+
 
 
     //向世界问个好
@@ -247,7 +249,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                             }
                         },
                         error:function () {
-                            alert("请检查参数");
+                            spopFail("日期格式不正确");
                         }
                     });
                 });

@@ -97,7 +97,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.november.admin.model.Admin">
+    <update id="updateByPrimaryKeySelective" parameterType="com.november.admin.model.Admin" useGeneratedKeys="true" keyProperty="id">
         update admin
         <set>
             <if test="adminCode != null">
@@ -168,7 +168,17 @@
         select count(1) from admin
         where id_card = #{idCard}
         <if test="id!=null">
-            id!=#{id}
+            AND id!=#{id}
         </if>
+    </select>
+
+    <select id="getByIds" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from admin
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
     </select>
 </mapper>

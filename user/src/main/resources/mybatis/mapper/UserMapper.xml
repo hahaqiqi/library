@@ -206,6 +206,13 @@
   </select>
 
   <select id="selectEmail" resultType="int">
-    SELECT COUNT (*) from user where user_email = #{email,jdbcType=INTEGER}
+    SELECT COUNT(*) from user where user_email = #{email,jdbcType=INTEGER}
+    <if test="id!=null">
+      AND id!=#{id}
+    </if>
   </select>
+
+  <update id="updateScore" >
+    update user set user_score =user_score+#{score,jdbcType=INTEGER} where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

@@ -29,4 +29,6 @@ public interface RoleAdminMapper {
     int countByAdminId(@Param("adminId") int adminId);
 
     List<Integer> getRoleIdsByAdminId(@Param("adminId") int adminId);
+
+    List<Integer> getAdminIdsByRoleId();
 }

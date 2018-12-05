@@ -73,4 +73,24 @@ public interface BookLeaseService {
      */
     public int selectBookLeaseCountByBookId(Integer id);
 
+    /**
+     * 通过bookid得到为完成的订单
+     * @param bookId
+     * @return
+     */
+    public BookLease getBookLeaseOne(Integer bookId);
+
+    /**
+     * 得到所有
+     * @return
+     */
+    List<BookLease> getAll();
+
+    /**
+     * 根据用户id得到该用户正在租借的书籍的编码String
+     * @param userId
+     * @return String
+     */
+    List<Integer> selectByUserId(Integer userId);
+
 }

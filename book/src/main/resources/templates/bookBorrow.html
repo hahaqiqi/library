@@ -13,21 +13,241 @@
     <script th:src="@{/spop-0.1.3/dist/spop.js}"></script>
 </head>
 <body>
-<div id="searchBox">
+<div id="searchBox" class="bigSearch">
     <input id="searchInput" type="text" name="title" placeholder="图书编号" class="layui-input">
-    <img id="searchBut" src="/img/sousuo.png"/>
+    <img id="searchBut" class="sousuoImg" src="/img/sousuo.png"/>
 </div>
-<div style="margin-left:0px;margin-top:20px;border:1px solid #17dea6;">
-    <div id="searchTable"></div>
+<form class="layui-form" action="">
+    <div id="radio" class="layui-form-item bigRadio">
+        <div class="layui-input-block">
+            <input type="radio" lay-filter="searchType" name="searchType" value="图书编号" title="图书编号" checked>
+            <input id="userEmailRadio" type="radio" lay-filter="searchType" name="searchType" value="用户邮箱" title="用户邮箱">
+        </div>
+    </div>
+</form>
 
+
+<div id="body">
     <div id="searchEmailBox">
         <input id="userEmailInput" type="text" name="title" placeholder="用户邮箱" class="layui-input">
-        <img id="searchEmailBut" src="/img/sousuo.png"/>
+        <img id="searchEmailBut" class="sousuoImg" src="/img/sousuo.png"/>
 
-        <input id="codeInput" style="margin-left: 10px;width: 110px;display: inline-block" type="text" name="" placeholder="验证码" autocomplete="off" class="layui-input">
+        <input id="codeInput" style="margin-left: 10px;width: 110px;display: inline-block" type="text" name=""
+               placeholder="验证码" autocomplete="off" class="layui-input">
         <button id="getCodeBut" class="layui-btn layui-btn-disabled" lay-filter="formDemo">获取验证码</button>
     </div>
+
+    <table class="layui-hide" id="searchTable" lay-filter="test"></table>
+
 </div>
+
+<div id="view"></div><!--容器-->
+
+<script type="text/html" id="bookLease"><!--确认订单form模板-->
+<form class="layui-form" id="bookLeaseFrom">
+    <input type="hidden" name="bookId" value="{{ d.bookId }}"/>
+    <input type="hidden" name="userId" value="{{ d.userId }}"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">借阅人邮箱</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="" type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.eamil }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图书名称</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="filtrateBookName" type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookName }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">编号</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="filtrateBookCode" type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookCode }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="filtrateAuthorName" type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookAuthor }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">收费</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="price" type="text" name="bookPrice" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.price }}" readonly="readonly"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux">元/天</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">折扣</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="discount" type="text" name="discount" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.discount }}" readonly="readonly"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux">折扣率</div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-inline">
+                <textarea id="bookTypeRemark" name="remark" placeholder="备注"
+                          class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <button id="submitBookLease" type="button" class="layui-btn" lay-submit lay-filter="save">确认
+            </button>
+        </div>
+    </div>
+</form>
+</script>
+
+<script type="text/html" id="bookLease2"><!--确认订单form模板(还书)-->
+<form class="layui-form" id="bookLeaseFrom2">
+    <input type="hidden" name="id" value="{{ d.leaseId }}"/>
+    <input type="hidden" name="bookId" value="{{ d.bookId }}"/>
+    <input type="hidden" name="userId" value="{{ d.userId }}"/>
+    <input type="hidden" name="status" value="0"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图书名称</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookName }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">编号</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookCode }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookAuthor }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">租借收费</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="price1" type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.price }}" readonly="readonly"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux">元</div>
+    </div>
+    <label class="layui-form-label"></label>
+    <div class="layui-form-mid layui-word-aux" style="margin-top: -20px;float: inherit;">{{ d.priceJs }}</div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">其他收费</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="otherPrice" type="text" name="" placeholder="损坏等其他情况" autocomplete="off"
+                   class="layui-input" value=""/>
+        </div>
+        <div class="layui-form-mid layui-word-aux">元</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">最终收费</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="price2" type="text" name="price" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.price }}" readonly="readonly"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux">元</div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-inline">
+                <textarea name="remark" placeholder="备注" class="layui-textarea">
+                    {{# if(d.remark!=null && d.remark!=""){  }}
+                        {{ d.remark }}
+                    {{# } }}
+                </textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <button id="submitBookLease2" type="button" class="layui-btn" lay-submit lay-filter="">确认
+            </button>
+        </div>
+    </div>
+</form>
+</script>
+
+<script type="text/html" id="bookLease3"><!--form模板(损毁/遗失)-->
+<form class="layui-form" id="bookLeaseFrom3">
+    <div class="layui-form-item">
+        <label class="layui-form-label">图书名称</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookName }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">编号</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookCode }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.bookAuthor }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">单价</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="unitPrice" type="text" name="" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.price }}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">赔付</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input id="compensatePrice" type="text" name="compensatePrice" placeholder="" autocomplete="off"
+                   class="layui-input" value="{{ d.price }}"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <button id="submitBookLease3" type="button" class="layui-btn" lay-submit lay-filter="">确认
+            </button>
+        </div>
+    </div>
+</form>
+</script>
+
+<script type="text/html" id="bookstatus">
+    <!--
+    SYY-11182018172052197243,SYY-11182018172052160007,SYY-11182018172052186618,SYY-11182018172052175191
+    -->
+
+    {{# if(d.status==2){ }}
+    <font>永久下架</font>
+    {{# }else if(d.status==0){ }}
+    <font>未上架</font>
+    {{# }else if(d.bookLeaseId==null || d.bookLeaseId==0){ }}
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="borrow">借阅</a>
+    {{# }else{ }}
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="giveBack">归还</a>
+    <a class="layui-btn layui-btn-xs" lay-event="relet">续租</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="lose">遗失/损坏</a>
+    {{# } }}
+</script>
 
 </body>
 

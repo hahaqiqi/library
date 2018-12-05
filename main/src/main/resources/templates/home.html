@@ -9,6 +9,17 @@
 
     <link rel="stylesheet" th:href="@{/css/app.css}" media="all">
     <link rel="stylesheet" th:href="@{/css/layout.css}" media="all">
+    <style>
+        #treeUl dd{
+            margin-left: -25px;
+        }
+        .layui-tab-title{
+            -webkit-user-select:none;
+            -moz-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+        }
+    </style>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin kit-layout-admin" id="layout">
@@ -31,7 +42,7 @@
         <ul class="layui-nav layui-layout-right kit-nav">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img th:src="@{/images/user.png}" class="layui-nav-img">&nbsp;&nbsp; user
+                    <img th:src="@{/images/user.png}" class="layui-nav-img">&nbsp;&nbsp; <span th:text="${session.admin.adminCode}"></span>
                 </a>
                 <!--<dl class="layui-nav-child">
                     <dd><a href="javascript:;">基本资料</a></dd>
@@ -55,7 +66,7 @@
             </div>
             <!-- options={url:'main.html',icon:'&#xe658;',title:'Navbar',id:'-1'}
             url:要打开的页面；icon:tab icon图标；title:tab标题；id:tab的唯一id(不可重复，遵守规则（一级菜单十位递增，二级在一级菜单一位递增）) -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
+            <ul id="treeUl" class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
 
             </ul>
 

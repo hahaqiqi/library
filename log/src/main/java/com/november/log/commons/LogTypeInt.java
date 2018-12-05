@@ -27,4 +27,10 @@ public interface LogTypeInt {
 
     //  角色权限
     int ROLEACL_TYPE = 7;
+
+    //  角色管理员
+    int ROLEADMIN_TYPE = 8;
+
+    //  用户类型
+    int USERTYPE_TYPE = 9;
 }

@@ -146,4 +146,27 @@
       select id,type_name as typeName,type_id as typeId
       from log_type
   </select>
+
+  <select id="getLogDateList" resultType="string" parameterType="map">
+      select distinct date_format(operate_time, '%Y-%m-%d') from log
+      <where>
+          <if test="startDate != null and endDate == null">
+              operate_time like concat(#{startDate},'%')
+          </if>
+          <if test="startDate != null and endDate != null">
+            and operate_time &gt;= #{startDate}
+            and operate_time &lt;= #{endDate}
+          </if>
+      </where>
+      order by operate_time desc
+  </select>
+
+  <select id="getLogListByOperTime" resultMap="ResultMapWithBLOBs">
+      select * from log where operate_time like concat(#{date},'%') limit #{page},#{limit}
+  </select>
+
+  <select id="getCountByOperTime" resultType="int">
+      select count(1) from log where operate_time like concat(#{date},'%')
+  </select>
+
 </mapper>

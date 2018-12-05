@@ -58,7 +58,7 @@ public interface BookService {
      * 多条件查询分页
      * @return
      */
-    public List<Book> pageListBook(int page, int limit,BookParam bookParam);
+    public List<Book> pageListBook(Integer page, Integer limit,BookParam bookParam);
 
     /**
      * 根据id得到一个Book
@@ -66,6 +66,13 @@ public interface BookService {
      * @return
      */
     public Book byIdBook(Integer id);
+
+    /**
+     * 根据list id得到一个多个Book
+     * @param list
+     * @return
+     */
+    public List<Book> byIdBooks(List<Integer> list);
 
     /**
      * 改变单个的状态
@@ -92,4 +99,6 @@ public interface BookService {
     public List<Book> getBookByCode(List<String> list);
 
     public String bookState(Integer id);
+
+    public int updateBookLeaseIdByBookId(Integer bookId,Integer leaseId);
 }

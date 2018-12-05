@@ -2,18 +2,18 @@ package com.november.acl.service;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.november.common.RequestHolder;
-import com.november.log.Param.LogParam;
-import com.november.log.commons.LogTypeInt;
-import com.november.log.service.LogService;
-import com.november.model.CacheType;
 import com.november.acl.dao.RedisDao;
 import com.november.acl.dao.RoleAclMapper;
 import com.november.acl.dao.RoleAdminMapper;
 import com.november.acl.dao.RoleMapper;
 import com.november.acl.model.Role;
 import com.november.acl.param.RoleParam;
+import com.november.common.RequestHolder;
 import com.november.exception.ParamException;
+import com.november.log.Param.LogParam;
+import com.november.log.commons.LogTypeInt;
+import com.november.log.service.LogService;
+import com.november.model.CacheType;
 import com.november.util.BeanValidator;
 import com.november.util.JsonMapper;
 import org.apache.commons.collections.CollectionUtils;
@@ -56,11 +56,7 @@ public class RoleServiceImpl implements RoleService {
         Role role = Role.builder().roleName(param.getRoleName())
                 .remark(param.getRemark()).build();
         //  设置操作的管理员
-        if(RequestHolder.getCurrentAdmin() != null){
-            role.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
-        }else{
-            role.setOperator("admin");
-        }
+        role.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
         //  设置为当前时间
         role.setOperateTime(new Date());
         //  插入数据库
@@ -88,11 +84,7 @@ public class RoleServiceImpl implements RoleService {
         Role after = Role.builder().id(param.getId()).roleName(param.getRoleName())
                 .remark(param.getRemark()).build();
         //  设置操作的管理员
-        if(RequestHolder.getCurrentAdmin() != null){
-            after.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
-        }else{
-            after.setOperator("admin");
-        }
+        after.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
         //  设置为当前时间
         after.setOperateTime(new Date());
         //  更新到数据库

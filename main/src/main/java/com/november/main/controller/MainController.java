@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
@@ -34,12 +35,12 @@ public class MainController {
 
     @ResponseBody
     @RequestMapping(value = "/login.json")
-    public JsonData login(LoginParam param, HttpServletRequest request){
+    public JsonData login(LoginParam param, HttpServletRequest request,HttpSession session){
         Admin admin = loginService.login(param);
+        session.setAttribute("admin",admin);
         com.november.model.Admin copyAdmin = new com.november.model.Admin();
         BeanUtils.copyProperties(admin,copyAdmin);
         RequestHolder.add(copyAdmin);
-        RequestHolder.add(request);
         return JsonData.success();
     }
 

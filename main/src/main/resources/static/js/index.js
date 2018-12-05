@@ -31,7 +31,7 @@ new Vue({
             layer.confirm('您确定要退出登录吗？', {
                 btn: ['确定', '取消'] //按钮
             }, function() {
-                window.location.href="/logout";
+                window.location.href="/logout.html";
             }, function() {
 
             });
@@ -74,14 +74,19 @@ new Vue({
                     spread: false,
                     children: [{
                         id: "11",
-                        title: "添加用户",
+                        title: "用户页",
                         icon: "&#xe671;",
-                        url: "/user.html"
+                        url: "/user/user.html"
                     }, {
                         id: "12",
-                        title: "子模块2",
-                        icon: "",
-                        url: "/user.html"
+                        title: "用户添加页",
+                        icon: "&#xe671;",
+                        url: "/user/tosave.html"
+                    },{
+                        id: "13",
+                        title: "用户类型页",
+                        icon: "&#xe671;",
+                        url: "/userType/userType.html",
                     }]
                 },{
                     id: "2",
@@ -90,14 +95,9 @@ new Vue({
                     spread: false,
                     children: [{
                         id: "21",
-                        title: "添加空间",
-                        icon: "",
-                        url: "/user.html"
-                    }, {
-                        id: "22",
-                        title: "子模块2",
-                        icon: "",
-                        url: "/user.html"
+                        title: "空间页",
+                        icon: "&#xe671;",
+                        url: "/space/space.html"
                     }]
                 }, {
                     id: "3",
@@ -107,29 +107,24 @@ new Vue({
                     children: [{
                         id: "31",
                         title: "添加书籍类型",
-                        icon: "",
+                        icon: "&#xe671;",
                         url: "/bookType/users.html"
                     }, {
                         id: "32",
                         title: "子模块2",
-                        icon: "",
+                        icon: "&#xe671;",
                         url: "/user.html"
                     }]
                 },{
                     id: "4",
                     title: "权限管理",
-                    icon: "&#xe605;",
+                    icon: "&#xe672;",
                     spread: false,
                     children: [{
                         id: "41",
-                        title: "子模块1",
-                        icon: "",
-                        url: "/user.html"
-                    }, {
-                        id: "42",
-                        title: "子模块2",
-                        icon: "",
-                        url: "/user.html"
+                        title: "权限页",
+                        icon: "&#xe671;",
+                        url: "/role/role.html"
                     }]
                 },{
                     id: "5",
@@ -138,14 +133,20 @@ new Vue({
                     spread: false,
                     children: [{
                         id: "51",
-                        title: "添加管理员",
-                        icon: "&#xe654;",
-                        url: "/user.html"
-                    }, {
-                        id: "52",
-                        title: "子模块2",
-                        icon: "",
-                        url: "/user.html"
+                        title: "管理员页",
+                        icon: "&#xe671;",
+                        url: "/admin/admin.html"
+                    }]
+                },{
+                    id: "6",
+                    title: "日志管理",
+                    icon: "&#xe655;",
+                    spread: false,
+                    children: [{
+                        id: "61",
+                        title: "日志页",
+                        icon: "&#xe671;",
+                        url: "/log/log.html"
                     }]
                 }];
 
@@ -197,7 +198,8 @@ new Vue({
 
                 $(document).on('click', '.layui-nav-item a', function() {
                     $(this).addClass('active');
-                    $(this).parents('.layui-nav-item').siblings().find('a').removeClass('active');
+                    $(this).parents().siblings().removeClass('active');
+                    $(this).parents().siblings().find('a').removeClass('active');
                     $(this).parents('.layui-nav-item').siblings().removeClass('layui-this');
                 });
                 //监听点击menu
@@ -205,6 +207,7 @@ new Vue({
                     $(elem).parent('.layui-nav-child').siblings('a').addClass('active');
                     $(elem).parents('.layui-nav-item').siblings().find('a').removeClass('active');
                     $(elem).siblings().find('a').removeClass('active');
+                    $(elem).parent().siblings().removeClass('layui-nav-itemed');
                 });
                 // 监听点击tab
                 $(document).on('dblclick', '.layui-tab li', function() {

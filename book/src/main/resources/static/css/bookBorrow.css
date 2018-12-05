@@ -1,5 +1,64 @@
-#searchBox {
-    width: 290px;
+.bigSearch{
+    width:555px;
+    margin:0 auto;
+    margin-top:200px;
+}
+.bigSearch input{
+    width:510px;
+    height:60px;
+    font-size:20px;
+    border:2px solid #17dea6;
+    border-radius:20px;
+    background:transparent;
+    top:0;
+    right:0;
+    padding-left:10px;
+    padding-right:48px;
+    display:inline-block;
+}
+.bigSearch img{
+    margin-left:-50px;
+    margin-top:-8px;
+    width:30px;
+    height:30px;
+}
+.bigRadio{
+    margin-left: 300px;
+}
+.smallRadio{
+    margin-left: -90px;
+}
+
+.smallSearch{
+    margin-left: 20px;
+    margin-top: 15px;
+}
+.smallSearch input{
+    width: 280px;
+    height: 33px;
+    font-size: 11px;
+    border: 2px solid #17dea6;
+    border-radius: 20px;
+    background: transparent;
+    top: 0;
+    right: 0;
+    padding-left: 10px;
+    padding-right: 28px;
+    display: inline;;
+}
+.smallSearch img{
+    margin-left: -28px;
+    margin-top: -3px;
+    width: 17px;
+    height: 17px;
+}
+#body{
+    margin-left:20px;
+    margin-top:20px;
+    display: none;
+}
+
+/*#searchBox {
     margin-left: 0px;
     margin-top: 15px;
 }
@@ -15,7 +74,7 @@
     right: 0;
     padding-left: 10px;
     padding-right: 28px;
-    display: inline-block;
+    display: inline;
 }
 
 #searchBut {
@@ -23,12 +82,16 @@
     margin-top: -3px;
     width: 17px;
     height: 17px;
+}*/
 
+.sousuoImg{
+    cursor:pointer;
 }
 
 #searchEmailBox {
     margin-left: 0px;
     margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 #userEmailInput{

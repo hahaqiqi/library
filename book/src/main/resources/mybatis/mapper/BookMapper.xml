@@ -42,8 +42,11 @@
   </select>
 
     <select id="pageList" resultMap="BaseResultMap">
-    SELECT * FROM book WHERE status!=2 LIMIT #{page},#{limit}
-  </select>
+        SELECT * FROM book WHERE status!=2
+        <if test="page!=null and limit!=null">
+            LIMIT #{page},#{limit}
+        </if>
+    </select>
 
     <select id="getBookByCode" resultMap="BaseResultMap" parameterType="java.util.List">
         select
@@ -53,6 +56,17 @@
         in
         <foreach collection="list" item="code" open="(" separator="," close=")">
             #{code}
+        </foreach>
+    </select>
+
+    <select id="selectByBookIds" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from book
+        where id
+        in
+        <foreach collection="list" item="bookId" open="(" separator="," close=")">
+            #{bookId}
         </foreach>
     </select>
 
@@ -269,6 +283,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+    <update id="updateBookLeaseIdByBookId">
+    update book
+    set book_lease_id=#{leaseId}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
     <update id="changeBookStatus">
     update book
     set status=#{statusId}
@@ -287,7 +307,7 @@
             </if>
 
             <if test='price != null'>
-               price = #{price,jdbcType=DOUBLE},
+                price = #{price,jdbcType=DOUBLE},
             </if>
 
             <if test="pressName != null and pressName !='' ">
@@ -297,13 +317,13 @@
                 book_type_id= #{bookTypeId,jdbcType=INTEGER},
             </if>
             <if test="status != null">
-                 status= #{status,jdbcType=INTEGER},
+                status= #{status,jdbcType=INTEGER},
             </if>
             <if test="bookChcoType != null ">
-                 book_chco_type =#{bookChcoType,jdbcType=INTEGER},
+                book_chco_type =#{bookChcoType,jdbcType=INTEGER},
             </if>
             <if test="bookSpaceId != null ">
-                 book_space_id= #{bookSpaceId,jdbcType=INTEGER},
+                book_space_id= #{bookSpaceId,jdbcType=INTEGER},
             </if>
             <if test="bookLeaseType != null ">
                 book_lease_type= #{bookLeaseType,jdbcType=INTEGER},
@@ -365,7 +385,7 @@
 
         </foreach>
     </insert>
-    <!--筛选查询分页-->
+    <!--筛选查询 分页-->
     <select id="filtrateSelect" resultMap="BaseResultMap" parameterType="com.november.book.param.BookParam">
         select * FROM book
         <where>
@@ -411,7 +431,9 @@
                 AND book_space_id= #{bookSpaceId,jdbcType=INTEGER}
             </if>
         </where>
-        LIMIT #{page},#{limit}
+        <if test="page!=null and limit!=null">
+            LIMIT #{page},#{limit}
+        </if>
 
     </select>
 

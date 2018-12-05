@@ -27,7 +27,7 @@ public interface BookMapper {
 
     List<Book> list();
 
-    List<Book> pageList(@Param("page") int page, @Param("limit")int limit);
+    List<Book> pageList(@Param("page") Integer page, @Param("limit")Integer limit);
 
     List<Book> filtrateSelect(BookParam bookParam);
 
@@ -40,4 +40,8 @@ public interface BookMapper {
     int bacthUpdateWhere(BookParam param);
 
     List<Book> getBookByCode(List<String> list);
+
+    int updateBookLeaseIdByBookId(@Param("id") Integer id,@Param("leaseId") Integer leaseId);
+
+    List<Book> selectByBookIds(List<Integer> list);
 }

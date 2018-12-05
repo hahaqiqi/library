@@ -444,6 +444,14 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         alert("6379");
     });
 
+    //导出excel
+    $('#downloadBookExcel').on("click",function(){
+        var fileName=$("#fileName").val();
+        if(fileName===""){
+            fileName="table";
+        }
+        window.open("/book/downloadBookExcel.json?fileName="+fileName);
+    });
 
 
 });
