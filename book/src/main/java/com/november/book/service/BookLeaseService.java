@@ -86,4 +86,11 @@ public interface BookLeaseService {
      */
     List<BookLease> getAll();
 
+    /**
+     * 根据用户id得到该用户正在租借的书籍的编码String
+     * @param userId
+     * @return String
+     */
+    List<Integer> selectByUserId(Integer userId);
+
 }

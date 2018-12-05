@@ -149,6 +149,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> byIdBooks(List<Integer> list) {
+        return bookMapper.selectByBookIds(list);
+    }
+
+    @Override
     public int changeBookStatus(Integer id, Integer statusId) {
         return bookMapper.changeBookStatus(id, statusId);
     }

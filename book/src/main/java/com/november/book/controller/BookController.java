@@ -75,7 +75,7 @@ public class BookController {
         return JsonData.success();
     }
 
-    @RequestMapping(value = "/updateLeaseId.json", method = RequestMethod.POST)//修改单本书籍的租借id
+    @RequestMapping(value = "/updateLeaseId.json")//修改单本书籍的租借id
     @ResponseBody
     public JsonData updateBookTypeLeaseIdByBookId(Integer bookId, Integer leaseId) {
         bookService.updateBookLeaseIdByBookId(bookId, leaseId);
@@ -195,7 +195,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "/searchBook.json", method = RequestMethod.GET)
-    @ResponseBody
+    @ResponseBody       //根据bookCode s
     public JsonData searchBook(String searchVal) {
         String params[] = searchVal.split(",");
         List<String> listStr = new ArrayList<>();
@@ -203,6 +203,18 @@ public class BookController {
             listStr.add(str);
         }
         List<Book> list = bookService.getBookByCode(listStr);
+        return JsonData.success(list);
+    }
+
+    @RequestMapping(value = "/searchBook2.json", method = RequestMethod.GET)
+    @ResponseBody       //根据bookId s
+    public JsonData searchBook2(String searchVal) {
+        String params[] = searchVal.split(",");
+        List<Integer> listStr = new ArrayList<>();
+        for (String str : params) {
+            listStr.add(Integer.parseInt(str));
+        }
+        List<Book> list = bookService.byIdBooks(listStr);
         return JsonData.success(list);
     }
 

@@ -1,5 +1,6 @@
 package com.november.book.controller;
 
+import com.november.book.model.Book;
 import com.november.book.model.BookLease;
 import com.november.book.model.BookType;
 import com.november.book.param.BookLeaseParam;
@@ -27,77 +28,96 @@ public class BookLeaseController {
     private BookLeaseParam filtrateBookLeaseParam;
 
     @RequestMapping(value = "/bookLease.html")
-    public String toBookLease(){
+    public String toBookLease() {
         return "bookLease";
     }
 
-    @RequestMapping(value = "/save.json",method =RequestMethod.POST)
+    @RequestMapping(value = "/save.json", method = RequestMethod.POST)
     @ResponseBody
-    public JsonData saveBookLease(BookLeaseParam param){
-        int newNumber= bookLeaseService.saveBookLease(param);
+    public JsonData saveBookLease(BookLeaseParam param) {
+        int newNumber = bookLeaseService.saveBookLease(param);
         return JsonData.success(newNumber);
     }
 
-    @RequestMapping(value = "/update.json",method =RequestMethod.POST)
+    @RequestMapping(value = "/update.json", method = RequestMethod.POST)
     @ResponseBody
-    public JsonData updateBookType(BookLeaseParam param){
+    public JsonData updateBookType(BookLeaseParam param) {
         bookLeaseService.updateBookLease(param);
+        //return "redirect:/book/updateLeaseId.json?bookId="+param.getBookId();
         return JsonData.success();
     }
 
-    @RequestMapping(value = "/delete.json",method =RequestMethod.GET)
+    @RequestMapping(value = "/delete.json", method = RequestMethod.GET)
     @ResponseBody
-    public JsonData deleteBookType(Integer id){
+    public JsonData deleteBookType(Integer id) {
         //bookLeaseService.deleteBookLease(id);
         return JsonData.success();
     }
 
-    @RequestMapping(value = "/list.json",method =RequestMethod.GET)
+    @RequestMapping(value = "/list.json", method = RequestMethod.GET)
     @ResponseBody
-    public JsonData listBookType(HttpServletRequest request){
-        int count=0;
+    public JsonData listBookType(HttpServletRequest request) {
+        int count = 0;
         int page = Integer.parseInt(request.getParameter("page"));//第几页
         int limit = Integer.parseInt(request.getParameter("limit"));//每页显示条数
-        List<BookLease> listBookLease = bookLeaseService.pageListBookLease(page,limit);
-        return JsonData.pageSuccess(listBookLease,count,limit);
+        List<BookLease> listBookLease = bookLeaseService.pageListBookLease(page, limit);
+        return JsonData.pageSuccess(listBookLease, count, limit);
     }
 
-    @RequestMapping(value = "/listAll.json",method =RequestMethod.GET)
+    @RequestMapping(value = "/listAll.json", method = RequestMethod.GET)
     @ResponseBody
-    public JsonData listBookTypeAll(){
+    public JsonData listBookTypeAll() {
 
         return JsonData.success();
     }
 
-    @RequestMapping(value = "/selectByBookId.json",method =RequestMethod.GET)//根据bookid返回所有
+    @RequestMapping(value = "/selectByBookId.json", method = RequestMethod.GET)//根据bookid返回所有
     @ResponseBody
-    public JsonData selectBookLeaseByBookId(Integer id){
+    public JsonData selectBookLeaseByBookId(Integer id) {
 
         return JsonData.success();
     }
 
-    @RequestMapping(value = "/selectByBookIdOne.json",method =RequestMethod.GET)//根据bookid返回一条（正在租借中的）,并计算价格
+    @RequestMapping(value = "/selectByBookIdOne.json", method = RequestMethod.GET)//根据bookid返回一条（正在租借中的）,并计算价格
     @ResponseBody
-    public JsonData selectBookLeaseByBookIdAndGh(Integer bookId){
-        BookLease bookLease= bookLeaseService.getBookLeaseOne(bookId);
-        String[] arr= CalculatePrice.getPrice(bookLease.getBookPrice(),bookLease.getDiscount(),bookLease.getOperateTime());
-        bookLease.setPrice(Double.parseDouble(arr[0]));
-        return JsonData.success(bookLease,arr[1]);
+    public JsonData selectBookLeaseByBookIdAndGh(Integer bookId) {
+        BookLease bookLease = bookLeaseService.getBookLeaseOne(bookId);
+        String[] arr = CalculatePrice.getPrice(bookLease.getBookPrice(), bookLease.getDiscount(), bookLease.getOperateTime());
+        if (bookLease.getPrice() > 0) {
+            arr[1] = arr[1] + " + " + bookLease.getPrice() + "(上次租借未支付金额)";
+        }
+        bookLease.setPrice(Double.parseDouble(arr[0]) + bookLease.getPrice());
+        return JsonData.success(bookLease, arr[1]);
     }
 
-    @RequestMapping(value = "/selectByUserId.json",method =RequestMethod.GET)
+    @RequestMapping(value = "/selectByBookIdOne2.json", method = RequestMethod.GET)//根据bookid返回租借人userid
     @ResponseBody
-    public JsonData selectBookLeaseByUserId(Integer id){
+    public JsonData selectBookLeaseByBookId2(Integer bookId) {
+        BookLease bookLease = bookLeaseService.getBookLeaseOne(bookId);
+        return JsonData.success(bookLease.getUserId());
+    }
+
+    @RequestMapping(value = "/selectAllByUserId.json", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonData selectBookLeaseByUserId(Integer id) {
 
         return JsonData.success();
     }
 
     //批量删除
-    @RequestMapping(value = "/batchDelete.json",method =RequestMethod.GET)
+    @RequestMapping(value = "/batchDelete.json", method = RequestMethod.GET)
     @ResponseBody
-    public JsonData batchDeleteBookType(String batchStrId){
+    public JsonData batchDeleteBookType(String batchStrId) {
 
         return JsonData.success();
+    }
+
+    //根据用户id得到该用户正在租借的书籍的list id
+    @RequestMapping(value = "/selectByUserId.json", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonData selectByUserId(Integer userId) {
+        List<Integer> list = bookLeaseService.selectByUserId(userId);
+        return JsonData.success(list);
     }
 
 }
