@@ -104,16 +104,41 @@ new Vue({
                     title: "书籍管理",
                     icon: "&#xe705;",
                     spread: false,
-                    children: [{
+                    children: [ {
                         id: "31",
-                        title: "添加书籍类型",
+                        title: "书籍租借页",
                         icon: "&#xe671;",
-                        url: "/bookType/users.html"
-                    }, {
+                        url: "/book/bookBorrow.html"
+                    },{
                         id: "32",
-                        title: "子模块2",
+                        title: "书籍类型页",
                         icon: "&#xe671;",
-                        url: "/user.html"
+                        url: "/bookType/bookType.html"
+                    }, {
+                        id: "33",
+                        title: "租借类型页",
+                        icon: "&#xe671;",
+                        url: "/bookLeaseType/bookLeaseType.html"
+                    }, {
+                        id: "34",
+                        title: "收费类型页",
+                        icon: "&#xe671;",
+                        url: "/bookCode/bookCode.html"
+                    }, {
+                        id: "35",
+                        title: "书籍租借管理页",
+                        icon: "&#xe671;",
+                        url: "/bookLease/bookLease.html"
+                    }, {
+                        id: "36",
+                        title: "书籍添加页",
+                        icon: "&#xe671;",
+                        url: "/book/bookAdd.html"
+                    }, {
+                        id: "37",
+                        title: "书籍管理页",
+                        icon: "&#xe671;",
+                        url: "/book/book.html"
                     }]
                 },{
                     id: "4",

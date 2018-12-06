@@ -348,6 +348,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 //layer.msg("删除"+data.id);
                 //向服务端发送删除指令
                 deleteBookType(data.id);
+                $(".layui-laypage-btn")[0].click();
             });
         } else if(layEvent === 'edit'){
             editObj=data;
