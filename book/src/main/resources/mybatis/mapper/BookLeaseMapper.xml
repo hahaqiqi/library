@@ -1,58 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.november.book.dao.BookLeaseMapper" >
-  <resultMap id="BaseResultMap" type="com.november.book.model.BookLease" >
-    <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
-    <result column="operator" property="operator" jdbcType="VARCHAR" />
-    <result column="book_id" property="bookId" jdbcType="INTEGER" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="book_price" property="bookPrice" jdbcType="DOUBLE" />
-    <result column="discount" property="discount" jdbcType="DOUBLE" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="operator" property="operator" jdbcType="VARCHAR" />
-    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
-    <result column="price" property="price" jdbcType="DOUBLE" />
-    <result column="final_operator" property="finalOperator" jdbcType="VARCHAR" />
-    <result column="final_operate_time" property="finalOperateTime" jdbcType="TIMESTAMP" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.november.book.dao.BookLeaseMapper">
+    <resultMap id="BaseResultMap" type="com.november.book.model.BookLease">
+        <result column="serial_number" property="serialNumber" jdbcType="VARCHAR"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="book_id" property="bookId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="book_price" property="bookPrice" jdbcType="DOUBLE"/>
+        <result column="discount" property="discount" jdbcType="DOUBLE"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP"/>
+        <result column="price" property="price" jdbcType="DOUBLE"/>
+        <result column="final_operator" property="finalOperator" jdbcType="VARCHAR"/>
+        <result column="final_operate_time" property="finalOperateTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id,serial_number, book_id, user_id, book_price, status,discount, operator, operate_time, price, final_operator,
     final_operate_time, remark
   </sql>
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from book_lease
-    where id = #{id,jdbcType=INTEGER}
-  </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from book_lease
+        where id = #{id,jdbcType=INTEGER}
+    </select>
 
-  <select id="selectBookLeaseByBookidOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
-    from book_lease
-    where book_id = #{bookId,jdbcType=INTEGER} AND status = 1
-  </select>
+    <select id="selectBookLeaseByBookidOne" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from book_lease
+        where book_id = #{bookId,jdbcType=INTEGER} AND status = 1
+    </select>
 
-  <select id="selectBookLeaseCountByBookId" resultType="java.lang.Integer">
+    <select id="selectBookLeaseCountByBookId" resultType="java.lang.Integer">
     select
     COUNT(1)
     from book_lease
     where book_id = #{bookId}
   </select>
 
-  <select id="getAll" resultMap="BaseResultMap">
-    select
-    *
-    from book_lease
-  </select>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from book_lease
+    </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByUserIding" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from book_lease WHERE user_id=#{userId} AND status=1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from book_lease
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.november.book.model.BookLease" >
+    <insert id="insert" parameterType="com.november.book.model.BookLease">
     insert into book_lease (id, book_id, user_id, 
       book_price, status, operator, 
       operate_time, price, final_operator, 
@@ -62,134 +68,135 @@
       #{operateTime,jdbcType=TIMESTAMP}, #{price,jdbcType=DOUBLE}, #{finalOperator,jdbcType=VARCHAR}, 
       #{finalOperateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.november.book.model.BookLease"  useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-    insert into book_lease
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="serialNumber != null">
-        serial_number,
-      </if>
-      <if test="bookId != null" >
-        book_id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="bookPrice != null" >
-        book_price,
-      </if>
-      <if test="discount != null" >
-        discount,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="operator != null" >
-        operator,
-      </if>
-      <if test="operateTime != null" >
-        operate_time,
-      </if>
-      <if test="price != null" >
-        price,
-      </if>
-      <if test="finalOperator != null" >
-        final_operator,
-      </if>
-      <if test="finalOperateTime != null" >
-        final_operate_time,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="serialNumber != null">
-        #{serialNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="bookId != null" >
-        #{bookId,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="bookPrice != null" >
-        #{bookPrice,jdbcType=DOUBLE},
-      </if>
-      <if test="discount != null" >
-        #{discount,jdbcType=DOUBLE},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="operator != null" >
-        #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null" >
-        #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="price != null" >
-        #{price,jdbcType=DOUBLE},
-      </if>
-      <if test="finalOperator != null" >
-        #{finalOperator,jdbcType=VARCHAR},
-      </if>
-      <if test="finalOperateTime != null" >
-        #{finalOperateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.november.book.model.BookLease" >
-    update book_lease
-    <set >
-      <if test="bookId != null" >
-        book_id = #{bookId,jdbcType=INTEGER},
-      </if>
-      <if test="serialNumber != null">
-        #{serial_number,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="bookPrice != null" >
-        book_price = #{bookPrice,jdbcType=DOUBLE},
-      </if>
-      <if test="discount != null" >
-        discount = #{discount,jdbcType=DOUBLE},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="operator != null" >
-        operator = #{operator,jdbcType=VARCHAR},
-      </if>
-      <if test="operateTime != null" >
-        operate_time = #{operateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=DOUBLE},
-      </if>
-      <if test="finalOperator != null" >
-        final_operator = #{finalOperator,jdbcType=VARCHAR},
-      </if>
-      <if test="finalOperateTime != null" >
-        final_operate_time = #{finalOperateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.november.book.model.BookLease" >
+    <insert id="insertSelective" parameterType="com.november.book.model.BookLease" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id">
+        insert into book_lease
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="serialNumber != null">
+                serial_number,
+            </if>
+            <if test="bookId != null">
+                book_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="bookPrice != null">
+                book_price,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+            <if test="operateTime != null">
+                operate_time,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="finalOperator != null">
+                final_operator,
+            </if>
+            <if test="finalOperateTime != null">
+                final_operate_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="serialNumber != null">
+                #{serialNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="bookId != null">
+                #{bookId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="bookPrice != null">
+                #{bookPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operateTime != null">
+                #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="finalOperator != null">
+                #{finalOperator,jdbcType=VARCHAR},
+            </if>
+            <if test="finalOperateTime != null">
+                #{finalOperateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.november.book.model.BookLease">
+        update book_lease
+        <set>
+            <if test="bookId != null">
+                book_id = #{bookId,jdbcType=INTEGER},
+            </if>
+            <if test="serialNumber != null">
+                #{serial_number,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="bookPrice != null">
+                book_price = #{bookPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="discount != null">
+                discount = #{discount,jdbcType=DOUBLE},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DOUBLE}-price,
+            </if>
+            <if test="finalOperator != null">
+                final_operator = #{finalOperator,jdbcType=VARCHAR},
+            </if>
+            <if test="finalOperateTime != null">
+                final_operate_time = #{finalOperateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.november.book.model.BookLease">
     update book_lease
     set book_id = #{bookId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},

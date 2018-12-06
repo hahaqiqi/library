@@ -2,6 +2,7 @@ package com.november.util;
 
 import java.util.Random;
 
+import com.november.exception.ParamException;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 
@@ -24,8 +25,7 @@ public class Email {
 			code=ryzm;
 		} catch (EmailException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("验证码发送失败");
+			throw new ParamException("验证码发送失败");
 		}
 		return code;
 	}

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -28,6 +29,7 @@ public class BookLeaseParam {
 
     private Date operateTime;
 
+    @NotNull(message = "收费不能为空")
     private Double price;
 
     private String finalOperator;

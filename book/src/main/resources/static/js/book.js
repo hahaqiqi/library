@@ -96,7 +96,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             $(".bookType").append("<option value='null'>接口异常</option>");
         }
     });
-    //得到所有限时活动
+    //得到所有租借规则
     $.ajax({
         url: '/bookLeaseType/listAll.json',
         async: false,
@@ -123,22 +123,89 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
     form.render();
 
-    //向世界问个好
-    //layer.msg('Hello World');
-
+    //封装form数据
+    getFormData = function (elem)
+    {
+        var fieldElem = $(elem).find('input,select,textarea'); //获取所有表单域
+        var field ={};
+        layui.each(fieldElem, function(_, item){
+            if(!item.name) return;
+            if(/^checkbox|radio$/.test(item.type) && !item.checked) return;
+            field[item.name] = item.value;
+        });
+        return field;
+    };
     //执行一个 table 实例(加载数据)
-    table.render({
-        done: function(res, curr, count){
-            //如果是异步请求数据方式，res即为你接口返回的信息。
-            //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-            console.log(res);
-            //得到当前页码
-            console.log(curr);
-            //得到数据总量
-            console.log(count);
-        }
-    });
-
+    //获取查询表单的参数
+    var formData = getFormData("#filtrateFrom");
+    tableSx=function() {
+        table.render({
+            elem: '#bbbbb'
+            , url: "/book/list.json"
+            , id: 'test'
+            , page: true
+            , toolbar: '#headTemplate'
+            , response: {
+                statusCode: 0 //规定成功的状态码，默认：0
+            }
+            , cols: [
+                [ //表头
+                    {type: 'checkbox', width: 40},
+                    , {field: 'id', width: 60, hide: true, sort: true, title: ""}
+                    , {field: 'bookName', sort: true}
+                    , {field: 'bookCode', hide: true, sort: true}
+                    , {field: 'authorName', sort: true}
+                    , {field: 'price', sort: true}
+                    , {field: 'pressName', sort: true}
+                    , {
+                    field: 'bookTypeId', sort: true, templet: function (bookTypeId) {
+                        return getBookType(bookTypeId)
+                    }
+                }
+                    , {
+                    field: 'bookLeaseId', hide: true, templet: function (obj) {
+                        if (obj.bookLeaseId == 0 || obj.bookLeaseId == null) {
+                            return '未被租借'
+                        } else {
+                            return '租借中'
+                        }
+                    }
+                }
+                    , {field: 'bookLeaseType', hide: true, sort: true}
+                    , {
+                    field: 'bookChcoType', sort: true, templet: function (obj) {
+                        if (obj.bookChcoType == 0) {
+                            return '免费'
+                        } else {
+                            return '收费'
+                        }
+                    }
+                }
+                    , {field: 'status', toolbar: '#bookstatus', align: 'center'}
+                    , {field: 'bookSpaceId', sort: true, toolbar: '#bookSpace', hide: true, align: 'center'}
+                    , {field: 'operator', hide: true, sort: true}
+                    , {
+                    field: 'operateTime', sort: true, hide: true, align: 'center', templet: function (operateTime) {
+                        return createTime(operateTime)
+                    }
+                }
+                    , {field: 'remark'}
+                    , {fixed: 'right', toolbar: '#barDemo', width: 175, align: 'center'}
+                ]
+            ],
+            where: formData
+            , done: function (res, curr, count) {
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+            }
+        });
+    };
+    tableSx();
     var editObj;
     //监听头工具栏事件
     table.on('toolbar(test)', function(obj){
@@ -224,36 +291,17 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
     //提交筛选
     $('#filtrateSubmitBookType').on("click",function(){
-        $.ajax({
-            url: '/book/setFiltrate.json',
-            data: $("#filtrateFrom").serializeArray(),
-            type: 'GET',
-            success: function (result) {
-                if (result.ret) {
-                    $('.layui-table-page .layui-input').val(1);
-                    $('.layui-laypage-btn').click();
-                } else {
-                    spopFail("错误",result.msg);
-                }
-            },
-            error:function () {
-                spopFail("错误","请检查参数");
-            }
-        });
+        formData = getFormData("#filtrateFrom");
+        tableSx();
+        layer.close(layer.index);
     });
+
     //清空条件
     $('#refiltrateSubmitBookType').on("click",function(){
-        $.ajax({
-            url: '/book/reFiltrate.json',
-            type: 'GET',
-            success: function (result) {
-                $("#filtrateFrom")[0].reset();
-                $("#updateFiltrateFrom")[0].reset();
-                layer.close(layer.index);
-                $('.layui-table-page .layui-input').val(1);
-                $('.layui-laypage-btn').click();
-            },
-        });
+        $("#filtrateFrom")[0].reset();
+        $("#updateFiltrateFrom")[0].reset();
+        tableSx();
+        layer.close(layer.index);
     });
     //更改筛选
     $('#updateFiltrateSubmitBookType').on("click",function(){

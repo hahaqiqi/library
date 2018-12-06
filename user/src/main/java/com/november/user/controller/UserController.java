@@ -82,9 +82,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value="/selectUserByEmail.json")
     public JsonData SelectUserByEmail(String email){
-
         User user=userService.selectUserByEmail(email);
-        System.out.print(user.toString());
         return JsonData.success(user);
     }
 

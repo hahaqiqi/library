@@ -23,4 +23,7 @@ public interface BookLeaseMapper {
     BookLease selectBookLeaseByBookidOne(Integer bookId);
 
     List<BookLease> getAll();
+
+    List<BookLease> selectByUserIding(@Param("userId") Integer userId);
+
 }

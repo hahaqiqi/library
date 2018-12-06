@@ -16,8 +16,9 @@ public interface SpaceService {
 
     int updateByPrimaryKeySelective(SpaceParam record);//修改空间
 
-    int Movespace(Integer id,Integer pid);
+    int Movespace(Integer id,Integer pid);//移动空间
 
+    List<Integer> selectSpaceBook(Integer id);//获取书籍信息
 
 //    boolean selectIdandParentId(Integer parentid);
 

@@ -68,6 +68,13 @@ public interface BookService {
     public Book byIdBook(Integer id);
 
     /**
+     * 根据list id得到一个多个Book
+     * @param list
+     * @return
+     */
+    public List<Book> byIdBooks(List<Integer> list);
+
+    /**
      * 改变单个的状态
      * @param id
      * @param statusId

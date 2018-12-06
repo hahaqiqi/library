@@ -77,10 +77,10 @@ public class BookServiceImpl implements BookService {
         Book before = bookMapper.selectByPrimaryKey(id);
         Preconditions.checkNotNull(before, "删除的内容不存在");
 
-        if (before.getBookLeaseId() != null && before.getBookLeaseId() != 0) {
+/*        if (before.getBookLeaseId() != null && before.getBookLeaseId() != 0) {
             //如果书籍正在被借阅，不允许删除和更改状态
             throw new ParamException("书籍借阅中,不允许删除");
-        }
+        }*/
         if (bookLeaseMapper.selectBookLeaseCountByBookId(id) > 0) {
             //有过订单不能从数据库删除
             //则将book status 改为 2(永久下架)
@@ -146,6 +146,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book byIdBook(Integer id) {
         return bookMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Book> byIdBooks(List<Integer> list) {
+        return bookMapper.selectByBookIds(list);
     }
 
     @Override

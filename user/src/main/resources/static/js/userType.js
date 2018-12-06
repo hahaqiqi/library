@@ -195,11 +195,6 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         }
     });
 
-    //分页
-    laypage.render({
-
-    });
-
     function showBookTypeInfo(showTitleType,viewdata) {
         var getTpl = demo.innerHTML
             ,view = document.getElementById('view');
