@@ -139,16 +139,17 @@ public class BookController {
 
     @RequestMapping(value = "/list.json", method = RequestMethod.GET)//查 包括高级查询
     @ResponseBody
-    public JsonData listBookType(HttpServletRequest request) {
-        int count;
-        if (filtrateBookParam == null) {
-            count = bookService.bookCount();
-        } else {
-            count = filtrateBookParam.getWhereList().size();
+    public JsonData listBookType(HttpServletRequest request, BookParam bookParam) {
+        List<Book> list = bookService.whereListBook(bookParam);
+        List<Integer> listInt = new ArrayList<>();
+        for (Book book : list) {
+            listInt.add(book.getId());
         }
+        bookParam.setWhereList(listInt);
+        int count = bookParam.getWhereList().size();
         int page = Integer.parseInt(request.getParameter("page"));//第几页
         int limit = Integer.parseInt(request.getParameter("limit"));//每页显示条数
-        List<Book> listBook = bookService.pageListBook(page, limit, filtrateBookParam);
+        List<Book> listBook = bookService.pageListBook(page, limit, bookParam);
         return JsonData.pageSuccess(listBook, count, limit);
     }
 
@@ -270,7 +271,7 @@ public class BookController {
     @ResponseBody
     public JsonData getExcelTest(HttpServletResponse response
             , @RequestParam(value = "backImageFile", required = false) MultipartFile file) {
-        List<BookExcel> bookExcels=ExcelUtil.loadBookExcel(file);
+        List<BookExcel> bookExcels = ExcelUtil.loadBookExcel(file);
         //BookExcel 转 Book
         List<Book> books = new ArrayList<>(bookExcels.size() - 1);  //-1 排除标题
         for (int i = 1; i < bookExcels.size(); i++) {
