@@ -208,8 +208,7 @@
     </script>
 
 <div id="SpaceAddBook" style="display:none;">
-    <form class="layui-form" action="" id="spaceBookForm" METHOD="POST">
-        <input name="bookpid" type="hidden" value=""/>
+    <form class="layui-form" action="" id="spaceBookForm" METHOD="POST" enctype="multipart/form-data">
         <div class="layui-form-item">
             <label class="layui-form-label">图书编号</label>
             <div class="layui-input-inline" style="width: 200px;">
@@ -237,8 +236,8 @@
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button id="submitSpaceBooks" type="button" class="layui-btn" lay-submit lay-filter="save">添加书组
-                </button>
+                <input id="bookExcelFile" type="file" name="backImageFile" style="display: none;" />
+                <button id="submitBookExcel" class="layui-btn" type="button">取</button>
             </div>
         </div>
 

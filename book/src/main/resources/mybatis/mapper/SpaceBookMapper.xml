@@ -50,20 +50,20 @@
   </update>
 
   <update id="BookSpaceAdd" parameterType="com.november.book.model.Book">
-    update book set book_space_id=#{bookpid}
+    update book set book_space_id=#{bookpid},status=#{status}
     WHERE
     book_code=#{bookCode}
-    AND
-    status=#{status}
   </update>
 
   <update id="BookSpaceAddList" parameterType="java.util.List">
       update book
       <set>
-        book_space_id=#{bookpid}
+        book_space_id=#{bookSpase},status=#{status}
       </set>
-    <foreach collection="list" item="bookCode" open="(" close=")" separator=",">
-      where book_code=#{bookCode}
+    where  book_code
+    IN
+    <foreach collection="listBook" item="item" open="(" close=")" separator=",">
+       #{item.bookCode}
     </foreach>
   </update>
 

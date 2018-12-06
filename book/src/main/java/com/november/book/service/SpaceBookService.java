@@ -16,6 +16,6 @@ public interface SpaceBookService {
 
     int BookSpaceAdd(Integer bookpid,String bookCode,Integer status);
 
-    int BookSpaceAddList(List<Book> listBook);//添加一组书籍到空间
+    int BookSpaceAddList(Integer status,Integer bookspace ,List<Book> listBook);//添加一组书籍到空间
 
 }

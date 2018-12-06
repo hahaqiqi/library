@@ -4,11 +4,15 @@ import com.november.book.model.Book;
 import com.november.book.param.BookParam;
 import com.november.book.service.SpaceBookService;
 import com.november.common.JsonData;
+import com.november.exception.ParamException;
+import com.november.model.BookExcel;
+import com.november.util.ExcelUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -66,8 +70,27 @@ public class SpaceBookController {
 
     @ResponseBody
     @RequestMapping("/spaceBookAddList.json")
-    public JsonData bookSpaceAddList(List<Book> listBookCode){
-        spacebookservice.BookSpaceAddList(listBookCode);
+    public JsonData bookSpaceAddList(
+            @RequestParam(value = "status") Integer status,
+            @RequestParam(value = "bookspaceid") Integer bookpid,
+            @RequestParam(value = "backImageFile", required = false) MultipartFile file){
+        /*spacebookservice.BookSpaceAddList();*/
+        List<BookExcel> bookExcels= ExcelUtil.loadBookExcel(file);
+        //BookExcel转换成list
+        List<Book> spaceBooks=new ArrayList<>(bookExcels.size()-1);
+        for (int i = 1; i < bookExcels.size(); i++) {
+            try {
+                Book book = new Book();
+                book.setBookCode(bookExcels.get(i).getBookCode());
+                book.setBookSpaceId(bookpid);
+                spaceBooks.add(book);
+            } catch (NumberFormatException e) {
+                throw new ParamException("错误，请检查Excel的第" + (i + 1) + "行数据");
+            } catch (Exception e) {
+                throw new ParamException("加载数据失败");
+            }
+        }
+        spacebookservice.BookSpaceAddList(status,bookpid,spaceBooks);
         return JsonData.success();
     }
 }

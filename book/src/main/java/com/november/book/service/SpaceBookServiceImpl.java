@@ -31,18 +31,18 @@ public class SpaceBookServiceImpl implements SpaceBookService{
         return spacebook.BookSpaceAdd(bookpid,bookCode,status);
     }
 
-    public int BookSpaceAddList(List<Book> listBook){
-        if(selectSpaceBookListBy(listBook)>listBook.size()){
+    public int BookSpaceAddList(Integer status,Integer bookSpase,List<Book> listBook){
+        /*if(selectSpaceBookListBy(listBook)>listBook.size()){
             throw new ParamException("这组图书中的某本图书重复");
         }else if(selectSpaceBookListBy(listBook)<listBook.size()){
             throw new ParamException("这组图书中的某本图书不存在");
-        }
-        return spacebook.BookSpaceAddList(listBook);
+        }*/
+        return spacebook.BookSpaceAddList(status,bookSpase,listBook);
     }
     /*
         判断
      */
-    public int selectSpaceBookListBy(List<Book> listBy){
+    /*public int selectSpaceBookListBy(List<Book> listBy){
         return spacebook.selectSpaceBookList(listBy);
-    }
+    }*/
 }

@@ -502,7 +502,37 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
         })
 
         //添加多本书籍
-        $('#submitSpaceBooks').on("click",function () {
+        $('#submitBookExcel').on("click",function () {
+            $("#bookExcelFile").click();
+        });
+        $('input[name=backImageFile]').change(function () {
+            /*var bookSpaceid=$('input[name=bookspaceid]').val()*/
+            var status = $("input[name='status']:checked").val()
+            var formData = new FormData($("#spaceBookForm")[0]);
+            formData.append("bookspaceid",bookspaceid);
+            formData.append("status",status);
+            $.ajax({
+                url: '/spacebook/spaceBookAddList.json',
+                type: 'post',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    if (result.ret == false) {
+                        spopFail("加载失败",result.msg);
+                    }else {
+                        spopSucess("加载成功");
+                        $("#bookExcelFile").val("");
+                        layer.close(layer.index);
+                        $(".layui-laypage-btn")[0].click();
+                    }
+                },
+                error:function () {
+                    $("#bookExcelFile").val("");
+                }
+            });
+        });
+       /* $('#submitSpaceBooks').on("click",function () {
             $.ajax({
                 url: '/spacebook/spaceBookAddList.json',
                 data: {},
@@ -519,6 +549,6 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                     spopFail("错误","请检查参数");
                 }
             });
-        })
+        })*/
     }
 });
