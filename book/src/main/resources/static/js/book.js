@@ -123,8 +123,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
     form.render();
 
-    //向世界问个好
-    //layer.msg('Hello World');
+    //封装form数据
     getFormData = function (elem)
     {
         var fieldElem = $(elem).find('input,select,textarea'); //获取所有表单域

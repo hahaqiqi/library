@@ -44,7 +44,7 @@ public class BookController {
     @Resource(name = "bookTypeService")
     private BookTypeService bookTypeService;
 
-    private BookParam filtrateBookParam = null; //筛选条件
+    private BookParam filtrateBookParam = null; //筛选后的结果
 
     @RequestMapping(value = "/book.html")
     public String toBook() {
@@ -84,7 +84,7 @@ public class BookController {
 
     @RequestMapping(value = "/batchUpdate.json", method = RequestMethod.POST)  //修改
     @ResponseBody
-    public JsonData batchUpdateBookType(HttpServletRequest request, BookParam param) {
+    public JsonData batchUpdateBookType(BookParam param) {
         try {
             if (IsEmpty.isAllFieldNull(param)) {
                 return JsonData.fail("无更改");
@@ -92,14 +92,8 @@ public class BookController {
         } catch (Exception e) {
             return JsonData.fail("未知错误");
         }
-        HttpSession session = request.getSession();
         BookParam bookParam = null;
-        try {
-            bookParam = (BookParam) session.getAttribute("bookParam");
-            param.setWhereList(bookParam.getWhereList());
-        } catch (Exception ex) {
-
-        }
+        param.setWhereList(filtrateBookParam.getWhereList());
         bookService.batchUpdate(param);
         return JsonData.success();
     }
@@ -111,35 +105,9 @@ public class BookController {
         return JsonData.success();
     }
 
-    @RequestMapping(value = "/reFiltrate.json", method = RequestMethod.GET)
-    @ResponseBody
-    public JsonData reFiltrate() {
-        filtrateBookParam = null;
-        return JsonData.success();
-    }
-
-    @RequestMapping(value = "/setFiltrate.json", method = RequestMethod.GET)
-    @ResponseBody
-    public JsonData setFiltrate(HttpServletRequest request, BookParam bookParam) {
-        try {
-            if (!IsEmpty.isAllFieldNull(bookParam)) {
-                List<Book> list = bookService.whereListBook(bookParam);
-                List<Integer> listInt = new ArrayList<>();
-                for (Book book : list) {
-                    listInt.add(book.getId());
-                }
-                bookParam.setWhereList(listInt);
-                filtrateBookParam = bookParam;
-            }
-        } catch (Exception e) {
-
-        }
-        return JsonData.success();
-    }
-
     @RequestMapping(value = "/list.json", method = RequestMethod.GET)//查 包括高级查询
     @ResponseBody
-    public JsonData listBookType(HttpServletRequest request, BookParam bookParam) {
+    public JsonData listBookType(BookParam bookParam) {
         List<Book> list = bookService.whereListBook(bookParam);
         List<Integer> listInt = new ArrayList<>();
         for (Book book : list) {
@@ -147,8 +115,9 @@ public class BookController {
         }
         bookParam.setWhereList(listInt);
         int count = bookParam.getWhereList().size();
-        int page = Integer.parseInt(request.getParameter("page"));//第几页
-        int limit = Integer.parseInt(request.getParameter("limit"));//每页显示条数
+        int page = bookParam.getPage();//第几页
+        int limit = bookParam.getLimit();//每页显示条数
+        filtrateBookParam=bookParam;
         List<Book> listBook = bookService.pageListBook(page, limit, bookParam);
         return JsonData.pageSuccess(listBook, count, limit);
     }
