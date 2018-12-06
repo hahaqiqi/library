@@ -41,6 +41,7 @@ public class AdminParam {
     @Length(min = 18,max= 18,message = "管理员身份证号长度应为18")
     private String idCard;
 
+    @NotBlank(message = "管理员备注不能为空")
     @Length(max = 200,message = "管理员备注长度不能超过200")
     private String remark;
 
