@@ -30,8 +30,8 @@ public class SpaceBookController {
     @ResponseBody
     @RequestMapping("/selectBook.json")                         //"1,2,3,4,5"
     public JsonData selectBook(@RequestParam(value = "bookspaceid") String bookspaceid
-        ,HttpServletRequest request){
-        log.info("获取书籍信息",bookspaceid);
+            , HttpServletRequest request) {
+        log.info("获取书籍信息", bookspaceid);
         int page = Integer.parseInt(request.getParameter("page"));//第几页
         int limit = Integer.parseInt(request.getParameter("limit"));//每页显示条数
         List<Integer> list = new ArrayList<>();
@@ -39,21 +39,21 @@ public class SpaceBookController {
         for (int i = 0; i < params.length; i++) {
             list.add(Integer.valueOf(params[i]));
         }
-        int count=spacebookservice.Booklimit(list);
-        BookParam bookParam=new BookParam();
+        int count = spacebookservice.Booklimit(list);
+        BookParam bookParam = new BookParam();
         bookParam.setWhereList(list);
         bookParam.setLimit(limit);
-        bookParam.setPage((page-1)*limit);
-        List<Book> listBook= spacebookservice.selectSpaceBook(bookParam);
-        return JsonData.pageSuccess(listBook,count,limit);
+        bookParam.setPage((page - 1) * limit);
+        List<Book> listBook = spacebookservice.selectSpaceBook(bookParam);
+        return JsonData.pageSuccess(listBook, count, limit);
 
 
     }
 
     @ResponseBody
     @RequestMapping("/spaceBookremove.json")
-    public JsonData remove(@RequestParam(value = "bookId") Integer bookId){
-        spacebookservice.BookSpaceremove(null,bookId);
+    public JsonData remove(@RequestParam(value = "bookId") Integer bookId) {
+        spacebookservice.BookSpaceremove(null, bookId);
         return JsonData.success();
     }
 
@@ -63,8 +63,8 @@ public class SpaceBookController {
             @RequestParam(value = "bookpid") Integer bookpid,
             @RequestParam(value = "bookCode") String bookCode,
             @RequestParam(value = "status") Integer status
-                                 ){
-        spacebookservice.BookSpaceAdd(bookpid,bookCode,status);
+    ) {
+        spacebookservice.BookSpaceAdd(bookpid, bookCode, status);
         return JsonData.success();
     }
 
@@ -73,11 +73,11 @@ public class SpaceBookController {
     public JsonData bookSpaceAddList(
             @RequestParam(value = "status") Integer status,
             @RequestParam(value = "bookspaceid") Integer bookpid,
-            @RequestParam(value = "backImageFile", required = false) MultipartFile file){
+            @RequestParam(value = "backImageFile", required = false) MultipartFile file) {
         /*spacebookservice.BookSpaceAddList();*/
-        List<BookExcel> bookExcels= ExcelUtil.loadBookExcel(file);
+        List<BookExcel> bookExcels = ExcelUtil.loadBookExcel(file);
         //BookExcel转换成list
-        List<Book> spaceBooks=new ArrayList<>(bookExcels.size()-1);
+        List<Book> spaceBooks = new ArrayList<>(bookExcels.size() - 1);
         for (int i = 1; i < bookExcels.size(); i++) {
             try {
                 Book book = new Book();
@@ -90,7 +90,7 @@ public class SpaceBookController {
                 throw new ParamException("加载数据失败");
             }
         }
-        spacebookservice.BookSpaceAddList(status,bookpid,spaceBooks);
+        spacebookservice.BookSpaceAddList(status, bookpid, spaceBooks);
         return JsonData.success();
     }
 }

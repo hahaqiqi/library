@@ -1,89 +1,98 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.november.book.dao.SpaceBookMapper" >
-  <resultMap id="BaseResultMap" type="com.november.book.model.Book" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="book_name" property="bookName" jdbcType="VARCHAR" />
-    <result column="book_code" property="bookCode" jdbcType="VARCHAR" />
-    <result column="author_name" property="authorName" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DOUBLE" />
-    <result column="press_name" property="pressName" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="book_type_id" property="bookTypeId" jdbcType="INTEGER" />
-    <result column="book_lease_id" property="bookLeaseId" jdbcType="INTEGER" />
-    <result column="book_loss_id" property="bookLossId" jdbcType="INTEGER" />
-    <result column="book_lease_type" property="bookLeaseType" jdbcType="INTEGER" />
-    <result column="book_chco_type" property="bookChcoType" jdbcType="INTEGER" />
-    <result column="book_space_id" property="bookSpaceId" jdbcType="INTEGER" />
-    <result column="operator" property="operator" jdbcType="VARCHAR" />
-    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-  </resultMap>
+<mapper namespace="com.november.book.dao.SpaceBookMapper">
+    <resultMap id="BaseResultMap" type="com.november.book.model.Book">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="book_code" property="bookCode" jdbcType="VARCHAR"/>
+        <result column="author_name" property="authorName" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DOUBLE"/>
+        <result column="press_name" property="pressName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="book_type_id" property="bookTypeId" jdbcType="INTEGER"/>
+        <result column="book_lease_id" property="bookLeaseId" jdbcType="INTEGER"/>
+        <result column="book_loss_id" property="bookLossId" jdbcType="INTEGER"/>
+        <result column="book_lease_type" property="bookLeaseType" jdbcType="INTEGER"/>
+        <result column="book_chco_type" property="bookChcoType" jdbcType="INTEGER"/>
+        <result column="book_space_id" property="bookSpaceId" jdbcType="INTEGER"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
 
-  <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
     id, book_name, book_code, author_name, price, press_name,status,book_type_id, book_lease_id,
     book_loss_id, book_lease_type, book_chco_type, book_space_id, operator, operate_time, 
     remark
   </sql>
 
-  <select id="selectSpaceBook" resultMap="BaseResultMap" parameterType="com.november.book.param.BookParam">
-    select * from Book where book_space_id
-    in
-    <foreach collection="whereList" item="id" open="(" separator="," close=")">
-      #{id}
-    </foreach>
-    AND status!=2
-    LIMIT #{page},#{limit}
-  </select>
+    <select id="selectSpaceBook" resultMap="BaseResultMap" parameterType="com.november.book.param.BookParam">
+        select * from Book where book_space_id
+        in
+        <foreach collection="whereList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND status!=2
+        LIMIT #{page},#{limit}
+    </select>
 
-  <select id="Booklimit" resultType="java.lang.Integer" parameterType="java.util.List">
-    select COUNT(1) from Book where book_space_id
-    in
-    <foreach collection="list" item="id" open="(" separator="," close=")">
-      #{id}
-    </foreach>
-    AND status!=2
-  </select>
+    <select id="Booklimit" resultType="java.lang.Integer" parameterType="java.util.List">
+        select COUNT(1) from Book where book_space_id
+        in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND status!=2
+    </select>
 
-  <update id="BookSpaceremove" parameterType="com.november.book.model.Book">
+    <update id="BookSpaceremove" parameterType="com.november.book.model.Book">
     update book set book_space_id=#{bookSpaceId} WHERE id=#{bookId}
   </update>
 
-  <update id="BookSpaceAdd" parameterType="com.november.book.model.Book">
-    update book set book_space_id=#{bookpid},status=#{status}
+    <update id="BookSpaceAdd" parameterType="com.november.book.model.Book">
+    update book
+        <trim prefix="set" suffixOverrides=",">
+            book_space_id=#{bookpid}
+            <if test="status != null and status != '' ">
+                ,status=#{status}
+            </if>
+        </trim>
     WHERE
     book_code=#{bookCode}
   </update>
 
-  <update id="BookSpaceAddList" parameterType="java.util.List">
-      update book
-      <set>
-        book_space_id=#{bookSpase},status=#{status}
-      </set>
-    where  book_code
-    IN
-    <foreach collection="listBook" item="item" open="(" close=")" separator=",">
-       #{item.bookCode}
-    </foreach>
-  </update>
+    <update id="BookSpaceAddList" parameterType="java.util.List">
+        update book
+        <trim prefix="set" suffixOverrides=",">
+            book_space_id=#{bookSpase}
+            <if test="status != null and status != '' ">
+                ,status=#{status}
+            </if>
+        </trim>
+        where book_code
+        IN
+        <foreach collection="listBook" item="item" open="(" close=")" separator=",">
+            #{item.bookCode}
+        </foreach>
+    </update>
 
-  <select id="selectSpaceBookList" resultType="java.lang.Integer" parameterType="java.util.List">
-    select COUNT(1) from book where book_code
-    in
-    <foreach collection="list" item="bookcode" open="(" separator="," close=")">
-      #{bookcode}
-    </foreach>
-  </select>
-<!--book_code,status-->
-  <!--<select id="" resultMap="BaseResultMap" parameterType="com.november.book.model.Book" >
-    select * from book
-    <where >
-    <if test="book_code !=null and book_code !='' ">
-      book_code=#{bookCode}
-    </if>
-      <if test="status !=null and status !='' ">
-        status=#{status}
+    <select id="selectSpaceBookList" resultType="java.lang.Integer" parameterType="java.util.List">
+        select COUNT(1) from book where book_code
+        in
+        <foreach collection="list" item="bookcode" open="(" separator="," close=")">
+            #{bookcode}
+        </foreach>
+    </select>
+    <!--book_code,status-->
+    <!--<select id="" resultMap="BaseResultMap" parameterType="com.november.book.model.Book" >
+      select * from book
+      <where >
+      <if test="book_code !=null and book_code !='' ">
+        book_code=#{bookCode}
       </if>
-    </where>
-  </select>-->
+        <if test="status !=null and status !='' ">
+          status=#{status}
+        </if>
+      </where>
+    </select>-->
 </mapper>

@@ -299,12 +299,12 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                      $("#SpaceAddBook").css("display", "block");
                      layer.open({
                          type: 1,
-                         title:'获取图书',
+                         title:'添加图书到本空间',
                          shade :0.4,
                          closeBtn:0,
                          shadeClose:true,
                          content: $("#SpaceAddBook"),
-                         area: '400px',
+                         area: '600px',
                          cancel:function(){
                              $("#SpaceAddBook").html("");
                          },
@@ -314,8 +314,9 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                      });
                      form.render();
                      break;
-                 /*case 'update':
-                    break;*/
+                 case 'refresh':
+                     $(".layui-laypage-btn")[0].click();
+                    break;
             }
         });
 
@@ -488,9 +489,9 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                 type: 'POST',
                 success: function (result) {
                     if (result.ret) {
-                        $(".layui-laypage-btn")[0].click();
-                        $("#SpaceAddBook").html("");
-                        spopSucess("获取成功");
+                        spopSucess("加载成功");
+                        layer.close(layer.index);
+                        selectBookinSpace(showTitleType,bookspaceid);
                     } else {
                         spopFail("错误",result.msg);
                     }
@@ -501,13 +502,11 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
             });
         })
 
-        //添加多本书籍
-        $('#submitBookExcel').on("click",function () {
+        submitTest=function(){
             $("#bookExcelFile").click();
-        });
-        $('input[name=backImageFile]').change(function () {
-            /*var bookSpaceid=$('input[name=bookspaceid]').val()*/
-            var status = $("input[name='status']:checked").val()
+        }
+        upExcel=function(){
+            var status = $("input[name='status']:checked").val();
             var formData = new FormData($("#spaceBookForm")[0]);
             formData.append("bookspaceid",bookspaceid);
             formData.append("status",status);
@@ -515,6 +514,7 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                 url: '/spacebook/spaceBookAddList.json',
                 type: 'post',
                 data: formData,
+                async:false,
                 processData: false,
                 contentType: false,
                 success: function (result) {
@@ -524,14 +524,14 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                         spopSucess("加载成功");
                         $("#bookExcelFile").val("");
                         layer.close(layer.index);
-                        $(".layui-laypage-btn")[0].click();
+                        selectBookinSpace(showTitleType,bookspaceid)
                     }
                 },
                 error:function () {
                     $("#bookExcelFile").val("");
                 }
             });
-        });
+        };
        /* $('#submitSpaceBooks').on("click",function () {
             $.ajax({
                 url: '/spacebook/spaceBookAddList.json',
