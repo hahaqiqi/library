@@ -54,9 +54,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value="/save.json")
     public JsonData saveByParam(UserParam record){
-
         Integer i=userService.insertSelective(record);
-        System.out.println(i);
         return JsonData.success();
     }
     //分页
@@ -73,9 +71,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value="/update.json",method = RequestMethod.POST)
     public JsonData update(UserParam record){
-
         Integer i=userService.updateByPrimaryKeySelective(record);
-
         return JsonData.success();
     }
     //根据邮箱查用户
@@ -83,6 +79,13 @@ public class UserController {
     @RequestMapping(value="/selectUserByEmail.json")
     public JsonData SelectUserByEmail(String email){
         User user=userService.selectUserByEmail(email);
+        return JsonData.success(user);
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/selectUserById.json")
+    public JsonData SelectUserById(Integer id){
+        User user=userService.selectByPrimaryKey(id);
         return JsonData.success(user);
     }
 
@@ -95,7 +98,7 @@ public class UserController {
         if(userService.selectEmail(userEmail,null)>0){
             throw new ParamException("该邮箱已被注册");
         }
-        String yzm=Email.GetCode(userEmail);
+        String yzm=Email.GetCode(userEmail);//调用发送邮箱返回验证码的方法
         System.out.println(yzm);
         return JsonData.success(yzm);
     }

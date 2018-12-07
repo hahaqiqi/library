@@ -1,9 +1,7 @@
 package com.november.book.service;
 
 import com.november.book.model.Book;
-import com.november.book.model.BookType;
 import com.november.book.param.BookParam;
-import com.november.book.param.BookTypeParam;
 
 import java.util.List;
 
@@ -101,4 +99,6 @@ public interface BookService {
     public String bookState(Integer id);
 
     public int updateBookLeaseIdByBookId(Integer bookId,Integer leaseId);
+
+    Book selectIdByCode(String bookCode);
 }

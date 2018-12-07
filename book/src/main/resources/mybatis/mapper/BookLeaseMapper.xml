@@ -210,4 +210,50 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+    <!--分页 -->
+    <select id="pageListBookLease" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from book_lease LIMIT #{page},#{limit}
+    </select>
+
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.november.book.param.BookLeaseParam">
+        select
+        <include refid="Base_Column_List"/>
+        from book_lease
+        <where>
+            <if test="userId!=null and userId!=''">
+                user_id=#{userId,jdbcType=INTEGER}
+            </if>
+            <if test="bookId!=null and bookId!=''">
+                AND book_id=#{bookId,jdbcType=INTEGER}
+            </if>
+            <if test="starTime!=null">
+                AND date(operate_time) &gt;= date(#{starTime,jdbcType=TIMESTAMP})
+            </if>
+            <if test="endTime!=null">
+                AND date(operate_time) &lt;=date(#{endTime,jdbcType=TIMESTAMP})
+            </if>
+        </where>
+        LIMIT #{page},#{limit}
+    </select>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(*) FROM book_lease
+        <where>
+            <if test="userId!=null and userId!=''">
+                user_id=#{userId,jdbcType=INTEGER}
+            </if>
+            <if test="bookId!=null and bookId!=''">
+                AND book_id=#{bookId,jdbcType=INTEGER}
+            </if>
+            <if test="starTime!=null ">
+                AND date(operate_time) &gt;= date(#{starTime,jdbcType=TIMESTAMP})
+            </if>
+            <if test="endTime!=null ">
+                AND date(operate_time) &lt;=date(#{endTime,jdbcType=TIMESTAMP})
+            </if>
+        </where>
+    </select>
 </mapper>

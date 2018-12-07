@@ -53,7 +53,7 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         if(yzEmail==yzm && yzm!=null){
             yzSubmit=true
             spopSucess("验证成功")
-            $('#userEmail').attr("disabled","true");//验证成功后邮箱不可更改
+            $('#userEmail').attr("readonly","true");//验证成功后邮箱不可更改
         }else{
             spopFail("验证失败");
         }

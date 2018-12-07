@@ -9,7 +9,6 @@ import com.november.book.model.Book;
 import com.november.book.param.BookParam;
 import com.november.book.util.BookCodeUtil;
 import com.november.common.RequestHolder;
-import com.november.exception.ParamException;
 import com.november.util.BeanValidator;
 import org.springframework.stereotype.Service;
 
@@ -199,5 +198,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public int updateBookLeaseIdByBookId(Integer bookId, Integer leaseId) {
         return bookMapper.updateBookLeaseIdByBookId(bookId, leaseId);
+    }
+
+    public Book selectIdByCode(String bookCode){
+        return bookMapper.selectIdByCode(bookCode);
     }
 }
