@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.userCount();
     }
 
-    public User selectUserByEmail(String userEmail) {
+    public User selectUserByEmail(String userEmail) {//邮箱查用户
         BeanValidator.check(userEmail);
         return userMapper.selectUserByEmail(userEmail);
     }
@@ -129,10 +129,10 @@ public class UserServiceImpl implements UserService {
         int score = 0;
         DecimalFormat decimalFormat = new DecimalFormat("######0");
         score = Integer.parseInt(decimalFormat.format(price));
-        if (score <= 0) {
+        if (score <= 0) {//如果积分小于等于0，积分为1
             score = 1;
         }
-        if (score > 10) {
+        if (score > 10) {//积分大于10为10
             score = 10;
         }
         return userMapper.updateScore(id, score);

@@ -8,28 +8,21 @@ import com.november.book.util.IsEmpty;
 import com.november.common.JsonData;
 import com.november.exception.ParamException;
 import com.november.model.BookExcel;
-import com.november.model.ExcelHead;
 import com.november.util.Email;
 import com.november.util.ExcelUtil;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -171,8 +164,8 @@ public class BookController {
     @RequestMapping(value = "/select.json", method = RequestMethod.GET)
     @ResponseBody
     public JsonData selectBookType(Integer id) {
-
-        return JsonData.success();
+        Book book = bookService.byIdBook(id);
+        return JsonData.success(book);
     }
 
 
@@ -298,4 +291,10 @@ public class BookController {
         return JsonData.success(books);
     }
 
+    @RequestMapping(value = "/getIdByCode.json")
+    @ResponseBody
+    public JsonData getIdByCode(String bookCode){
+        Book bookId=bookService.selectIdByCode(bookCode);
+        return JsonData.success(bookId);
+    }
 }

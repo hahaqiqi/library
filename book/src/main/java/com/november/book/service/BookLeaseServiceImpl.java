@@ -79,7 +79,7 @@ public class BookLeaseServiceImpl implements BookLeaseService {
 
     @Override
     public List<BookLease> pageListBookLease(int page, int limit) {
-        return null;
+        return bookLeaseMapper.pageListBookLease((page - 1) * limit, limit);
     }
 
     @Override
@@ -110,10 +110,19 @@ public class BookLeaseServiceImpl implements BookLeaseService {
     @Override
     public List<Integer> selectByUserId(Integer userId) {
         List<BookLease> bookLeases = bookLeaseMapper.selectByUserIding(userId);
-        List<Integer> bookIds=new ArrayList<>();
-        for(BookLease bookLease:bookLeases){
+        List<Integer> bookIds = new ArrayList<>();
+        for (BookLease bookLease : bookLeases) {
             bookIds.add(bookLease.getBookId());
         }
         return bookIds;
+    }
+
+    public List<BookLease> selectByParam(BookLeaseParam param) {//带条件的分页展示
+        param.setPage((param.getPage() - 1) * param.getLimit());
+        return bookLeaseMapper.selectByParam(param);
+    }
+
+    public int getCount(BookLeaseParam param) {//得到行数
+        return bookLeaseMapper.getCount(param);
     }
 }

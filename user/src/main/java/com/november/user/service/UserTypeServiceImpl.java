@@ -81,11 +81,11 @@ public class UserTypeServiceImpl implements UserTypeService {
         return userTypeMapper.updateByPrimaryKey(record);
     }
 
-    public UserType selectUsertypeByScore(Integer score){
+    public UserType selectUsertypeByScore(Integer score){//用户积分得到用户类型
         List<UserType> list= userTypeMapper.selectUsertypeByScore();
         UserType userType=null;
-        for(UserType li:list){
-            if(score>=li.getMinScore()) {
+        for(UserType li:list){//积分降序遍历
+            if(score>=li.getMinScore()) {//若用户积分大于该类型最小积分，则为该类型
                 userType = li;
                 break;
             }

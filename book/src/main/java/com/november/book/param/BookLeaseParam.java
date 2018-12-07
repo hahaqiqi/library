@@ -3,6 +3,7 @@ package com.november.book.param;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -38,4 +39,13 @@ public class BookLeaseParam {
 
     private String remark;
 
+    private Integer page;
+
+    private Integer limit;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date starTime;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endTime;
 }

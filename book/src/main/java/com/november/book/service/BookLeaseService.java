@@ -93,4 +93,7 @@ public interface BookLeaseService {
      */
     List<Integer> selectByUserId(Integer userId);
 
+    List<BookLease> selectByParam(BookLeaseParam param);
+
+    int getCount(BookLeaseParam param);
 }

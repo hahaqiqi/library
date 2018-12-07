@@ -1,12 +1,8 @@
 package com.november.book.controller;
 
-import com.november.book.model.Book;
 import com.november.book.model.BookLease;
-import com.november.book.model.BookType;
 import com.november.book.param.BookLeaseParam;
-import com.november.book.param.BookTypeParam;
 import com.november.book.service.BookLeaseService;
-import com.november.book.service.BookTypeService;
 import com.november.book.util.CalculatePrice;
 import com.november.common.JsonData;
 import org.springframework.stereotype.Controller;
@@ -15,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -56,12 +50,10 @@ public class BookLeaseController {
 
     @RequestMapping(value = "/list.json", method = RequestMethod.GET)
     @ResponseBody
-    public JsonData listBookType(HttpServletRequest request) {
-        int count = 0;
-        int page = Integer.parseInt(request.getParameter("page"));//第几页
-        int limit = Integer.parseInt(request.getParameter("limit"));//每页显示条数
-        List<BookLease> listBookLease = bookLeaseService.pageListBookLease(page, limit);
-        return JsonData.pageSuccess(listBookLease, count, limit);
+    public JsonData listBookType(BookLeaseParam param) {//分页查询bookLease
+        int count=bookLeaseService.getCount(param);
+        List<BookLease> listBookLease = bookLeaseService.selectByParam(param);
+        return JsonData.pageSuccess(listBookLease, count, param.getLimit());
     }
 
     @RequestMapping(value = "/listAll.json", method = RequestMethod.GET)
@@ -119,5 +111,6 @@ public class BookLeaseController {
         List<Integer> list = bookLeaseService.selectByUserId(userId);
         return JsonData.success(list);
     }
+
 
 }
