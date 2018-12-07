@@ -21,10 +21,9 @@ public interface SpaceMapper {
 
     int updateByPrimaryKeySelective(Space record);//修改空间
 
-//    List<Space> selectIdandParentId(@Param("parentid") Integer parentid);
-
     int Movespace(@Param("id") Integer id,@Param("parentId") Integer pid);//移动节点
 
     List<Integer> selectSpaceBook(List<Integer> Spaceid);
+
 
 }

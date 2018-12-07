@@ -25,7 +25,7 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
         elem: '#test-tree-table',
         data: data,
         field: 'spaceName',
-        is_checkbox: true,
+        is_checkbox: false,
         /*icon_val: {
             open: "&#xe619;",
             close: "&#xe61a;"
@@ -42,11 +42,11 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                 title: 'ID',
                 width: '20%'
             },
-            {
+            /*{
                 field: 'parentId',
                 title: '父ID',
                 width: '20%',
-            },
+            },*/
             {
                 field: 'actions',
                 title: '操作',

@@ -84,4 +84,12 @@ public class SpaceController {
         return JsonData.success(listStr);
     }
 
+    @ResponseBody
+    @RequestMapping("/getSpaceidPlace.json")
+    public JsonData getSpaceidPlace(@RequestParam(value = "spaceid") Integer spaceid){
+        //
+        String name= spaceser.showBookspacePlace(spaceid);
+        return JsonData.success(name);
+    }
+
 }
