@@ -162,7 +162,7 @@ new Vue({
                         icon: "&#xe671;",
                         url: "/admin/admin.html"
                     }]
-                },{
+                }/*,{
                     id: "6",
                     title: "日志管理",
                     icon: "&#xe655;",
@@ -173,7 +173,7 @@ new Vue({
                         icon: "&#xe671;",
                         url: "/log/log.html"
                     }]
-                }];
+                }*/];
 
                 menu.push({
                     id: "",

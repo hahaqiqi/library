@@ -280,8 +280,8 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                     ,{field: 'authorName',width:124, title: '作者'}
                     ,{field: 'price',width:115, title: '价格'}
                     ,{field: 'pressName',width:231, title: '出版社'}
-                    ,{field: 'bookTypeId',width:121, title: '书籍类型'}
-                    ,{field: 'bookLeaseType',width:118, title: '书籍租借类型'}
+/*                    ,{field: 'bookTypeId',width:121, title: '书籍类型'}
+                    ,{field: 'bookLeaseType',width:118, title: '书籍租借类型'}*/
                     ,{field: 'bookChcoType',width:88, title: '收费方式',templet:function(obj){if(obj.bookChcoType==0){return '免费'}else{ return '收费' } }}
                     /*,{field: '',width:230, title: '书籍状态'}*/
                     ,{field:'remark',width:135, title: '备注'}
@@ -520,6 +520,7 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                 success: function (result) {
                     if (result.ret == false) {
                         spopFail("加载失败",result.msg);
+                        $("#bookExcelFile").val("");
                     }else {
                         spopSucess("加载成功");
                         $("#bookExcelFile").val("");

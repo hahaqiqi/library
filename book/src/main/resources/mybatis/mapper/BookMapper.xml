@@ -489,7 +489,9 @@
                 AND book_space_id= #{bookSpaceId,jdbcType=INTEGER}
             </if>
         </where>
-
     </select>
 
+    <select id="selectIdByCode" resultMap="BaseResultMap">
+        SELECT * from book WHERE book_code=#{bookCode,jdbcType=VARCHAR}
+    </select>
 </mapper>
