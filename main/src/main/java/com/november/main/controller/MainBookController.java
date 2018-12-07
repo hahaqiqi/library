@@ -67,7 +67,7 @@ public class MainBookController {
         //设置状态为租借完成
         bookLease.setStatus(0);
         //执行修改
-        BookLeaseParam bookLeaseParam=new BookLeaseParam();
+        BookLeaseParam bookLeaseParam = new BookLeaseParam();
         bookLeaseParam.setId(bookLease.getId());
         bookLeaseParam.setBookId(bookLease.getBookId());
         bookLeaseParam.setUserId(bookLease.getUserId());
@@ -87,9 +87,12 @@ public class MainBookController {
     @RequestMapping(value = "/loseBook.json", method = RequestMethod.POST)
     @ResponseBody
     @Transactional
-    public JsonData loseBook(Integer bookId,Double compensatePrice) {
+    public JsonData loseBook(Integer bookId, Double compensatePrice) {
         //根据bookid得到该订单
         BookLease bookLease = bookLeaseService.getBookLeaseOne(bookId);
+        if (compensatePrice < bookLease.getPrice()) {
+            throw new ParamException("书籍续租过，赔付金额必须大于上次租借产生的费用："+bookLease.getPrice());//表示续租过，交付金额必须大于上次租借产生的费用
+        }
         //设置状态为遗失、损坏
         bookLease.setStatus(2);
         //设置收费
@@ -97,7 +100,7 @@ public class MainBookController {
         //删除书籍（实际为修改状态）
         bookService.deleteBook(bookId);
         //创建对象并执行修改
-        BookLeaseParam bookLeaseParam=new BookLeaseParam();
+        BookLeaseParam bookLeaseParam = new BookLeaseParam();
         bookLeaseParam.setId(bookLease.getId());
         bookLeaseParam.setStatus(bookLease.getStatus());
         bookLeaseParam.setPrice(bookLease.getPrice());

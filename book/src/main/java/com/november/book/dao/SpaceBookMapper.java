@@ -18,5 +18,5 @@ public interface SpaceBookMapper {
 
     int BookSpaceAdd(@Param("bookpid")Integer bookpid,@Param("bookCode")String bookCode,@Param("status")Integer status);//添加书籍到空间
 
-    int BookSpaceAddList(List<Book> listBook);//添加一组书籍到空间
+    int BookSpaceAddList(@Param("status")Integer status,@Param("bookSpase") Integer bookSpase,@Param("listBook")List<Book> listBook);//添加一组书籍到空间
 }

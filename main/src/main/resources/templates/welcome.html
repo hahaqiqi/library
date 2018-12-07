@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
+    <script th:src="@{/plugins/layui/layui.js}"></script>
+    <script th:src="@{/plugins/vue/vue.min.js}"></script>
+    <script th:src="@{/js/index.js}"></script>
     <script th:src="@{/layui/layui.js}"></script>
     <title></title>
     <style>
@@ -16,11 +19,11 @@
     <div id="imgDiv" style="margin: 0 auto;width:515px;">
         <div style="width:180px;height:180px;display: inline-block;">
             <font style="font-family:Georgia, serif;width:180px;text-align:center;display:inline-block;position: relative;top:30px">借书/还书</font>
-            <img th:src="@{/images/shu.png}" style="width:180px;float:left;"/>
+            <img id="borrowImg" th:src="@{/images/shu.png}" style="width:180px;float:left;"/>
         </div>
         <div style="width:180px;height:180px;display: inline-block;margin-left:50px">
             <font style="font-family:Georgia, serif;width:180px;text-align:center;display:inline-block;position: relative;top:30px">登记用户</font>
-            <img th:src="@{/images/add.png}" style="width:180px;float:left;"/>
+            <img id="userAddImg" th:src="@{/images/add.png}" style="width:180px;float:left;"/>
         </div>
     </div>
 </div>
@@ -40,7 +43,25 @@
                 $(this).css("margin-top","0px");
                 $(this).prev("font").css("opacity","0");
             }
-        })
+        });
+        $("#borrowImg").on("click",function(event){
+            var options = {
+                id: "31",
+                title: "书籍租借页",
+                icon: "&#xe671;",
+                url: "/book/bookBorrow.html"
+            }
+            window.parent.addTab(options)
+        });
+        $("#userAddImg").on("click",function(event){
+            var options = {
+                url: '/user/tosave.html',
+                icon: '&#xe671;',
+                title: '用户添加页',
+                id: '12'
+            }
+            window.parent.addTab(options)
+        });
     });
 </script>
 </body>

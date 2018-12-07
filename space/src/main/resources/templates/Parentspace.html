@@ -208,39 +208,27 @@
     </script>
 
 <div id="SpaceAddBook" style="display:none;">
-    <form class="layui-form" action="" id="spaceBookForm" METHOD="POST">
-        <input name="bookpid" type="hidden" value=""/>
-        <div class="layui-form-item">
+    <form class="layui-form" action="" id="spaceBookForm" METHOD="POST" enctype="multipart/form-data">
+        <div class="layui-form-item" style="margin-top: 30px">
             <label class="layui-form-label">图书编号</label>
             <div class="layui-input-inline" style="width: 200px;">
                 <input id="bookCodes" type="text" name="bookCode" placeholder="请输入图书编号" autocomplete="off"
                        class="layui-input" value="">
             </div>
+                <button id="submitSpaceBook" type="button" class="layui-btn" lay-submit lay-filter="save">添加单个
+                </button>
+                <input id="bookExcelFile" class="" type="file" name="backImageFile" onchange="upExcel()" style="display: none" />
+                <button type="button" class="layui-btn" onclick="submitTest()">从Excel加载</button>
         </div>
 
         <div class="layui-form-item">
                 <label class="layui-form-label">状态</label>
                 <div class="layui-input-inline" style="width: 260px;">
-                    <!--<input  id="part" type="radio" name="status" value="1" title="正常" checked>-->
-                    <!--<input  id="part" type="radio" name="status" value="0" title="下架">-->
-                    <input name="status" id="status" type="radio" value="1" title="正常"/>
-                    <input name="status" id="status" type="radio" value="0" title="下架"/>
+                    <input name="status"  type="radio" value="1" title="正常"/>
+                    <input name="status"  type="radio" value="0" title="下架"/>
+                    <input name="status"  type="radio" value="" title="不更改" checked/>
                 </div>
          </div>
-
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button id="submitSpaceBook" type="button" class="layui-btn" lay-submit lay-filter="save">立即添加
-                </button>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button id="submitSpaceBooks" type="button" class="layui-btn" lay-submit lay-filter="save">添加书组
-                </button>
-            </div>
-        </div>
 
     </form>
 </div>

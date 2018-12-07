@@ -123,8 +123,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
     form.render();
 
-    //向世界问个好
-    //layer.msg('Hello World');
+    //封装form数据
     getFormData = function (elem)
     {
         var fieldElem = $(elem).find('input,select,textarea'); //获取所有表单域
@@ -349,6 +348,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 //layer.msg("删除"+data.id);
                 //向服务端发送删除指令
                 deleteBookType(data.id);
+                $(".layui-laypage-btn")[0].click();
             });
         } else if(layEvent === 'edit'){
             editObj=data;
