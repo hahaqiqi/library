@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.insert(record);
     }
 
-    public int insertSelective(UserParam param) {
+    public int insertSelective(UserParam param) {//添加
         BeanValidator.check(param);
         User user = User.builder().userBirthday(param.getUserBirthday())
                 .userName(param.getUserName())
@@ -56,15 +56,13 @@ public class UserServiceImpl implements UserService {
             throw new ParamException("该日期在当前时间之后");
         }
 
-        if (RequestHolder.getCurrentAdmin() != null) {
+        if (RequestHolder.getCurrentAdmin() != null) {//调用RequestHolder.getCurrentAdmin()得到创建者
             user.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
         } else {
             user.setOperator("admin");
         }
-        user.setOperateTime(new Date());
+        user.setOperateTime(new Date());//
         user.setStatus(1);
-
-
         return userMapper.insertSelective(user);
     }
 
@@ -72,11 +70,12 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(id);
     }
 
+    //分页
     public List<User> select(int page, int limit) {
         return userMapper.select((page - 1) * limit, limit);
     }
 
-    public int updateByPrimaryKeySelective(UserParam param) {
+    public int updateByPrimaryKeySelective(UserParam param) {//修改
         BeanValidator.check(param);
         User user = User.builder().id(param.getId())
                 .userName(param.getUserName())
@@ -114,13 +113,14 @@ public class UserServiceImpl implements UserService {
 
     public int userCount() {
         return userMapper.userCount();
-    }
+    }//得到总行数
 
     public User selectUserByEmail(String userEmail) {//邮箱查用户
         BeanValidator.check(userEmail);
         return userMapper.selectUserByEmail(userEmail);
     }
 
+    //查邮箱是否相同
     public int selectEmail(String userEmail, Integer id) {
         return userMapper.selectEmail(userEmail, id);
     }

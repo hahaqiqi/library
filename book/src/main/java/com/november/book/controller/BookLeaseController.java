@@ -50,7 +50,7 @@ public class BookLeaseController {
 
     @RequestMapping(value = "/list.json", method = RequestMethod.GET)
     @ResponseBody
-    public JsonData listBookType(BookLeaseParam param) {//分页查询bookLease
+    public JsonData listBookType(BookLeaseParam param) {//分页条件查询bookLease
         int count=bookLeaseService.getCount(param);
         List<BookLease> listBookLease = bookLeaseService.selectByParam(param);
         return JsonData.pageSuccess(listBookLease, count, param.getLimit());
@@ -59,7 +59,6 @@ public class BookLeaseController {
     @RequestMapping(value = "/listAll.json", method = RequestMethod.GET)
     @ResponseBody
     public JsonData listBookTypeAll() {
-
         return JsonData.success();
     }
 
@@ -92,7 +91,6 @@ public class BookLeaseController {
     @RequestMapping(value = "/selectAllByUserId.json", method = RequestMethod.GET)
     @ResponseBody
     public JsonData selectBookLeaseByUserId(Integer id) {
-
         return JsonData.success();
     }
 

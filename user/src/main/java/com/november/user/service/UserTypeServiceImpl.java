@@ -25,7 +25,7 @@ public class UserTypeServiceImpl implements UserTypeService {
         return userTypeMapper.insert(record);
     }
 
-    public int insertSelective(UserTypeParam param){
+    public int insertSelective(UserTypeParam param){//添加
         BeanValidator.check(param);
         UserType userType=UserType.builder()
                 .typeName(param.getTypeName())
@@ -56,7 +56,7 @@ public class UserTypeServiceImpl implements UserTypeService {
         return userTypeMapper.selectByPrimaryKey(id);
     }
 
-    public int updateByPrimaryKeySelective(UserTypeParam param){
+    public int updateByPrimaryKeySelective(UserTypeParam param){//修改
         BeanValidator.check(param);
         UserType userType=UserType.builder()
                 .id(param.getId())
@@ -82,7 +82,7 @@ public class UserTypeServiceImpl implements UserTypeService {
     }
 
     public UserType selectUsertypeByScore(Integer score){//用户积分得到用户类型
-        List<UserType> list= userTypeMapper.selectUsertypeByScore();
+        List<UserType> list= userTypeMapper.selectUsertypeByScore();//调用降序查询userType
         UserType userType=null;
         for(UserType li:list){//积分降序遍历
             if(score>=li.getMinScore()) {//若用户积分大于该类型最小积分，则为该类型
@@ -93,6 +93,7 @@ public class UserTypeServiceImpl implements UserTypeService {
         return userType;
     }
 
+    //降序查询userType
     public List<UserType> selectUsertypeByScore(){
         return userTypeMapper.selectUsertypeByScore();
     }
