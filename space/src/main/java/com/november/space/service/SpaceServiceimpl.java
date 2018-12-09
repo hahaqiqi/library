@@ -151,6 +151,36 @@ public class SpaceServiceimpl implements SpaceService {
         }
         return listId;
     }
+
+    /*
+        根据传过来的ID值查出位置
+     */
+
+
+    public String showBookspacePlace(Integer id){
+        StringBuffer name=new StringBuffer();
+        List<String> listSpace=new ArrayList<>();
+        listSpace = rrr(id,listSpace);
+        for (int i=listSpace.size()-1;i>=0;i--){
+            name.append(listSpace.get(i));
+            if(i>0){
+                name.append("→");
+            }
+        }
+        return name.toString();
+    }
+
+    public List<String> rrr(Integer sapceid,List<String> listsapce){
+        Space space =spacemapper.selectByPrimaryKey(sapceid);
+        if(space !=null){
+            listsapce.add(space.getSpaceName());
+            if(space.getParentId()>0){
+                rrr(space.getParentId(),listsapce);
+            }
+        }
+        return listsapce;
+    }
+
     /*@Override
     public int updateByPrimaryKey(SpaceParam record) {
         return spacemapper.updateByPrimaryKey(record);

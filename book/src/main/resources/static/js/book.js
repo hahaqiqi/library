@@ -151,19 +151,19 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             , cols: [
                 [ //表头
                     {type: 'checkbox', width: 40},
-                    , {field: 'id', width: 60, hide: true, sort: true, title: ""}
-                    , {field: 'bookName', sort: true}
-                    , {field: 'bookCode', hide: true, sort: true}
-                    , {field: 'authorName', sort: true}
-                    , {field: 'price', sort: true}
-                    , {field: 'pressName', sort: true}
+                    , {field: 'id', width: 60, hide: true, sort: true, title: "ID"}
+                    , {field: 'bookName', sort: true, title: "书籍名称"}
+                    , {field: 'bookCode', hide: true, sort: true, title: "书籍编号"}
+                    , {field: 'authorName', sort: true, title: "作者"}
+                    , {field: 'price', sort: true, title: "价格"}
+                    , {field: 'pressName', sort: true, title: "出版社"}
                     , {
-                    field: 'bookTypeId', sort: true, templet: function (bookTypeId) {
+                    field: 'bookTypeId', sort: true, title: "书籍类型", templet: function (bookTypeId) {
                         return getBookType(bookTypeId)
                     }
                 }
                     , {
-                    field: 'bookLeaseId', hide: true, templet: function (obj) {
+                    field: 'bookLeaseId', hide: true, title: "租借状态", templet: function (obj) {
                         if (obj.bookLeaseId == 0 || obj.bookLeaseId == null) {
                             return '未被租借'
                         } else {
@@ -171,9 +171,9 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                         }
                     }
                 }
-                    , {field: 'bookLeaseType', hide: true, sort: true}
+                    , {field: 'bookLeaseType', hide: true, sort: true, title: "租借类型"}
                     , {
-                    field: 'bookChcoType', sort: true, templet: function (obj) {
+                    field: 'bookChcoType', sort: true, title: "收费方式", templet: function (obj) {
                         if (obj.bookChcoType == 0) {
                             return '免费'
                         } else {
@@ -181,15 +181,15 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                         }
                     }
                 }
-                    , {field: 'status', toolbar: '#bookstatus', align: 'center'}
-                    , {field: 'bookSpaceId', sort: true, toolbar: '#bookSpace', hide: true, align: 'center'}
-                    , {field: 'operator', hide: true, sort: true}
+                    , {field: 'status', toolbar: '#bookstatus',width:135, align: 'center', title: "状态"}
+                    , {field: 'bookSpaceId', sort: true, toolbar: '#bookSpace', hide: true, align: 'center', title: "存放位置"}
+                    , {field: 'operator', hide: true, sort: true, title: "创建人"}
                     , {
-                    field: 'operateTime', sort: true, hide: true, align: 'center', templet: function (operateTime) {
+                    field: 'operateTime', sort: true, hide: true, align: 'center', title: "创建时间", templet: function (operateTime) {
                         return createTime(operateTime)
                     }
                 }
-                    , {field: 'remark'}
+                    , {field: 'remark', title: "备注"}
                     , {fixed: 'right', toolbar: '#barDemo', width: 175, align: 'center'}
                 ]
             ],
@@ -274,6 +274,11 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                         $("#filtrate").css("display","none");
                     }
                 });
+            case 'exportTheSelected':
+                if(data.length > 0){
+
+                }
+                break;
 
 
 
@@ -284,7 +289,6 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 }*/
                 form.render();
                 break;
-
         };
     });
 

@@ -20,11 +20,6 @@ public interface SpaceService {
 
     List<Integer> selectSpaceBook(Integer id);//获取书籍信息
 
-//    boolean selectIdandParentId(Integer parentid);
 
-  /*  SpaceParam selectByPrimaryKey(@Param("id") Integer id);
-
-    int updateByPrimaryKeySelective(SpaceParam record);
-
-    int updateByPrimaryKey(SpaceParam record);*/
+    String showBookspacePlace(Integer id);
 }
