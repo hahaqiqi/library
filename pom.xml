@@ -11,7 +11,7 @@
     <modules>
         <module>main</module>
         <module>public</module>
-        <module>demo2</module>
+        <module>log</module>
         <module>user</module>
         <module>admin</module>
         <module>acl</module>
