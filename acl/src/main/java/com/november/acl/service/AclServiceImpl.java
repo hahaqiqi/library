@@ -49,8 +49,8 @@ public class AclServiceImpl implements AclService {
     @Resource
     private ShiroService shiroService;
 
-    @Resource
-    private LogService logService;
+    //@Resource
+    //private LogService logService;
 
     public boolean checkExist(int parentId, String aclName, Integer id) {
         return aclMapper.countByNameAndParentId(parentId, aclName, id) > 0;
@@ -65,8 +65,8 @@ public class AclServiceImpl implements AclService {
             //  删除rid对应拥有的所有权限点
             roleAclMapper.deleteByRoleId(rid);
             //  插入日志
-            logService.saveLog(LogParam.builder().type(LogTypeInt.ROLEACL_TYPE).remark("删除角色分配的权限")
-                    .oldValue(JsonMapper.obj2String(aclIdByRoleId)).targetId(rid).build());
+            //logService.saveLog(LogParam.builder().type(LogTypeInt.ROLEACL_TYPE).remark("删除角色分配的权限")
+            //       .oldValue(JsonMapper.obj2String(aclIdByRoleId)).targetId(rid).build());
             //  终止
             return;
         }
@@ -97,8 +97,8 @@ public class AclServiceImpl implements AclService {
         //  进行权限点赋予前删除当前拥有权限
         roleAclMapper.deleteByRoleId(rid);
         //  插入日志
-        logService.saveLog(LogParam.builder().type(LogTypeInt.ROLEACL_TYPE).remark("删除角色分配的权限")
-                .oldValue(JsonMapper.obj2String(aclIdByRoleId)).targetId(rid).build());
+//        logService.saveLog(LogParam.builder().type(LogTypeInt.ROLEACL_TYPE).remark("删除角色分配的权限")
+//                .oldValue(JsonMapper.obj2String(aclIdByRoleId)).targetId(rid).build());
         //  创建权限点集合
         List<Acl> aclsByOperType = Lists.newArrayList();
         //  循环所有子节点id
@@ -121,8 +121,8 @@ public class AclServiceImpl implements AclService {
             roleAclMapper.batchInsert(aclIds, rid, RequestHolder.getCurrentAdmin().getAdminCode());
         }
         //  插入日志
-        logService.saveLog(LogParam.builder().type(LogTypeInt.ROLEACL_TYPE).remark("分配角色新的权限")
-                .targetId(rid).build());
+        //logService.saveLog(LogParam.builder().type(LogTypeInt.ROLEACL_TYPE).remark("分配角色新的权限")
+        //        .targetId(rid).build());
         //  shiro进行权限赋予更新
         if (ApplicationContextHelper.propBean("shiroFilter", ShiroFilterFactoryBean.class) != null) {
             shiroService.updatePermission((ShiroFilterFactoryBean) ApplicationContextHelper.propBean("shiroFilter", ShiroFilterFactoryBean.class));
@@ -230,7 +230,7 @@ public class AclServiceImpl implements AclService {
             //  根据父id获得操作集合
             List<Acl> aclOperList = aclMapper.getAclsByOperType(Lists.newArrayList(operType.getId()), parentId);
             //  判断是否为空
-            if(CollectionUtils.isEmpty(aclOperList)){
+            if (CollectionUtils.isEmpty(aclOperList)) {
                 //  是空的话跳过
                 continue;
             }

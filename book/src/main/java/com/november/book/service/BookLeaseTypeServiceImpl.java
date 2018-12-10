@@ -6,6 +6,7 @@ import com.google.common.base.Preconditions;
 import com.november.book.dao.BookLeaseTypeMapper;
 import com.november.book.model.BookLeaseType;
 import com.november.book.param.BookLeaseTypeParam;
+import com.november.common.RequestHolder;
 import com.november.exception.ParamException;
 import com.november.util.BeanValidator;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,15 @@ public class BookLeaseTypeServiceImpl implements BookLeaseTypeService {
         if(bookLeaseTypeMapper.selectByTypeName(param)>0){
             throw new ParamException("已经有相同的类型名");
         }
-        BookLeaseType bookLeaseType=BookLeaseType.builder().typeName(param.getTypeName()).discount(param.getDiscount())
-                                        .score(param.getScore()).remark(param.getRemark()).build();
-        bookLeaseType.setOperator("admin");
+        BookLeaseType bookLeaseType=BookLeaseType.builder()
+                .typeName(param.getTypeName())
+                .discount(param.getDiscount())
+                .score(param.getScore())
+                .remark(param.getRemark())
+                .build();
+        if (RequestHolder.getCurrentAdmin() != null) {
+            bookLeaseType.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
+        }
         return bookLeaseTypeMapper.insertSelective(bookLeaseType);
     }
 
@@ -39,10 +46,13 @@ public class BookLeaseTypeServiceImpl implements BookLeaseTypeService {
         if(bookLeaseTypeMapper.selectByTypeName(param)>0){
             throw new ParamException("已经有相同的类型名");
         }
-        BookLeaseType after=BookLeaseType.builder().typeName(param.getTypeName()).discount(param.getDiscount())
-                .score(param.getScore()).remark(param.getRemark()).id(param.getId()).build();
-        after.setOperator("admin");
-        after.setOperateTime(new Date());
+        BookLeaseType after=BookLeaseType.builder()
+                .typeName(param.getTypeName())
+                .discount(param.getDiscount())
+                .score(param.getScore())
+                .remark(param.getRemark())
+                .id(param.getId())
+                .build();
         return bookLeaseTypeMapper.updateByPrimaryKeySelective(after);
     }
 
@@ -71,4 +81,5 @@ public class BookLeaseTypeServiceImpl implements BookLeaseTypeService {
     public BookLeaseType byIdBookLeaseType(Integer id) {
         return bookLeaseTypeMapper.selectByPrimaryKey(id);
     }
+
 }

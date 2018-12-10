@@ -38,8 +38,6 @@ public class BookServiceImpl implements BookService {
                     .price(param.getPrice()).remark(param.getRemark()).build();
             if (RequestHolder.getCurrentAdmin() != null) {
                 book.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
-            } else {
-                book.setOperator("admin");
             }
             //默认未上架
             book.setStatus(0);
@@ -52,22 +50,24 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int updateBook(BookParam param) {
-        param.setCount(1);
+        param.setCount(1);//新增是数量必须大于1 修改时为空，所以在检查前设为1
         BeanValidator.check(param);
         Book before = bookMapper.selectByPrimaryKey(param.getId());
         Preconditions.checkNotNull(before, "修改的内容不存在");
-        Book after = Book.builder().bookChcoType(param.getBookChcoType()).bookCode(param.getBookCode())
-                .bookLeaseId(param.getBookLeaseId()).bookLeaseType(param.getBookLeaseType())
-                .bookLossId(param.getBookLossId()).bookName(param.getBookName())
-                .bookSpaceId(param.getBookSpaceId()).bookTypeId(param.getBookTypeId())
-                .authorName(param.getAuthorName()).pressName(param.getPressName())
-                .price(param.getPrice()).remark(param.getRemark()).id(param.getId()).build();
-        if (RequestHolder.getCurrentAdmin() != null) {
-            after.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
-        } else {
-            after.setOperator("admin");
-        }
-        after.setOperateTime(new Date());
+        Book after = Book.builder()
+                .bookChcoType(param.getBookChcoType())
+                .bookCode(param.getBookCode())
+                .bookLeaseId(param.getBookLeaseId())
+                .bookLeaseType(param.getBookLeaseType())
+                .bookLossId(param.getBookLossId())
+                .bookName(param.getBookName())
+                .bookSpaceId(param.getBookSpaceId())
+                .bookTypeId(param.getBookTypeId())
+                .authorName(param.getAuthorName())
+                .pressName(param.getPressName())
+                .price(param.getPrice())
+                .remark(param.getRemark())
+                .id(param.getId()).build();
         return bookMapper.updateByPrimaryKeySelective(after);
     }
 
@@ -75,11 +75,6 @@ public class BookServiceImpl implements BookService {
     public int deleteBook(Integer id) {
         Book before = bookMapper.selectByPrimaryKey(id);
         Preconditions.checkNotNull(before, "删除的内容不存在");
-
-/*        if (before.getBookLeaseId() != null && before.getBookLeaseId() != 0) {
-            //如果书籍正在被借阅，不允许删除和更改状态
-            throw new ParamException("书籍借阅中,不允许删除");
-        }*/
         if (bookLeaseMapper.selectBookLeaseCountByBookId(id) > 0) {
             //有过订单不能从数据库删除
             //则将book status 改为 2(永久下架)
@@ -203,5 +198,11 @@ public class BookServiceImpl implements BookService {
     //bookCode得到Book
     public Book selectIdByCode(String bookCode){
         return bookMapper.selectIdByCode(bookCode);
+    }
+
+
+    @Override
+    public int updateLeaseTypeIdByBookIds(List<Integer> bookIds, Integer leaseType) {
+        return bookMapper.updateLeaseTypeIdByBookIds(bookIds,leaseType);
     }
 }

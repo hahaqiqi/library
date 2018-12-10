@@ -14,6 +14,14 @@ function spopBatchHint(msg) {
     });
 }
 
+function spopFail(msg) {
+    spop({
+        template:  '<h4 class="spop-title"></h4>'+msg,
+        group: 'submit-status',
+        style: 'error',
+    });
+}
+
 function spopFail(msg,msgError) {
     spop({
         template:  '<h4 class="spop-title">'+msg+'</h4>'+msgError,

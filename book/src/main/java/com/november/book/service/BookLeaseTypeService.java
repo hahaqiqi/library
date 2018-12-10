@@ -52,5 +52,4 @@ public interface BookLeaseTypeService {
      * @return
      */
     public BookLeaseType byIdBookLeaseType(Integer id);
-
 }

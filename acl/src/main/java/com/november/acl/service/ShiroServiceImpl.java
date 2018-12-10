@@ -43,42 +43,43 @@ public class ShiroServiceImpl implements ShiroService {
 //            String[] uriArr;
             for (Acl acl : acls) {
                 List<Integer> roleIds = roleAclMapper.getRoleIdByAclId(acl.getId());
-                if(CollectionUtils.isEmpty(roleIds)){
+                if (CollectionUtils.isEmpty(roleIds)) {
                     continue;
                 }
                 List<Role> roles = roleMapper.getByIdList(roleIds);
-                if(CollectionUtils.isEmpty(roles)){
+                if (CollectionUtils.isEmpty(roles)) {
                     continue;
                 }
-                List<String> rolesName =  roles.stream().map(r -> r.getRoleName() ).collect(Collectors.toList());
+                List<String> rolesName = roles.stream().map(r -> r.getRoleName()).collect(Collectors.toList());
                 StringBuffer sbf = new StringBuffer();
                 for (int i = 0; i < rolesName.size(); i++) {
                     sbf.append(rolesName.get(i));
-                    if(i != (rolesName.size()-1)){
+                    if (i != (rolesName.size() - 1)) {
                         sbf.append(',');
                     }
                 }
-                filterChainDefinitionMap.put(acl.getUrl(),"authc,roles["+ sbf.toString() +"]");
+                filterChainDefinitionMap.put(acl.getUrl(), "authc,roles[" + sbf.toString() + "]");
             }
         }
-        filterChainDefinitionMap.put("/logout.html","logout");
+        filterChainDefinitionMap.put("/logout.html", "logout");
         // 设置登录的请求
-        filterChainDefinitionMap.put("/login.json","anon");
+        filterChainDefinitionMap.put("/login.json", "anon");
         // 设置静态资源可访问
-        filterChainDefinitionMap.put("/css/**","anon");
-        filterChainDefinitionMap.put("/extends/**","anon");
-        filterChainDefinitionMap.put("/images/**","anon");
-        filterChainDefinitionMap.put("/js/**","anon");
-        filterChainDefinitionMap.put("/layui/**","anon");
-        filterChainDefinitionMap.put("/plugins/**","anon");
-        filterChainDefinitionMap.put("/spop-0.1.3/**","anon");
-        filterChainDefinitionMap.put("/css/**","anon");
-        filterChainDefinitionMap.put("/**","authc");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/extends/**", "anon");
+        filterChainDefinitionMap.put("/images/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/layui/**", "anon");
+        filterChainDefinitionMap.put("/plugins/**", "anon");
+        filterChainDefinitionMap.put("/spop-0.1.3/**", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/**", "authc");
         return filterChainDefinitionMap;
     }
 
     /**
      * 在对角色进行增删改操作时，需要调用此方法进行动态刷新
+     *
      * @param shiroFilterFactoryBean
      */
     @Override

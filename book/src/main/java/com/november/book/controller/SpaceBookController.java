@@ -27,6 +27,8 @@ public class SpaceBookController {
     @Resource(name = "spacebookService")
     private SpaceBookService spacebookservice;
 
+    List<Book> updateBook = null;
+
     @ResponseBody
     @RequestMapping("/selectBook.json")                         //"1,2,3,4,5"
     public JsonData selectBook(@RequestParam(value = "bookspaceid") String bookspaceid
@@ -55,9 +57,19 @@ public class SpaceBookController {
         bookParam.setPage((page - 1) * limit);
         //创建对象集合接收selectSpaceBook方法
         List<Book> listBook = spacebookservice.selectSpaceBook(bookParam);
+        //设置需要修改的List<Book>
+        updateBook = listBook;
         return JsonData.pageSuccess(listBook, count, limit);
+    }
 
-
+    @ResponseBody
+    @RequestMapping("/getUpdateBook.json")
+    public JsonData getUpdateBook() {
+        StringBuffer bookIds=new StringBuffer();
+        for (Book book : updateBook) {
+            bookIds.append(book.getId()+",");
+        }
+        return JsonData.success(bookIds);
     }
 
     /*
@@ -70,6 +82,7 @@ public class SpaceBookController {
         spacebookservice.BookSpaceremove(null, bookId);
         return JsonData.success();
     }
+
     /*
         空间书籍添加
      */
@@ -104,10 +117,10 @@ public class SpaceBookController {
                 book.setBookCode(bookExcels.get(i).getBookCode());
                 book.setBookSpaceId(bookpid);
                 spaceBooks.add(book);
-             //NumberFormatException异常
+                //NumberFormatException异常
             } catch (NumberFormatException e) {
                 throw new ParamException("错误，请检查Excel的第" + (i + 1) + "行数据");
-             //  Exception 异常
+                //  Exception 异常
             } catch (Exception e) {
                 throw new ParamException("加载数据失败");
             }

@@ -34,8 +34,6 @@ public class BookLeaseServiceImpl implements BookLeaseService {
                 .serialNumber(SerialNumberUtil.getCerialNumber()).build();
         if (RequestHolder.getCurrentAdmin() != null) {
             bookLease.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
-        } else {
-            bookLease.setOperator("admin");
         }
         bookLeaseMapper.insertSelective(bookLease);
         return bookLease.getId();
@@ -51,9 +49,8 @@ public class BookLeaseServiceImpl implements BookLeaseService {
                 .status(param.getStatus())
                 .id(param.getId())
                 .price(param.getPrice())
-                .remark(param.getRemark()).build();
-        bookLease.setFinalOperator("admin");
-        bookLease.setFinalOperateTime(new Date());
+                .remark(param.getRemark())
+                .build();
         return bookLeaseMapper.updateByPrimaryKeySelective(bookLease);
     }
 

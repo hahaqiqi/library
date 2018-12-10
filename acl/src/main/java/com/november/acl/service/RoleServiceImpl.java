@@ -39,8 +39,8 @@ public class RoleServiceImpl implements RoleService {
     @Resource
     private RoleAclMapper roleAclMapper;
 
-    @Resource
-    private LogService logService;
+    // @Resource
+    //private LogService logService;
 
     @Resource(name = "aclRedisDao")
     private RedisDao redisDao;
@@ -62,10 +62,10 @@ public class RoleServiceImpl implements RoleService {
         //  插入数据库
         roleMapper.insertSelective(role);
         //  删除缓存的键
-        redisDao.delKey(CacheType.LIST_PREFIX+"role");
+        redisDao.delKey(CacheType.LIST_PREFIX + "role");
         //  添加入日志
-        logService.saveLog(LogParam.builder().type(LogTypeInt.ROLE_TYPE).targetId(role.getId())
-                .remark("添加角色").newValue(JsonMapper.obj2String(role)).build());
+        // logService.saveLog(LogParam.builder().type(LogTypeInt.ROLE_TYPE).targetId(role.getId())
+        //       .remark("添加角色").newValue(JsonMapper.obj2String(role)).build());
     }
 
     @Transactional
@@ -90,10 +90,10 @@ public class RoleServiceImpl implements RoleService {
         //  更新到数据库
         roleMapper.updateByPrimaryKeySelective(after);
         //  删除缓存的键
-        redisDao.delKey(CacheType.LIST_PREFIX+"role");
+        redisDao.delKey(CacheType.LIST_PREFIX + "role");
         //  添加入日志
-        logService.saveLog(LogParam.builder().type(LogTypeInt.ROLE_TYPE).targetId(param.getId())
-                .remark("修改角色").oldValue(JsonMapper.obj2String(before)).newValue(JsonMapper.obj2String(after)).build());
+        //logService.saveLog(LogParam.builder().type(LogTypeInt.ROLE_TYPE).targetId(param.getId())
+        //      .remark("修改角色").oldValue(JsonMapper.obj2String(before)).newValue(JsonMapper.obj2String(after)).build());
     }
 
     @Override
@@ -104,7 +104,7 @@ public class RoleServiceImpl implements RoleService {
         //  根据当前角色id获得已分配的管理员
         List<Integer> adminIdsByRoleId = roleAdminMapper.getAdminIdsByRoleId(id);
         //  判断是否不为空
-        if(CollectionUtils.isNotEmpty(adminIdsByRoleId)){
+        if (CollectionUtils.isNotEmpty(adminIdsByRoleId)) {
             //  如果不为空抛出异常说明
             throw new ParamException("该角色下还有管理员");
         }
@@ -119,21 +119,21 @@ public class RoleServiceImpl implements RoleService {
         //  删除分配的权限
         roleAclMapper.deleteByRoleId(id);
         //  删除缓存的键
-        redisDao.delKey(CacheType.LIST_PREFIX+"role");
+        redisDao.delKey(CacheType.LIST_PREFIX + "role");
         //  添加入日志
-        logService.saveLog(LogParam.builder().type(LogTypeInt.ROLE_TYPE).targetId(id)
-                .remark("删除角色").oldValue(JsonMapper.obj2String(role)).build());
-        if(CollectionUtils.isNotEmpty(aclIdByRoleId)){
+        //logService.saveLog(LogParam.builder().type(LogTypeInt.ROLE_TYPE).targetId(id)
+        //        .remark("删除角色").oldValue(JsonMapper.obj2String(role)).build());
+        if (CollectionUtils.isNotEmpty(aclIdByRoleId)) {
             //  添加入日志
-            logService.saveLog(LogParam.builder().type(LogTypeInt.ROLEACL_TYPE).targetId(id)
-                    .remark("删除角色分配的权限").oldValue(JsonMapper.obj2String(aclIdByRoleId)).build());
+            // logService.saveLog(LogParam.builder().type(LogTypeInt.ROLEACL_TYPE).targetId(id)
+            //     .remark("删除角色分配的权限").oldValue(JsonMapper.obj2String(aclIdByRoleId)).build());
         }
     }
 
     @Override
     public List<Role> getByIds(List<Integer> ids) {
         //  判断是否为空
-        if(CollectionUtils.isEmpty(ids)){
+        if (CollectionUtils.isEmpty(ids)) {
             return Lists.newArrayList();
         }
         List<Role> roles = roleMapper.getByIdList(ids);
@@ -144,18 +144,18 @@ public class RoleServiceImpl implements RoleService {
         //  从redis中取值
         String value = redisDao.getValue(CacheType.LIST_PREFIX + "role");
         //  判断是否有值
-        if(StringUtils.isBlank(value)){
+        if (StringUtils.isBlank(value)) {
             //  从数据库中取值
             List<Role> all = roleMapper.getAll();
             //  判断数据库中取的值是否为空
-            if(CollectionUtils.isEmpty(all)){
+            if (CollectionUtils.isEmpty(all)) {
                 //  是则返回新集合
                 return Lists.newArrayList();
             }
             //  转化为字符串
             String sValue = JsonMapper.obj2String(all);
             //  存值至10分钟
-            redisDao.setExKey(CacheType.LIST_PREFIX+"role",sValue,10,TimeUnit.MINUTES);
+            redisDao.setExKey(CacheType.LIST_PREFIX + "role", sValue, 10, TimeUnit.MINUTES);
             //  返回数据库取的值
             return all;
         }

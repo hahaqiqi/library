@@ -1,6 +1,6 @@
 //处理日期格式
 function createTime(v) {
-    var date = new Date(v.operateTime);
+    var date = new Date(v);
     var y = date.getFullYear();
     var m = date.getMonth() + 1;
     m = m < 10 ? '0' + m : m;
@@ -69,7 +69,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery','lay
                     //layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
                     editObj=checkStatus.data[0];
                     var viewdata = { //数据
-                        "adminCode":data.adminCode
+                        "adminCode":data[0].adminCode
                         ,"id":data[0].id
                         ,"adminPwd":data[0].adminPwd
                         ,"adminName":data[0].adminName

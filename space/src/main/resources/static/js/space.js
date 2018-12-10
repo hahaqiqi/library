@@ -16,6 +16,8 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
         success: function (result) {
             if (result.ret) {
                 data=result.data;
+            }else{
+                spopFail("错误",result.msg);
             }
         },
     });
@@ -112,7 +114,6 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
     })
     //查询书籍
     treetable.on('treetable(sel)',function(data){
-        console.dir(data);
         bookspaceid=data.item.id
             $.ajax({
                 url: '/space/spacelist.json',
@@ -276,6 +277,7 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
             ,cols: [
                 [ //表头
                     {type: 'checkbox', fixed: 'left'}
+                    ,{field: 'id', title: 'ID',hide:true}
                     ,{field: 'bookName',width:161, title: '书籍名称'}
                     ,{field: 'authorName',width:124, title: '作者'}
                     ,{field: 'price',width:115, title: '价格'}
@@ -306,7 +308,7 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                          content: $("#SpaceAddBook"),
                          area: '600px',
                          cancel:function(){
-                             $("#SpaceAddBook").html("");
+                             $("#SpaceAddBook").css("display","none");
                          },
                          end:function () {
                              $("#SpaceAddBook").css("display","none");
@@ -316,6 +318,101 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                      break;
                  case 'refresh':
                      $(".layui-laypage-btn")[0].click();
+                    break;
+                case 'exportTheSelected':
+                    if (data.length > 0) {
+                        var batchStrId = "";
+                        for (var c = 0; c < data.length; c++) {
+                            if (c == 0) {
+                                batchStrId = checkStatus.data[c].id;
+                                continue;
+                            }
+                            batchStrId = batchStrId + "," + checkStatus.data[c].id;
+                        }
+                        window.open("/book/downloadBookExcelSelect.json?searchVal=" + batchStrId);
+                    }else{
+                        layer.msg('无选中数据');
+                    }
+                    break;
+                case "settingLeaseType":
+                    layer.open({
+                        type: 1,
+                        title:'设置租借类型',
+                        shade :0.4,
+                        shadeClose:true,
+                        content: $("#settingLeaseType"),
+                        area: ['500px', '300px'],
+                        success:function () {
+                            $("#settingLeaseType").css("display","block");
+                            //得到所有租借规则
+                            $.ajax({
+                                url: '/bookLeaseType/listAll.json',
+                                async: false,
+                                type: 'GET',
+                                success: function (result) {
+                                    $("#updateBookLeaseType").empty();
+                                    if (result.ret == true) {
+                                        $("#updateBookLeaseType").append("<option value=''>设为空</option>");
+                                        if (result.data.length <= 0) {
+                                            $("#updateBookLeaseType").append("<option value=''>无</option>");
+                                        } else {
+                                            for (var i = 0; i < result.data.length; i++) {
+                                                $("#updateBookLeaseType").append("<option value=" + result.data[i].id + ">" + result.data[i].typeName + "</option>");
+                                            }
+                                        }
+                                    } else {
+                                        $("#updateBookLeaseType").append("<option value='null'>加载失败</option>");
+                                    }
+                                },
+                                error: function () {
+                                    $(".bookType").append("<option value='null'>接口异常</option>");
+                                }
+                            });
+                            updateLeaseType=function () {
+                                var bookIds;
+                                //先得到要更改的书籍id
+                                $.ajax({
+                                    url: '/spacebook/getUpdateBook.json',
+                                    type: 'GET',
+                                    async:false,
+                                    success: function (result) {
+                                        if (result.ret) {
+                                            bookIds=result.data;
+                                        } else {
+                                            spopFail("获取修改书籍信息错误", result.msg);
+                                        }
+                                    },
+                                    error: function () {
+                                        spopFail("获取修改书籍信息错误", "");
+                                    }
+                                });
+
+                                $.ajax({
+                                    url: '/book/updateLeaseTypeIdByBookIds.json',
+                                    data: {"bookIds":bookIds,"leaseType":$("#updateBookLeaseType").val()},
+                                    type: 'POST',
+                                    success: function (result) {
+                                        if (result.ret) {
+                                            spopSucess("修改成功");
+                                            layer.close(layer.index);
+                                        } else {
+                                            spopFail("错误", result.msg);
+                                        }
+                                    },
+                                    error: function () {
+                                        spopFail("错误", "请检查参数");
+                                    }
+                                });
+                            }
+                            form.render();
+                        },
+                        cancel:function(){
+                            $("#settingLeaseType").css("display","none");
+                        },
+                        end:function () {
+                            $("#settingLeaseType").css("display","none");
+                        }
+                    });
                     break;
             }
         });
@@ -361,8 +458,6 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                     ,"submitType":1
                 }
                 showBookTypeInfo("编辑",viewdata);
-            }else if(layEvent === 'browse'){//查看书籍存放地点
-                alert("browse");
             }else if(layEvent === 'changeStatus'){//下架书籍或恢复书籍
                 $.ajax({
                     url: '/book/changeBookStatus.json',

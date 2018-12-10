@@ -101,4 +101,12 @@ public interface BookService {
     public int updateBookLeaseIdByBookId(Integer bookId,Integer leaseId);
 
     Book selectIdByCode(String bookCode);
+
+    /**
+     * 批量修改书籍的租借类型
+     * @param bookIds
+     * @param leaseType
+     * @return
+     */
+    public int updateLeaseTypeIdByBookIds(List<Integer> bookIds, Integer leaseType);
 }

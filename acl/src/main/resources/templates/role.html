@@ -56,10 +56,17 @@
                             <div class="layui-form-item" id="role-oper">
                                 <div class="layui-form-label">快捷操作</div>
                                 <div class="layui-form-block">
-                                    <button type="button" class="layui-btn layui-btn-primary" id="checkAllBtn">全选</button>
-                                    <button type="button" class="layui-btn layui-btn-primary" id="uncheckAllBtn" onclick="uncheckAll('#LAY-auth-tree-index')">全不选</button>
-                                    <button type="button" class="layui-btn layui-btn-primary" id="showAllBtn" onclick="showAll('#LAY-auth-tree-index')">全部展开</button>
-                                    <button type="button" class="layui-btn layui-btn-primary" id="closeAllBtn" onclick="closeAll('#LAY-auth-tree-index')">全部隐藏</button>
+                                    <button type="button" class="layui-btn layui-btn-primary" id="checkAllBtn">全选
+                                    </button>
+                                    <button type="button" class="layui-btn layui-btn-primary" id="uncheckAllBtn"
+                                            onclick="uncheckAll('#LAY-auth-tree-index')">全不选
+                                    </button>
+                                    <button type="button" class="layui-btn layui-btn-primary" id="showAllBtn"
+                                            onclick="showAll('#LAY-auth-tree-index')">全部展开
+                                    </button>
+                                    <button type="button" class="layui-btn layui-btn-primary" id="closeAllBtn"
+                                            onclick="closeAll('#LAY-auth-tree-index')">全部隐藏
+                                    </button>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -70,7 +77,9 @@
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
-                                    <button class="layui-btn" type="submit" lay-submit lay-filter="LAY-auth-tree-submit">提交</button>
+                                    <button class="layui-btn" type="submit" lay-submit
+                                            lay-filter="LAY-auth-tree-submit">提交
+                                    </button>
                                     <button class="layui-btn layui-btn-primary" type="reset">重置</button>
                                 </div>
                             </div>
@@ -106,7 +115,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">角色姓名</label>
             <div class="layui-input-inline">
-                <input type="text" name="roleName" placeholder="请输入角色姓名" value="{{ d.roleName || '' }}" autocomplete="off" class="layui-input">
+                <input type="text" name="roleName" placeholder="请输入角色姓名" value="{{ d.roleName || '' }}"
+                       autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
@@ -136,7 +146,7 @@
         formSelects: 'formSelects-v4'
     });
 
-    layui.use(['authtree', 'form', 'layer','laytpl','formSelects'], function(){
+    layui.use(['authtree', 'form', 'layer', 'laytpl', 'formSelects'], function () {
         var form = layui.form
             , layer = layui.layer
             , laytpl = layui.laytpl
@@ -163,7 +173,7 @@
             loadRoleList();
 
             //  初始化方法
-            function initParam(){
+            function initParam() {
                 $("#roleDiv").html("");
                 lastRid = -1;
                 layui.formSelects.data('admin-select', 'local', {
@@ -186,11 +196,11 @@
                                 for (var i in roleList) {
                                     roleMap[roleList[i].id] = roleList[i];
                                     var data = {
-                                        "id":roleList[i].id
-                                        ,"roleName":roleList[i].roleName
+                                        "id": roleList[i].id
+                                        , "roleName": roleList[i].roleName
                                     };
                                     var getTpl = $("#roleDivTemp").html();
-                                    laytpl(getTpl).render(data,function(html){
+                                    laytpl(getTpl).render(data, function (html) {
                                         $("#roleDiv").append(html);
                                     });
                                 }
@@ -206,25 +216,46 @@
                 });
             }
 
+            //处理日期格式
+            function createTime(v) {
+                var date = new Date(v);
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                m = m < 10 ? '0' + m : m;
+                var d = date.getDate();
+                var h = date.getHours();
+                d = d < 10 ? ("0" + d) : d;
+                h = h < 10 ? ("0" + h) : h;
+                var M = date.getMinutes();
+                M = M < 10 ? ("0" + M) : M;
+                var s = date.getSeconds(); //秒
+                var str = y + "-" + m + "-" + d + " " + h + ":" + M + ":" + s;
+                return str;
+            }
+
             //  加载管理员集合
-            function loadAdminList(){
+            function loadAdminList() {
                 $.ajax({
-                    url : '/admin/list.json',
-                    success:function(result){
-                        if(result.ret){
+                    url: '/admin/list.json',
+                    success: function (result) {
+                        if (result.ret) {
+                            for (var i = 0; i < result.data.length; i++) {
+                                result.data[i].birthday = createTime(result.data[i].birthday);
+                                result.data[i].operateTime = createTime(result.data[i].operateTime);
+                            }
                             $.ajax({
-                                url : "/role/packAdminList.json",
-                                data : {
-                                    "str" : JSON.stringify(result.data),
-                                    "rid" : lastRid
+                                url: "/role/packAdminList.json",
+                                data: {
+                                    "str": JSON.stringify(result.data),
+                                    "rid": lastRid
                                 },
-                                success:function(re){
+                                success: function (re) {
                                     layui.formSelects.data('admin-select', 'local', {
                                         arr: re.data
                                     });
                                 }
                             });
-                        }else{
+                        } else {
                             spop({
                                 template: '<h4 class="spop-title">加载管理员</h4>' + result.msg,
                                 group: 'submit-status',
@@ -235,27 +266,27 @@
                 });
             }
 
-            function loadClickDivCss(){
-                if(lastRid != -1){
-                    var $div = $(".role-div[data-id="+lastRid+"]");
-                    $div.css("background-color","#FFB800");
-                    $div.siblings().css("background-color","#5FB878");
+            function loadClickDivCss() {
+                if (lastRid != -1) {
+                    var $div = $(".role-div[data-id=" + lastRid + "]");
+                    $div.css("background-color", "#FFB800");
+                    $div.siblings().css("background-color", "#5FB878");
                 }
             }
 
             //  加载每个角色拥有的权限
-            $(document).on('click', '.role-div', function(e) {
+            $(document).on('click', '.role-div', function (e) {
                 var id = $(this).attr("data-id");
                 lastRid = id;
                 loadAdminList();
                 loadClickDivCss();
                 $.ajax({
-                    url : '/acl/tree.json',
+                    url: '/acl/tree.json',
                     data: {
-                        "rid" : id
+                        "rid": id
                     },
-                    success: function(result){
-                        if(result.ret){
+                    success: function (result) {
+                        if (result.ret) {
                             //  TODO
                             var trees = result.data;
                             // 如果后台返回的不是树结构，请使用 authtree.listConvert 转换
@@ -267,7 +298,7 @@
                                 openall: true
                             });
                             $("#role-oper").show("fast");
-                        }else{
+                        } else {
                             spop({
                                 template: '<h4 class="spop-title">加载权限点</h4>' + result.msg,
                                 group: 'submit-status',
@@ -281,11 +312,11 @@
             //  角色添加
             $("#role-add").click(function () {
                 var data = {
-                    "isCreate" : true
+                    "isCreate": true
                 };
                 var getTpl = $("#roleFormTemp").html()
-                    ,view = $("#view");
-                laytpl(getTpl).render(data,function(html){
+                    , view = $("#view");
+                laytpl(getTpl).render(data, function (html) {
                     view.html(html);
                 });
                 currentOpen = layer.open({
@@ -293,7 +324,7 @@
                     type: 1,
                     content: $("#view"),
                     shade: 0,
-                    cancel: function(){
+                    cancel: function () {
                         closeOpen();
                     }
                 });
@@ -301,20 +332,20 @@
             });
 
             //  角色修改
-            $(document).on('click', '.role-edit', function(e) {
+            $(document).on('click', '.role-edit', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var id = $(this).parent().parent().parent().attr("data-id");
                 var role = roleMap[id];
                 var data = {
-                    "id":role.id
-                    ,"roleName":role.roleName
-                    ,"remark" : role.remark
-                    ,"isCreate" : false
+                    "id": role.id
+                    , "roleName": role.roleName
+                    , "remark": role.remark
+                    , "isCreate": false
                 };
                 var getTpl = $("#roleFormTemp").html()
-                    ,view = $("#view");
-                laytpl(getTpl).render(data,function(html){
+                    , view = $("#view");
+                laytpl(getTpl).render(data, function (html) {
                     view.html(html);
                 });
                 currentOpen = layer.open({
@@ -322,7 +353,7 @@
                     type: 1,
                     content: $("#view"),
                     shade: 0,
-                    cancel: function(){
+                    cancel: function () {
                         closeOpen();
                     }
                 });
@@ -330,30 +361,30 @@
             });
 
             //  角色删除
-            $(document).on('click', '.role-delete', function(e) {
+            $(document).on('click', '.role-delete', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var id = $(this).parent().parent().parent().attr("data-id");
                 var name = $(this).parent().parent().parent().attr("data-name");
-                layer.confirm('是否删除角色['+name+']', function(index){
+                layer.confirm('是否删除角色[' + name + ']', function (index) {
                     $.ajax({
-                        url : "/role/delete.json",
+                        url: "/role/delete.json",
                         type: 'POST',
                         data: {
-                            "id" : id
+                            "id": id
                         },
-                        success: function(result){
-                            if(result.ret){
+                        success: function (result) {
+                            if (result.ret) {
                                 spop({
-                                    template: '<h4 class="spop-title">删除角色</h4>角色['+name+']删除成功' ,
+                                    template: '<h4 class="spop-title">删除角色</h4>角色[' + name + ']删除成功',
                                     group: 'submit-status',
                                     style: 'success',
                                     autoclose: 3000
                                 });
                                 loadRoleList();
-                            }else{
+                            } else {
                                 spop({
-                                    template: '<h4 class="spop-title">删除角色</h4>角色['+name+']删除失败,'+result.msg ,
+                                    template: '<h4 class="spop-title">删除角色</h4>角色[' + name + ']删除失败,' + result.msg,
                                     group: 'submit-status',
                                     style: 'error'
                                 });
@@ -366,7 +397,7 @@
             });
 
             //  角色添加和修改的提交
-            $(document).on('click', '#submitRole', function() {
+            $(document).on('click', '#submitRole', function () {
                 $.ajax({
                     url: isCreate ? '/role/save.json' : '/role/update.json',
                     data: $("#roleForm").serializeArray(),
@@ -393,8 +424,8 @@
             });
 
             //  关闭添加和修改弹出层
-            function closeOpen(){
-                if(currentOpen){
+            function closeOpen() {
+                if (currentOpen) {
                     $("#view").html("");
                     layer.close(currentOpen);
                     currentOpen = undefined;
@@ -402,8 +433,8 @@
             }
 
             //  角色权限赋予提交
-            form.on('submit(LAY-auth-tree-submit)', function(obj){
-                if(lastRid == -1){
+            form.on('submit(LAY-auth-tree-submit)', function (obj) {
+                if (lastRid == -1) {
                     spop({
                         template: "请先在左侧选择角色",
                         group: 'submit-status',
@@ -419,20 +450,20 @@
                     url: '/acl/changeAcl.json',
                     dataType: 'json',
                     data: {
-                        "idStr" : authids+"",
-                        "rid" : lastRid
+                        "idStr": authids + "",
+                        "rid": lastRid
                     },
-                    success: function(result){
-                        if(result.ret){
+                    success: function (result) {
+                        if (result.ret) {
                             spop({
                                 template: "修改权限成功",
                                 style: 'success',
                                 autoclose: 3000
                             });
-                        }else{
+                        } else {
                             flag = false;
                             spop({
-                                template: "<h4>赋予权限失败</h4>"+result.msg,
+                                template: "<h4>赋予权限失败</h4>" + result.msg,
                                 style: 'error',
                                 autoclose: 3000
                             });
@@ -440,41 +471,41 @@
                     }
                 });
                 $.ajax({
-                    url : '/role/changeAdmin.json',
+                    url: '/role/changeAdmin.json',
                     data: {
-                        "rid" : lastRid,
-                        "idStr" : adminId+""
+                        "rid": lastRid,
+                        "idStr": adminId + ""
                     },
-                    success: function(result){
-                        if(result.ret){
+                    success: function (result) {
+                        if (result.ret) {
                             spop({
                                 template: "赋予权限成功",
                                 style: 'success',
                                 autoclose: 3000
                             });
                             loadRoleList();
-                        }else{
+                        } else {
                             flag = false;
                             spop({
-                                template: "<h4>赋予权限失败</h4>"+result.msg,
+                                template: "<h4>赋予权限失败</h4>" + result.msg,
                                 style: 'error',
                                 autoclose: 3000
                             });
                         }
                     }
                 });
-                if(flag){
+                if (flag) {
                     loadRoleList();
                 }
                 return false;
             });
 
             //  全选按钮
-            $("#checkAllBtn").click(function(){
+            $("#checkAllBtn").click(function () {
                 authtree.checkAll("#LAY-auth-tree-index");
             });
 
-            $("#uncheckAllBtn").click(function(){
+            $("#uncheckAllBtn").click(function () {
                 authtree.uncheckAll("#LAY-auth-tree-index");
             });
             $("#showAllBtn").click(function () {

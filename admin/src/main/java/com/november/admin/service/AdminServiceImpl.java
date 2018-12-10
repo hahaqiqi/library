@@ -37,6 +37,10 @@ public class AdminServiceImpl implements AdminService {
     public void save(AdminParam param) {
         //  验证参数
         BeanValidator.check(param);
+        //验证登录账号
+        if(adminMapper.getAdminByAdminCode(param.getAdminCode())!=null){
+            throw new ParamException("登录账号已经存在");
+        }
         //  检查身份证
         if (checkIdCard(param.getId(),param.getIdCard())) {
             throw new ParamException("身份证号已经存在");
@@ -52,8 +56,8 @@ public class AdminServiceImpl implements AdminService {
         //  插入数据库
         adminMapper.insertSelective(admin);
         //  插入日志
-        logService.saveLog(LogParam.builder().type(LogTypeInt.ADMIN_TYPE).targetId(admin.getId())
-                .newValue(JsonMapper.obj2String(admin)).remark("添加管理员").build());
+        /*logService.saveLog(LogParam.builder().type(LogTypeInt.ADMIN_TYPE).targetId(admin.getId())
+                .newValue(JsonMapper.obj2String(admin)).remark("添加管理员").build());*/
     }
 
     @Override
@@ -78,9 +82,6 @@ public class AdminServiceImpl implements AdminService {
         after.setOperateTime(new Date());
         //  更新入数据库
         adminMapper.updateByPrimaryKeySelective(after);
-        //  插入日志
-        logService.saveLog(LogParam.builder().type(LogTypeInt.ADMIN_TYPE).targetId(param.getId())
-                .oldValue(JsonMapper.obj2String(before)).newValue(JsonMapper.obj2String(after)).remark("修改管理员").build());
     }
 
     @Override

@@ -110,25 +110,10 @@ public class BookController {
         int count = bookParam.getWhereList().size();
         int page = bookParam.getPage();//第几页
         int limit = bookParam.getLimit();//每页显示条数
-        filtrateBookParam=bookParam;
+        filtrateBookParam = bookParam;
         List<Book> listBook = bookService.pageListBook(page, limit, bookParam);
         return JsonData.pageSuccess(listBook, count, limit);
     }
-
-    /*@RequestMapping(value = "/list.json", method = RequestMethod.GET)//查 包括高级查询
-    @ResponseBody
-    public JsonData listBookType(HttpServletRequest request) {
-        int count;
-        if(filtrateBookParam==null){
-            count=bookService.bookCount();
-        }else {
-            count = filtrateBookParam.getWhereList().size();
-        }
-        int page = Integer.parseInt(request.getParameter("page"));//第几页
-        int limit = Integer.parseInt(request.getParameter("limit"));//每页显示条数
-        List<Book> listBook = bookService.pageListBook(page, limit, filtrateBookParam);
-        return JsonData.pageSuccess(listBook, count, limit);
-    }*/
 
     @RequestMapping(value = "/select.json", method = RequestMethod.GET)
     @ResponseBody
@@ -136,7 +121,6 @@ public class BookController {
         Book book = bookService.byIdBook(id);
         return JsonData.success(book);
     }
-
 
     @RequestMapping(value = "/batchDelete.json", method = RequestMethod.GET)//批量删除
     @ResponseBody
@@ -195,11 +179,42 @@ public class BookController {
         return JsonData.success(code);
     }
 
+    @RequestMapping(value = "/downloadBookExcelSelect.json", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonData downloadBookExcelSelect(HttpServletResponse response, String searchVal) throws IOException {
+        List<Book> books = (List<Book>) searchBook2(searchVal).getData();
+        List<BookExcel> bookExcels =downloadBookExcelHelp(books);
+        ExcelUtil e = new ExcelUtil();
+        HSSFWorkbook workbook = e.downloadBook(bookExcels);
+        response.reset();
+        response.addHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode("table", "UTF-8") + ".xlsx");
+        OutputStream os = new BufferedOutputStream(response.getOutputStream());
+        response.setContentType("application/vnd.ms-excel;charset=UTF-8"); //将excel写入到输出流中
+        workbook.write(os);
+        os.flush();
+        os.close();
+        return null;
+    }
+
     @RequestMapping(value = "/downloadBookExcel.json", method = RequestMethod.GET)
     @ResponseBody
     public JsonData excelTest(HttpServletResponse response, String fileName) throws IOException {
-        List<BookExcel> bookExcels = new ArrayList<>();
         List<Book> listBook = bookService.pageListBook(null, null, filtrateBookParam);
+        List<BookExcel> bookExcels=downloadBookExcelHelp(listBook);
+        ExcelUtil e = new ExcelUtil();
+        HSSFWorkbook workbook = e.downloadBook(bookExcels);
+        response.reset();
+        response.addHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8") + ".xlsx");
+        OutputStream os = new BufferedOutputStream(response.getOutputStream());
+        response.setContentType("application/vnd.ms-excel;charset=UTF-8"); //将excel写入到输出流中
+        workbook.write(os);
+        os.flush();
+        os.close();
+        return null;
+    }
+
+    public List<BookExcel> downloadBookExcelHelp(List<Book> listBook){//将List<Book>转List<BookExcel>
+        List<BookExcel> bookExcels = new ArrayList<>();
         for (Book book : listBook) {
             BookExcel bookExcel = BookExcel.builder()
                     .bookName(book.getBookName())
@@ -217,16 +232,7 @@ public class BookController {
             }
             bookExcels.add(bookExcel);
         }
-        ExcelUtil e = new ExcelUtil();
-        HSSFWorkbook workbook = e.downloadBook(bookExcels);
-        response.reset();
-        response.addHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8") + ".xlsx");
-        OutputStream os = new BufferedOutputStream(response.getOutputStream());
-        response.setContentType("application/vnd.ms-excel;charset=UTF-8"); //将excel写入到输出流中
-        workbook.write(os);
-        os.flush();
-        os.close();
-        return null;
+        return bookExcels;
     }
 
     @RequestMapping(value = "/getBookExcel.json", method = RequestMethod.POST)
@@ -262,8 +268,20 @@ public class BookController {
 
     @RequestMapping(value = "/getIdByCode.json")
     @ResponseBody
-    public JsonData getIdByCode(String bookCode){
-        Book bookId=bookService.selectIdByCode(bookCode);
+    public JsonData getIdByCode(String bookCode) {
+        Book bookId = bookService.selectIdByCode(bookCode);
         return JsonData.success(bookId);
+    }
+
+    @RequestMapping(value = "/updateLeaseTypeIdByBookIds.json")
+    @ResponseBody
+    public JsonData updateLeaseTypeIdByBookIds(String bookIds, Integer leaseType) {
+        String params[] = bookIds.split(",");
+        List<Integer> listStr = new ArrayList<>();
+        for (String str : params) {
+            listStr.add(Integer.parseInt(str));
+        }
+        bookService.updateLeaseTypeIdByBookIds(listStr,leaseType);
+        return JsonData.success();
     }
 }

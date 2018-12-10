@@ -179,6 +179,9 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             },
             cancel: function(){
                 $("#view").html("");
+            },
+            end: function(){
+                $("#view").html("");
             }
         });
     }

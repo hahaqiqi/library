@@ -20,18 +20,18 @@
 <table class="layui-table" lay-data="{ url:'/user/list.json', page:true, id:'test',toolbar: '#headTemplate',done:function(res, curr, count){ pageCh(res, curr, count) }}" lay-filter="test">
     <thead>
     <tr>
-        <th lay-data="{type:'checkbox', width:40}"></th>
+        <!--<th lay-data="{type:'checkbox', width:40}"></th>-->
         <th lay-data="{field:'id', width:60, hide:true, sort: true}">ID</th>
-        <th lay-data="{field:'userName',width:60,sort: true}">用户名</th>
-        <th lay-data="{field:'userPhone',width:122, sort: true}">手机号</th>
+        <th lay-data="{field:'userName',sort: true}">用户名</th>
+        <!--<th lay-data="{field:'userPhone',width:122, sort: true}">手机号</th>-->
         <th lay-data="{field:'userEmail', sort: true}">邮箱</th>
         <th lay-data="{field:'userScore', width:80, sort: true}">积分</th>
         <th lay-data="{field:'userBalance', width:80, sort: true,hide:true}">余额</th>
-        <th lay-data="{field:'idCard', sort: true}">身份证</th>
-        <th lay-data="{field:'userBirthday', width:80, sort: true}">生日</th>
+        <th lay-data="{field:'idCard',width:190, sort: true}">身份证</th>
+        <th lay-data="{field:'userBirthday', sort: true,templet: function (v) {return createTime(v.userBirthday)}}">生日</th>
         <th lay-data="{field:'status', width:80, sort: true,hide:true,templet:function(obj){if(obj.status==1){return '正常';}else{return '封禁';}}} " >用户状态</th>
         <th lay-data="{field:'operator', width:80, sort: true,hide:true}">创建者</th>
-        <th lay-data="{field:'operateTime',width:100,sort: true,hide:true,align:'center',templet:function(operateTime){return createTime(operateTime)} }">创建时间</th>
+        <th lay-data="{field:'operateTime',width:100,sort: true,hide:true,align:'center',templet:function(v){return createTime(v.operateTime)} }">创建时间</th>
         <th lay-data="{field:'remark'}">备注</th>
         <th lay-data="{fixed: 'right',toolbar:'#barDemo', width:175,align:'center'}"></th>
     </tr>
@@ -61,12 +61,12 @@
                 <input id="userName" type="text" name="userName" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.userName }}" >
             </div>
         </div>
-        <div class="layui-form-item">
+        <!--<div class="layui-form-item">
             <label class="layui-form-label">手机</label>
             <div class="layui-input-inline" style="width: 179px;">
                 <input id="userPhone" type="text" name="userPhone" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.userPhone }}" >
             </div>
-        </div>
+        </div>-->
 
         <div class="layui-form-item" >
             <label class="layui-form-label">邮箱</label>
@@ -75,18 +75,18 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <!--<div class="layui-form-item">
             <label class="layui-form-label">积分</label>
             <div class="layui-input-inline" style="width: 179px;">
                 <input id="userScore" type="text" name="userScore" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.userScore }}" >
             </div>
-        </div>
-        <div class="layui-form-item">
+        </div>-->
+        <!--<div class="layui-form-item">
             <label class="layui-form-label">余额</label>
             <div class="layui-input-inline" style="width: 179px;">
                 <input id="userBalance" type="text" name="userBalance" placeholder="请输入名称" autocomplete="off" class="layui-input" value="{{ d.userBalance }}" >
             </div>
-        </div>
+        </div>-->
 
         <div class="layui-form-item">
             <label class="layui-form-label">身份证</label>
@@ -103,7 +103,7 @@
         </div>
         <br/>
 
-        <div class="layui-form-item">
+        <!--<div class="layui-form-item">
             <label class="layui-form-label">用户状态</label>
             <div class="layui-input-inline" style="width: 179px;">
                 <select  id="status" name="status" lay-filter="aihao">
@@ -116,7 +116,7 @@
                     {{#  } }}
                 </select>
             </div>
-        </div>
+        </div>-->
 
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注</label>

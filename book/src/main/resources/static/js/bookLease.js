@@ -1,6 +1,6 @@
 //处理日期格式
 function createTime(v) {
-    var date = new Date(v.operateTime);
+    var date = new Date(v);
     var y = date.getFullYear();
     var m = date.getMonth() + 1;
     m = m < 10 ? '0' + m : m;
@@ -137,9 +137,15 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery', 'l
                     , {field: 'bookPrice', title: '书籍原价',hide:true}
                     , {field: 'discount', title: '折扣',hide:true}
                     , {field: 'status', title: '书籍状态',hide:true}
-                    , {field: 'operateTime', title: '租借时间'}
+                    , {field: 'operateTime', title: '租借时间',templet: function (v) {
+                            return createTime(v.operateTime);
+                        }
+                    }
                     , {field: 'price', title: '实际收费'}
-                    , {field: 'finalOperateTime', title: '归还时间'}
+                    , {field: 'finalOperateTime', title: '归还时间',templet: function (v) {
+                            return createTime(v.finalOperateTime);
+                        }
+                    }
                     , {field: 'remark', title: '备注'}
                 ]
             ],

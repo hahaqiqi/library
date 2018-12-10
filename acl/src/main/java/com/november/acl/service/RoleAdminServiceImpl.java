@@ -30,43 +30,43 @@ public class RoleAdminServiceImpl implements RoleAdminService {
     @Resource
     private RoleAdminMapper roleAdminMapper;
 
-    @Resource
-    private LogService logService;
+    //@Resource
+    //private LogService logService;
 
     @Resource
     private AdminMapper adminMapper;
 
-    public void changeAdmin(String idStr,int rid){
+    public void changeAdmin(String idStr, int rid) {
         //  获得已分配的管理员的id
         List<Integer> idList = roleAdminMapper.getAdminIdsByRoleId(rid);
         //  删除分配
         roleAdminMapper.deleteByRoleId(rid);
         //  记录日志
-        logService.saveLog(LogParam.builder().targetId(rid).remark("删除角色已分配的管理员")
-                .type(LogTypeInt.ROLEADMIN_TYPE).oldValue(JsonMapper.obj2String(idList)).build());
+        //logService.saveLog(LogParam.builder().targetId(rid).remark("删除角色已分配的管理员")
+        //       .type(LogTypeInt.ROLEADMIN_TYPE).oldValue(JsonMapper.obj2String(idList)).build());
         //  判断id字符串是否不为空
-        if(StringUtils.isNotBlank(idStr)){
+        if (StringUtils.isNotBlank(idStr)) {
             //  分割id字符串
-            String[] strs = StringUtils.split(idStr,",");
+            String[] strs = StringUtils.split(idStr, ",");
             //  转化字符串数组为集合
             List<Integer> ids = Lists.newArrayList(Arrays.asList(strs).stream().map(s -> Integer.valueOf(s)).collect(Collectors.toList()));
             //  分配角色给管理员
-            batchRoleAdmin(ids,rid);
+            batchRoleAdmin(ids, rid);
         }
     }
 
-    private void batchRoleAdmin(List<Integer> ids,int rid){
+    private void batchRoleAdmin(List<Integer> ids, int rid) {
         //  判断当前是否登陆了管理员
-        if(RequestHolder.getCurrentAdmin()!=null){
+        if (RequestHolder.getCurrentAdmin() != null) {
             //  当前管理员
-            roleAdminMapper.batchInsert(ids,rid,RequestHolder.getCurrentAdmin().getAdminCode());
-        }else{
+            roleAdminMapper.batchInsert(ids, rid, RequestHolder.getCurrentAdmin().getAdminCode());
+        } else {
             //  默认admin
-            roleAdminMapper.batchInsert(ids,rid,"admin");
+            roleAdminMapper.batchInsert(ids, rid, "admin");
         }
         //  记录日志
-        logService.saveLog(LogParam.builder().targetId(rid).remark("添加管理员新分配的角色")
-                .type(LogTypeInt.ROLEADMIN_TYPE).newValue(JsonMapper.obj2String(ids)).build());
+        //logService.saveLog(LogParam.builder().targetId(rid).remark("添加管理员新分配的角色")
+        //       .type(LogTypeInt.ROLEADMIN_TYPE).newValue(JsonMapper.obj2String(ids)).build());
     }
 
     @Override
@@ -80,7 +80,7 @@ public class RoleAdminServiceImpl implements RoleAdminService {
             //  转换
             AdminDto dto = AdminDto.adapt(admin);
             //  判断该管理员是否在其中
-            if(adminIdsByRoleId.contains(dto.getId())){
+            if (adminIdsByRoleId.contains(dto.getId())) {
                 //  默认选中
                 dto.setSelected("selected");
             }

@@ -27,7 +27,7 @@
     <dependencies>
         <dependency>
             <groupId>com.november</groupId>
-            <artifactId>demo2</artifactId>
+            <artifactId>log</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!--user-->
@@ -42,12 +42,7 @@
             <artifactId>acl</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!--admin-->
-        <dependency>
-            <groupId>com.november</groupId>
-            <artifactId>admin</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
         <!--space-->
         <dependency>
             <groupId>com.november</groupId>
@@ -58,6 +53,12 @@
         <dependency>
             <groupId>com.november</groupId>
             <artifactId>book</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!--admin-->
+        <dependency>
+            <groupId>com.november</groupId>
+            <artifactId>admin</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

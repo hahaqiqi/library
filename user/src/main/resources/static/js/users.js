@@ -1,17 +1,12 @@
 //处理日期格式
 function createTime(v) {
-    var date = new Date(v.operateTime);
+    var date = new Date(v);
     var y = date.getFullYear();
     var m = date.getMonth() + 1;
     m = m < 10 ? '0' + m : m;
     var d = date.getDate();
-    var h = date.getHours();
     d = d < 10 ? ("0" + d) : d;
-    h = h < 10 ? ("0" + h) : h;
-    var M = date.getMinutes();
-    M = M < 10 ? ("0" + M) : M;
-    var s=date.getSeconds(); //秒
-    var str = y + "-" + m + "-" + d + " " + h + ":" + M+":"+s;
+    var str = y + "-" + m + "-" + d;
     return str;
 }
 

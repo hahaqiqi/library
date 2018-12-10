@@ -1,5 +1,16 @@
+.spop--info{
+    background-color: #6d81af;
+}
+.spop--error{
+    background-color: #b93528;
+}
+.spop--warning{
+    background-color: #6d81af;
+}
+.spop--success{
+    background-color: #3fa747;
+}
 .spop--info, .spop--error, .spop--warning, .spop--success{
-    background-color: #c2c6e0;
     border-radius: 10px;
 }
 .spop-container {

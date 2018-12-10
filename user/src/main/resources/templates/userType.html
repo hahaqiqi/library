@@ -20,20 +20,19 @@
 <table class="layui-table" lay-data="{ url:'/userType/list.json', page:true, id:'test',toolbar: '#headTemplate',done:function(res, curr, count){ pageCh(res, curr, count) }}" lay-filter="test">
     <thead>
     <tr>
-        <th lay-data="{type:'checkbox', width:40}"></th>
+        <!--<th lay-data="{type:'checkbox', width:40}"></th>-->
         <th lay-data="{field:'id', width:60, hide:true, sort: true}">ID</th>
         <th lay-data="{field:'typeName',width:100,sort: true}">用户类型</th>
         <th lay-data="{field:'minScore', width:80, sort: true}">最小积分</th>
         <th lay-data="{field:'discount', width:80, sort: true}">折扣</th>
-        <th lay-data="{field:'status', width:80, sort: true,templet:function(obj){if(obj.status==1){return '正常';}else{return '封禁';}}} " >用户状态</th>
         <th lay-data="{field:'operator', width:80, sort: true}">创建者</th>
-        <th lay-data="{field:'operateTime',width:100,sort: true,align:'center',templet:function(operateTime){return createTime(operateTime)} }">创建时间</th>
+        <th lay-data="{field:'operateTime',sort: true,align:'center',templet:function(operateTime){return createTime(operateTime)} }">创建时间</th>
         <th lay-data="{field:'remark'}">备注</th><span isis="tt"></span>
         <th lay-data="{fixed: 'right',toolbar:'#barDemo', width:175,align:'center'}"></th>
     </tr>
     </thead>
 </table>
-<div id="slidePage" class="layui-elem-field layui-field-title" style="margin-top: 30px;width: 480px;margin-left: 40px"></div>
+<!--<div id="slidePage" class="layui-elem-field layui-field-title" style="margin-top: 30px;width: 480px;margin-left: 40px"></div>-->
 <div id="view"></div>
 
 
@@ -75,7 +74,7 @@
 
         <br/>
 
-        <div class="layui-form-item">
+        <!--<div class="layui-form-item">
             <label class="layui-form-label">用户类型状态</label>
             <div class="layui-input-inline" style="width: 179px;">
                 <select  id="status" name="status" lay-filter="aihao">
@@ -88,7 +87,7 @@
                     {{#  } }}
                 </select>
             </div>
-        </div>
+        </div>-->
 
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注</label>

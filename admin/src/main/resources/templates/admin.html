@@ -20,16 +20,16 @@
 <table class="layui-table" lay-data="{ url:'/admin/page.json', page:true, id:'test',toolbar: '#headTemplate',done:function(res, curr, count){ pageCh(res, curr, count) }}" lay-filter="test">
     <thead>
     <tr>
-        <th lay-data="{type:'checkbox', width:40}"></th>
+        <!--<th lay-data="{type:'checkbox', width:40}"></th>-->
         <th lay-data="{field:'id', width:60, hide:true, sort: true}">ID</th>
         <th lay-data="{field:'adminCode',width:80,sort: true}">账号</th>
-        <th lay-data="{field:'adminPwd', width:80, sort: true}">密码</th>
+        <th lay-data="{field:'adminPwd', width:80,hide:true, sort: true}">密码</th>
         <th lay-data="{field:'adminName', width:80, sort: true}">姓名</th>
-        <th lay-data="{field:'age', width:80,sort: true}">年龄</th>
-        <th lay-data="{field:'birthday', width:120,sort: true}">生日</th>
-        <th lay-data="{field:'idCard', width:150, sort: true}">身份证号</th>
-        <th lay-data="{field:'operator', width:80, sort: true}">创建人</th>
-        <th lay-data="{field:'operateTime',width:200,sort: true,align:'center',templet:function(operateTime){return createTime(operateTime)} }">创建时间</th>
+        <th lay-data="{field:'age', width:80,sort: true,hide:true,}">年龄</th>
+        <th lay-data="{field:'birthday', width:120,sort: true,templet:function(v){return createTime(v.birthday)}}">生日</th>
+        <th lay-data="{field:'idCard', width:190, sort: true}">身份证号</th>
+        <th lay-data="{field:'operator', width:80, sort: true,hide:true,}">创建人</th>
+        <th lay-data="{field:'operateTime',width:200,sort: true,hide:true,align:'center',templet:function(v){return createTime(v.operateTime)} }">创建时间</th>
         <th lay-data="{field:'remark'}">备注</th><span isis="tt"></span>
         <th lay-data="{fixed: 'right',toolbar:'#barDemo', width:175,align:'center'}"></th>
     </tr>

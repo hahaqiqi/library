@@ -22,7 +22,7 @@ public class AdminParam {
     private Integer id;
 
     @NotBlank(message = "管理员账号不能为空")
-    @Length(min = 5,max = 20,message = "管理员账号长度要在5-20位之间")
+    @Length(min = 3,max = 10,message = "管理员账号长度要在3-10位之间")
     private String adminCode;
 
     @NotBlank(message = "管理员密码不能为空")
@@ -30,7 +30,7 @@ public class AdminParam {
     private String adminPwd;
 
     @NotBlank(message = "管理员真实姓名不能为空")
-    @Length(min = 2,max = 20,message = "管理员真实姓名长度要在8-20位之间")
+    @Length(min = 2,max = 20,message = "管理员真实姓名长度要在2-20位之间")
     private String adminName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -41,7 +41,6 @@ public class AdminParam {
     @Length(min = 18,max= 18,message = "管理员身份证号长度应为18")
     private String idCard;
 
-    @NotBlank(message = "管理员备注不能为空")
     @Length(max = 200,message = "管理员备注长度不能超过200")
     private String remark;
 

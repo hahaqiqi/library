@@ -494,4 +494,14 @@
     <select id="selectIdByCode" resultMap="BaseResultMap">
         SELECT * from book WHERE book_code=#{bookCode,jdbcType=VARCHAR}
     </select>
+
+    <update id="updateLeaseTypeIdByBookIds">
+        update book
+        set book_lease_type=#{leaseType}
+        where id
+        in
+        <foreach collection="bookIds" item="id" open="(" separator="," close=")">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </update>
 </mapper>

@@ -28,8 +28,8 @@ public class UserParam implements Serializable{
     @Email(message="邮箱格式不正确")
     private String userEmail;
 
-    @NotNull(message = "积分不能为空")
-    private Integer userScore;
+
+    private Integer userScore=100;
 
     private Double userBalance;
 

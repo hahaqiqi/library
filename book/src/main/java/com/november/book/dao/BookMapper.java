@@ -46,4 +46,6 @@ public interface BookMapper {
     List<Book> selectByBookIds(List<Integer> list);
 
     Book selectIdByCode(String bookCode);
+
+    int  updateLeaseTypeIdByBookIds(@Param("bookIds") List<Integer> bookIds, @Param("leaseType") Integer leaseType);
 }

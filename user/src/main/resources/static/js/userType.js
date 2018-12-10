@@ -19,7 +19,7 @@ var pageOldMax;
 var sliderPage;
 var pageMax;
 function pageCh(res, curr, count) {
-    layui.use(['slider','jquery'], function() {
+    /*layui.use(['slider','jquery'], function() {
         var slider = layui.slider //滑块
             ,$=layui.$                  //jquery
         pageMax=Math.ceil(count/res.limit);
@@ -44,7 +44,7 @@ function pageCh(res, curr, count) {
         }else{
             sliderPage.setValue(curr);
         }
-    });
+    });*/
 }
 
 layui.config({
@@ -59,10 +59,6 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         ,laytpl = layui.laytpl //模板
         ,slider = layui.slider
         ,$=layui.$//jquery
-
-
-    //向世界问个好
-    //layer.msg('Hello World');
 
     //执行一个 table 实例(加载数据)
     table.render({
@@ -257,22 +253,5 @@ layui.use(['form', 'laydate', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         });
         return delSuccess;
     }
-
-    //批量删除数据
-    // function batchDeleteBookType(batchStrId) {
-    //     var delSuccessCount=0;
-    //     $.ajax({
-    //         url: '/userType/batchDelete.json',
-    //         data: {"batchStrId":batchStrId},
-    //         async:false,
-    //         type: 'GET',
-    //         success: function (result) {
-    //             delSuccessCount=result.msg;
-    //         }
-    //     });
-    //     return delSuccessCount;
-    // }
-
-
 
 });

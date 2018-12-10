@@ -10,22 +10,23 @@ function createTime(v) {
     h = h < 10 ? ("0" + h) : h;
     var M = date.getMinutes();
     M = M < 10 ? ("0" + M) : M;
-    var s=date.getSeconds(); //秒
-    var str = y + "-" + m + "-" + d + " " + h + ":" + M+":"+s;
+    var s = date.getSeconds(); //秒
+    var str = y + "-" + m + "-" + d + " " + h + ":" + M + ":" + s;
     return str;
 }
+
 function getBookType(bid) {
-    var typeName="没有此类型";
-    layui.use('jquery', function() {
-        var $=layui.$;
+    var typeName = "没有此类型";
+    layui.use('jquery', function () {
+        var $ = layui.$;
         $.ajax({
             url: '/bookType/select.json',
             data: {"id": bid.bookTypeId},
             async: false,
             type: 'GET',
             success: function (result) {
-                if(result.data!=null){
-                    typeName= result.data.typeName;
+                if (result.data != null) {
+                    typeName = result.data.typeName;
                 }
             }
         });
@@ -36,6 +37,7 @@ function getBookType(bid) {
 var pageOldMax;
 var sliderPage;
 var pageMax;
+
 function pageCh(res, curr, count) {
     /*layui.use(['slider','jquery'], function() {
         var slider = layui.slider //滑块
@@ -69,14 +71,14 @@ layui.config({
     version: '1541881042991' //为了更新 js 缓存，可忽略
 });
 
-layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], function(){
+layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl', 'jquery'], function () {
     var form = layui.form //表单
-        ,laypage = layui.laypage //分页
-        ,layer = layui.layer //弹层
-        ,table = layui.table //表格
-        ,laytpl = layui.laytpl //模板
-        ,slider = layui.slider
-        ,$=layui.$//jquery
+        , laypage = layui.laypage //分页
+        , layer = layui.layer //弹层
+        , table = layui.table //表格
+        , laytpl = layui.laytpl //模板
+        , slider = layui.slider
+        , $ = layui.$//jquery
 
     //得到所有书籍类型
     $.ajax({
@@ -84,15 +86,15 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         async: false,
         type: 'GET',
         success: function (result) {
-            if(result.ret==true){
-                for(var i=0;i<result.data.length;i++){
-                    $(".bookType").append("<option value="+result.data[i].id+">"+result.data[i].typeName+"</option>");
+            if (result.ret == true) {
+                for (var i = 0; i < result.data.length; i++) {
+                    $(".bookType").append("<option value=" + result.data[i].id + ">" + result.data[i].typeName + "</option>");
                 }
-            }else{
+            } else {
                 $(".bookType").append("<option value='null'>加载失败</option>");
             }
         },
-        error:function () {
+        error: function () {
             $(".bookType").append("<option value='null'>接口异常</option>");
         }
     });
@@ -102,35 +104,33 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
         async: false,
         type: 'GET',
         success: function (result) {
-            if(result.ret==true){
-                if(result.data.length<=0){
+            if (result.ret == true) {
+                if (result.data.length <= 0) {
                     $("#updateBookLeaseType").append("<option value=''>无</option>");
-                }else {
+                } else {
                     for (var i = 0; i < result.data.length; i++) {
                         $("#updateBookLeaseType").append("<option value=" + result.data[i].id + ">" + result.data[i].typeName + "</option>");
                     }
                 }
-            }else{
+            } else {
                 $("#updateBookLeaseType").append("<option value='null'>加载失败</option>");
             }
         },
-        error:function () {
+        error: function () {
             $(".bookType").append("<option value='null'>接口异常</option>");
         }
     });
 
 
-
     form.render();
 
     //封装form数据
-    getFormData = function (elem)
-    {
+    getFormData = function (elem) {
         var fieldElem = $(elem).find('input,select,textarea'); //获取所有表单域
-        var field ={};
-        layui.each(fieldElem, function(_, item){
-            if(!item.name) return;
-            if(/^checkbox|radio$/.test(item.type) && !item.checked) return;
+        var field = {};
+        layui.each(fieldElem, function (_, item) {
+            if (!item.name) return;
+            if (/^checkbox|radio$/.test(item.type) && !item.checked) return;
             field[item.name] = item.value;
         });
         return field;
@@ -138,7 +138,7 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     //执行一个 table 实例(加载数据)
     //获取查询表单的参数
     var formData = getFormData("#filtrateFrom");
-    tableSx=function() {
+    tableSx = function () {
         table.render({
             elem: '#bbbbb'
             , url: "/book/list.json"
@@ -181,11 +181,23 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                         }
                     }
                 }
-                    , {field: 'status', toolbar: '#bookstatus',width:135, align: 'center', title: "状态"}
-                    , {field: 'bookSpaceId', sort: true, toolbar: '#bookSpace', hide: true, align: 'center', title: "存放位置"}
+                    , {field: 'status', toolbar: '#bookstatus', width: 135, align: 'center', title: "状态"}
+                    , {
+                    field: 'bookSpaceId',
+                    sort: true,
+                    toolbar: '#bookSpace',
+                    hide: true,
+                    align: 'center',
+                    title: "存放位置"
+                }
                     , {field: 'operator', hide: true, sort: true, title: "创建人"}
                     , {
-                    field: 'operateTime', sort: true, hide: true, align: 'center', title: "创建时间", templet: function (operateTime) {
+                    field: 'operateTime',
+                    sort: true,
+                    hide: true,
+                    align: 'center',
+                    title: "创建时间",
+                    templet: function (operateTime) {
                         return createTime(operateTime)
                     }
                 }
@@ -208,46 +220,45 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     tableSx();
     var editObj;
     //监听头工具栏事件
-    table.on('toolbar(test)', function(obj){
+    table.on('toolbar(test)', function (obj) {
         var checkStatus = table.checkStatus(obj.config.id)
-            ,data = checkStatus.data; //获取选中的数据
-        switch(obj.event){
-           /* case 'add':
-                var viewdata = { //数据
-                    "bookTypeName":""
-                    ,"remark":""
-                    ,"submitType":1
-                }
-                showBookTypeInfo("新增",viewdata);
-                break;*/
+            , data = checkStatus.data; //获取选中的数据
+        switch (obj.event) {
+            /* case 'add':
+                 var viewdata = { //数据
+                     "bookTypeName":""
+                     ,"remark":""
+                     ,"submitType":1
+                 }
+                 showBookTypeInfo("新增",viewdata);
+                 break;*/
             case 'update':
                 break;
             case 'delete':
-                if(data.length === 0){
+                if (data.length === 0) {
                     layer.msg('请选择一行');
                 } else {
                     //批量删除
                     // checkStatus.data[c].id 为要删除的id
-                    layer.confirm('确认删除所选中的 '+data.length+" 条数据吗?", function(index){
+                    layer.confirm('确认删除所选中的 ' + data.length + " 条数据吗?", function (index) {
                         layer.close(index);
-                        var batchStrId="";
-                        for(var c=0;c<data.length;c++){
-                            //layer.alert('删除'+checkStatus.data[c].id);
-                            if(c==0){
-                                batchStrId=checkStatus.data[c].id;
+                        var batchStrId = "";
+                        for (var c = 0; c < data.length; c++) {
+                            if (c == 0) {
+                                batchStrId = checkStatus.data[c].id;
                                 continue;
                             }
-                            batchStrId=batchStrId+","+checkStatus.data[c].id;
+                            batchStrId = batchStrId + "," + checkStatus.data[c].id;
                         }
-                        var delSuccessCount=batchDeleteBookType(batchStrId);
-                        if(delSuccessCount>0) {
+                        var delSuccessCount = batchDeleteBookType(batchStrId);
+                        if (delSuccessCount > 0) {
                             var fk = "删除数据" + delSuccessCount + "/" + data.length + "成功</br>删除数据" + (data.length - delSuccessCount) + "/" + data.length + "失败";
-                            if(data.length - delSuccessCount>0){
-                                fk=fk+"</br>书籍可能在被租借中,无法删除";
+                            if (data.length - delSuccessCount > 0) {
+                                fk = fk + "</br>书籍可能在被租借中,无法删除";
                             }
                             spopBatchHint(fk);
-                        }else{
-                            spopFail("操作错误","");
+                        } else {
+                            spopFail("操作错误", "");
                         }
                         $(".layui-laypage-btn")[0].click();
                     });
@@ -261,25 +272,35 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 $("#filtrate").css("display", "block");
                 layer.open({
                     type: 1,
-                    title:'高级搜索和修改',
-                    shade :0.4,
-                    closeBtn:0,
-                    shadeClose:true,
+                    title: '高级搜索和修改',
+                    shade: 0.4,
+                    closeBtn: 0,
+                    shadeClose: true,
                     content: $("#filtrate"),
                     area: '900px',
-                    cancel:function(){
+                    cancel: function () {
 
                     },
-                    end:function () {
-                        $("#filtrate").css("display","none");
+                    end: function () {
+                        $("#filtrate").css("display", "none");
                     }
                 });
+                break;
             case 'exportTheSelected':
-                if(data.length > 0){
-
+                if (data.length > 0) {
+                    var batchStrId = "";
+                    for (var c = 0; c < data.length; c++) {
+                        if (c == 0) {
+                            batchStrId = checkStatus.data[c].id;
+                            continue;
+                        }
+                        batchStrId = batchStrId + "," + checkStatus.data[c].id;
+                    }
+                    window.open("/book/downloadBookExcelSelect.json?searchVal=" + batchStrId);
+                }else{
+                    layer.msg('无选中数据');
                 }
                 break;
-
 
 
                 /*if($("#filtrate").css("display")=="block"){
@@ -289,26 +310,27 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                 }*/
                 form.render();
                 break;
-        };
+        }
+        ;
     });
 
 
     //提交筛选
-    $('#filtrateSubmitBookType').on("click",function(){
+    $('#filtrateSubmitBookType').on("click", function () {
         formData = getFormData("#filtrateFrom");
         tableSx();
         layer.close(layer.index);
     });
 
     //清空条件
-    $('#refiltrateSubmitBookType').on("click",function(){
+    $('#refiltrateSubmitBookType').on("click", function () {
         $("#filtrateFrom")[0].reset();
         $("#updateFiltrateFrom")[0].reset();
         tableSx();
         layer.close(layer.index);
     });
     //更改筛选
-    $('#updateFiltrateSubmitBookType').on("click",function(){
+    $('#updateFiltrateSubmitBookType').on("click", function () {
         $.ajax({
             url: '/book/batchUpdate.json',
             data: $("#updateFiltrateFrom").serializeArray(),
@@ -319,63 +341,86 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                     layer.close(layer.index);
                     $(".layui-laypage-btn")[0].click();
                 } else {
-                    spopFail("错误",result.msg);
+                    spopFail("错误", result.msg);
                 }
             },
-            error:function () {
-                spopFail("错误","请检查参数");
+            error: function () {
+                spopFail("错误", "请检查参数");
             }
         });
     });
 
     //监听行工具事件
-    table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+    table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
         var data = obj.data //获得当前行数据
-            ,layEvent = obj.event; //获得 lay-event 对应的值
-        if(layEvent === 'detail'){
+            , layEvent = obj.event; //获得 lay-event 对应的值
+        if (layEvent === 'detail') {
             var viewdata = { //数据
-                "bookName":data.bookName
-                ,"bookCode":data.bookCode
-                ,"authorName":data.authorName
-                ,"price":data.price
-                ,"pressName":data.pressName
-                ,"bookTypeId":data.bookTypeId
-                ,"bookChcoType":data.bookChcoType
-                ,"bookSpaceId":data.bookSpaceId
-                ,"remark":data.remark
-                ,"submitType":0
+                "bookName": data.bookName
+                , "bookCode": data.bookCode
+                , "authorName": data.authorName
+                , "price": data.price
+                , "pressName": data.pressName
+                , "bookTypeId": data.bookTypeId
+                , "bookChcoType": data.bookChcoType
+                , "bookSpaceId": data.bookSpaceId
+                , "remark": data.remark
+                , "submitType": 0
             }
-            showBookTypeInfo("查看",viewdata);
-        } else if(layEvent === 'del'){
-            layer.confirm('确认删除这一条数据?', function(index){
+            showBookTypeInfo("查看", viewdata);
+        } else if (layEvent === 'del') {
+            layer.confirm('确认删除这一条数据?', function (index) {
                 layer.close(index);
                 //layer.msg("删除"+data.id);
                 //向服务端发送删除指令
                 deleteBookType(data.id);
                 $(".layui-laypage-btn")[0].click();
             });
-        } else if(layEvent === 'edit'){
-            editObj=data;
+        } else if (layEvent === 'edit') {
+            editObj = data;
             var viewdata = { //数据
-                "bookName":data.bookName
-                ,"bookCode":data.bookCode
-                ,"authorName":data.authorName
-                ,"price":data.price
-                ,"pressName":data.pressName
-                ,"bookTypeId":data.bookTypeId
-                ,"bookChcoType":data.bookChcoType
-                ,"bookSpaceId":data.bookSpaceId
-                ,"remark":data.remark
-                ,"id":data.id
-                ,"submitType":1
+                "bookName": data.bookName
+                , "bookCode": data.bookCode
+                , "authorName": data.authorName
+                , "price": data.price
+                , "pressName": data.pressName
+                , "bookTypeId": data.bookTypeId
+                , "bookChcoType": data.bookChcoType
+                , "bookSpaceId": data.bookSpaceId
+                , "remark": data.remark
+                , "id": data.id
+                , "submitType": 1
             }
-            showBookTypeInfo("编辑",viewdata);
-        }else if(layEvent === 'browse'){//查看书籍存放地点
-            alert("browse");
-        }else if(layEvent === 'changeStatus'){//下架书籍或恢复书籍
+            showBookTypeInfo("编辑", viewdata);
+        } else if (layEvent === 'browse') {//查看书籍存放地点
+            if(data.bookSpaceId==null || data.bookSpaceId==""){
+                spopTs("无位置信息");
+                return;
+            }
+            $.ajax({
+                url: '/space/getSpaceidPlace.json',
+                data: {"spaceid": data.bookSpaceId},
+                type: 'GET',
+                success: function (result) {
+                    if (result.ret) {
+                        layer.open({
+                            title: '书籍存放在：',
+                            type: 1,
+                            closeBtn: 2,
+                            content: '<div style="height: 60px;">'+result.data+'</div>'
+                        });
+                    } else {
+                        spopFail("获取失败", "未知错误");
+                    }
+                },
+                error: function () {
+                    spopFail("获取失败", "未知错误");
+                }
+            });
+        } else if (layEvent === 'changeStatus') {//下架书籍或恢复书籍
             $.ajax({
                 url: '/book/changeBookStatus.json',
-                data: {"id": data.id,"statusId":data.status==0?1:0},
+                data: {"id": data.id, "statusId": data.status == 0 ? 1 : 0},
                 type: 'GET',
                 success: function (result) {
                     if (result.ret) {
@@ -393,25 +438,23 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     });
 
     //分页
-    laypage.render({
+    laypage.render({});
 
-    });
-
-    function showBookTypeInfo(showTitleType,viewdata) {
+    function showBookTypeInfo(showTitleType, viewdata) {
         var getTpl = demo.innerHTML
-            ,view = document.getElementById('view');
-        laytpl(getTpl).render(viewdata, function(html){
+            , view = document.getElementById('view');
+        laytpl(getTpl).render(viewdata, function (html) {
             view.innerHTML = html;
         });
         layer.open({
-            title: showTitleType+'图书',
+            title: showTitleType + '图书',
             type: 1,
             content: $("#view"),
             shade: 0,
             area: '380px',
-            success:function(){
+            success: function () {
                 //监听提交数据
-                $('#submitBookType').on("click",function(){
+                $('#submitBookType').on("click", function () {
                     $.ajax({
                         url: '/book/update.json',
                         data: $("#bookForm").serializeArray(),
@@ -423,16 +466,16 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
                                 $(".layui-laypage-btn")[0].click();
                                 $("#view").html("");
                             } else {
-                                spopFail("修改失败",result.msg);
+                                spopFail("修改失败", result.msg);
                             }
                         },
-                        error:function () {
-                            spopFail("修改失败","请检查参数");
+                        error: function () {
+                            spopFail("修改失败", "请检查参数");
                         }
                     });
                 });
             },
-            cancel: function(){
+            cancel: function () {
                 $("#view").html("");
             }
         });
@@ -442,22 +485,22 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
             async: false,
             type: 'GET',
             success: function (result) {
-                if(result.ret==true){
-                    for(var i=0;i<result.data.length;i++){
-                        if(viewdata.bookTypeId==result.data[i].id){
-                            $("#bookType").append("<option value="+result.data[i].id+" selected>"+result.data[i].typeName+"</option>");
+                if (result.ret == true) {
+                    for (var i = 0; i < result.data.length; i++) {
+                        if (viewdata.bookTypeId == result.data[i].id) {
+                            $("#bookType").append("<option value=" + result.data[i].id + " selected>" + result.data[i].typeName + "</option>");
                             continue;
                         }
-                        $("#bookType").append("<option value="+result.data[i].id+">"+result.data[i].typeName+"</option>");
+                        $("#bookType").append("<option value=" + result.data[i].id + ">" + result.data[i].typeName + "</option>");
                     }
-                }else{
+                } else {
                     $("#bookType").append("<option value='null'>加载失败</option>");
                 }
             },
-            error:function () {
+            error: function () {
                 $("#bookType").append("<option value='null'>接口异常</option>");
             }
-    });
+        });
         form.render();
     }
 
@@ -465,14 +508,14 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
     function deleteBookType(delid) {
         $.ajax({
             url: '/book/delete.json',
-            data: {"id":delid},
-            async:false,
+            data: {"id": delid},
+            async: false,
             type: 'GET',
             success: function (result) {
-                if(result.ret){
+                if (result.ret) {
                     spopSucess("删除成功");
-                }else{
-                    spopFail("删除失败",result.msg);
+                } else {
+                    spopFail("删除失败", result.msg);
                 }
             }
         });
@@ -480,30 +523,30 @@ layui.use(['form', 'laypage', 'layer', 'table', 'slider', 'laytpl','jquery'], fu
 
     //批量删除数据
     function batchDeleteBookType(batchStrId) {
-        var delSuccessCount=0;
+        var delSuccessCount = 0;
         $.ajax({
             url: '/book/batchDelete.json',
-            data: {"batchStrId":batchStrId},
-            async:false,
+            data: {"batchStrId": batchStrId},
+            async: false,
             type: 'GET',
             success: function (result) {
-                delSuccessCount=result.msg;
+                delSuccessCount = result.msg;
             }
         });
         return delSuccessCount;
     }
 
-    table.on('look', function(obj){
+    table.on('look', function (obj) {
         alert("6379");
     });
 
     //导出excel
-    $('#downloadBookExcel').on("click",function(){
-        var fileName=$("#fileName").val();
-        if(fileName===""){
-            fileName="table";
+    $('#downloadBookExcel').on("click", function () {
+        var fileName = $("#fileName").val();
+        if (fileName === "") {
+            fileName = "table";
         }
-        window.open("/book/downloadBookExcel.json?fileName="+fileName);
+        window.open("/book/downloadBookExcel.json?fileName=" + fileName);
     });
 
 

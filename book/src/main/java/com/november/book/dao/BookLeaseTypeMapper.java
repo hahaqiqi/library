@@ -26,4 +26,5 @@ public interface BookLeaseTypeMapper {
     int selectByTypeName(BookLeaseTypeParam param);
 
     List<BookLeaseType> listAll();
+
 }
