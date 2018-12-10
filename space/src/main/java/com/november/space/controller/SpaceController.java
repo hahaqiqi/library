@@ -69,15 +69,19 @@ public class SpaceController {
     @ResponseBody
     @RequestMapping("/spacelist.json")
     public JsonData getSpacelist(@RequestParam(value = "spaceid") Integer spaceid){
-        log.info("开始获取空间");
+        log.info("开始获取空间书籍");
+        //创建一个Integer类型的集合接收selectSpaceBook方法
         List<Integer> list=spaceser.selectSpaceBook(spaceid);
+        //创建StringBuffer
         StringBuffer listStr=new StringBuffer();
-        //1,2,3,4
+        //循环把Integer类型的集合里的id值放入StringBuffer
         for(int i=0;i<list.size();i++){
+            //判断从0开始,并跳出循环
             if(i==0){
                 listStr.append(list.get(i));
                 continue;
             }
+            //添加间隔","
             listStr.append(",");
             listStr.append(list.get(i));
         }
