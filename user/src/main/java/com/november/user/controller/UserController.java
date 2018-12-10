@@ -82,6 +82,7 @@ public class UserController {
         return JsonData.success(user);
     }
 
+    //userId查User
     @ResponseBody
     @RequestMapping(value="/selectUserById.json")
     public JsonData SelectUserById(Integer id){

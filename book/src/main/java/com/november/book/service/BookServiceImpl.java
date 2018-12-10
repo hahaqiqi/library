@@ -200,6 +200,7 @@ public class BookServiceImpl implements BookService {
         return bookMapper.updateBookLeaseIdByBookId(bookId, leaseId);
     }
 
+    //bookCode得到Book
     public Book selectIdByCode(String bookCode){
         return bookMapper.selectIdByCode(bookCode);
     }

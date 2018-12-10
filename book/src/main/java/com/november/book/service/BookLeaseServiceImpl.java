@@ -124,5 +124,5 @@ public class BookLeaseServiceImpl implements BookLeaseService {
 
     public int getCount(BookLeaseParam param) {//得到行数
         return bookLeaseMapper.getCount(param);
-    }
+    }//得到满足条件的行数
 }
