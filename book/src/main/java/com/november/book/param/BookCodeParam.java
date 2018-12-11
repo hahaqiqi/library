@@ -28,5 +28,4 @@ public class BookCodeParam {
     @Length(max = 200,message = "备注长度不能超过200")
     private String remark;
 
-
 }

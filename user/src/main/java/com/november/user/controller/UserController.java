@@ -100,7 +100,6 @@ public class UserController {
             throw new ParamException("该邮箱已被注册");
         }
         String yzm=Email.GetCode(userEmail);//调用发送邮箱返回验证码的方法
-        System.out.println(yzm);
         return JsonData.success(yzm);
     }
 }

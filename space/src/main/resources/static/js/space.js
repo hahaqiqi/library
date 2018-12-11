@@ -279,6 +279,7 @@ layui.use(['treetable','form','jquery','layer', 'laytpl','table'],function(){
                     {type: 'checkbox', fixed: 'left'}
                     ,{field: 'id', title: 'ID',hide:true}
                     ,{field: 'bookName',width:161, title: '书籍名称'}
+                    ,{field: 'bookCode',hide:true, title: '书籍编号'}
                     ,{field: 'authorName',width:124, title: '作者'}
                     ,{field: 'price',width:115, title: '价格'}
                     ,{field: 'pressName',width:231, title: '出版社'}

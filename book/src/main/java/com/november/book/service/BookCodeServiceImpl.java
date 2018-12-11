@@ -39,11 +39,13 @@ public class BookCodeServiceImpl implements BookCodeService {
 
     @Override
     public int updateBookCode(BookCodeParam param) {
+        //基本数据检查
         BeanValidator.check(param);
         //如果是1 则不允许修改范围 将PriceMin值设为0
         if (param.getId() == 1) {
             param.setBookPriceMin(0);
         } else {
+            //else 判断修改的内容是否存在
             BookCode before = bookCodeMapper.selectByPrimaryKey(param.getId());
             Preconditions.checkNotNull(before, "修改的内容不存在");
             if (bookCodeMapper.isRepeat(param) > 0) {

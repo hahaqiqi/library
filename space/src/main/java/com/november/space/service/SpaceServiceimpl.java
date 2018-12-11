@@ -37,9 +37,9 @@ public class SpaceServiceimpl implements SpaceService {
         ////检查param类BeanValidator.check
         BeanValidator.check(param);
         //使用parentIdJudge判断父空间下的子空间名称
-       if(parentIdJudge(param.getParentId(),param.getSpaceName())){
-           throw new ParamException("这个父空间已经有这个子空间了");
-       }
+        if(parentIdJudge(param.getParentId(),param.getSpaceName())){
+            throw new ParamException("这个父空间已经有这个子空间了");
+        }
         //非空判断
         if(param.getRemark()==""){
             param.setRemark("暂时没有");
@@ -47,14 +47,14 @@ public class SpaceServiceimpl implements SpaceService {
         //使用builder()方法把SpaceParam类存储的数据传递给Space类
         Space space =Space.builder().spaceName(param.getSpaceName()).level(param.getLevel())
                 .remark(param.getRemark()).parentId(param.getParentId()).build();
-       //判断当前用户权限,当用户权限为null的是时候赋值
-       if(RequestHolder.getCurrentAdmin()!=null){
-           space.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
-       }else{
-           space.setOperator("admin");
-       }
-       space.setOperateTime(new Date());
-       return spacemapper.insert(space);
+        //判断当前用户权限,当用户权限为null的是时候赋值
+        if(RequestHolder.getCurrentAdmin()!=null){
+            space.setOperator(RequestHolder.getCurrentAdmin().getAdminCode());
+        }else{
+            space.setOperator("admin");
+        }
+        space.setOperateTime(new Date());
+        return spacemapper.insert(space);
     }
 
     /*
@@ -70,19 +70,19 @@ public class SpaceServiceimpl implements SpaceService {
 
     public List<Space> forListSpace(int start,int end,List<Space> listSpace){
         //循环获取ID值
-            for(int i=start;i<end;i++){
-                //创建List接收selectList方法查询id值
-                List<Space> newList=spacemapper.selectList(listSpace.get(i).getId());
-                //使用遍历添加把接收了id值的对象赋给listSpace
-                for (Space space : newList) {
-                    listSpace.add(space);
-                }
+        for(int i=start;i<end;i++){
+            //创建List接收selectList方法查询id值
+            List<Space> newList=spacemapper.selectList(listSpace.get(i).getId());
+            //使用遍历添加把接收了id值的对象赋给listSpace
+            for (Space space : newList) {
+                listSpace.add(space);
             }
-            //当循环结束条件end不等于listSpace.size()的时候使用递归重新执行方法
-            if(end!=listSpace.size()){
-                forListSpace(end,listSpace.size(),listSpace);
-            }
-            return listSpace;
+        }
+        //当循环结束条件end不等于listSpace.size()的时候使用递归重新执行方法
+        if(end!=listSpace.size()){
+            forListSpace(end,listSpace.size(),listSpace);
+        }
+        return listSpace;
     }
 
     /*public List<Space> getListSpaceId(int start,int end,List<Space> listSpace){
